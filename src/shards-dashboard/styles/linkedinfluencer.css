@@ -26,21 +26,3 @@
     cursor: pointer;
     float: right;
 }
-.leftContainer {
-    width: calc((576px * .29167) + 124px);
-    float: left;
-}
-.rightContainer{
-    float: left;
-    margin-right: -1px;
-    width: calc((576px * .29167) + 144px);
-    box-sizing: border-box;  
-    margin-left: calc((576px * 0) - 24px + 49px);
-}
-.centerContainer{
-    box-sizing: border-box;
-    float: left;
-    margin-right: -1px;
-    width: calc((576px * .5) + 264px);
-    margin-left: calc((576px * 0) - 24px + 49px);
-}

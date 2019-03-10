@@ -12,6 +12,7 @@ import ComponentsOverview from "./views/ComponentsOverview";
 import Tables from "./views/Tables";
 import BlogPosts from "./views/BlogPosts";
 import Feed from "./views/Feed";
+import Login from "./views/Login";
 
 export default [
   {
@@ -46,9 +47,9 @@ export default [
     component: ComponentsOverview
   },
   {
-    path: "/tables",
+    path: "/login",
     layout: DefaultLayout,
-    component: Tables
+    component: Login
   },
   {
     path: "/blog-posts",

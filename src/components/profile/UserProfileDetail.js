@@ -1,5 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
 import facebook from "../../images/icon/facebook.png";
 import instagram from "../../images/icon/instagram.png";
 import youtube from "../../images/icon/youtube.png";
@@ -11,15 +10,8 @@ import {
   Row,
   Col,
   Card,
-  CardHeader,
-  Button,
-  ListGroup,
-  ListGroupItem,
-  Progress,
   CardBody,
-  FormSelect,
   Badge,
-  Container
 } from "shards-react";
 import { HashRouter as Router, Route, Link, NavLink } from 'react-router-dom';
 
@@ -27,6 +19,11 @@ class UserDetails extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      profile:{
+        states:{
+          name:""
+        }
+      },
       userDetails: {
         name: "Nathan Figueroa",
         backgroundImage: require("./../../images/content-management/channels4_banner.jpg"),
@@ -43,11 +40,21 @@ class UserDetails extends React.Component {
     }
   }
 
+  componentDidMount() {
+    fetch("http://localhost:8080/api/account/398765f0-4220-11e9-8972-aca63e449b3c").then((Response) => Response.json()).then((findresponse)=> {
+      this.setState({
+        profile: findresponse
+            })
+        }
+    )
+}
+
   render() {
     const {
-      userDetails,
-      smallStats
+      profile,
+      userDetails
     } = this.state;
+    console.log(profile);
     return (
       <div>
         <Row>
@@ -68,9 +75,9 @@ class UserDetails extends React.Component {
               </div>
                 <Row style={{padding:"10px"}}>
                   <Col className="mb-6" style={{marginTop:"25px"}}>
-                    <h4 className="mb-0">{userDetails.name}</h4>
-                    <h6>Eating | Training | Life</h6>
-                    <h6>Coral Springs, Florida 33067</h6>
+                    <h4 className="mb-0">{profile.fName} {profile.lName}</h4>
+                    <h6>{profile.summary}</h6>
+                    <h6>{profile.address}, {profile.states.name} {profile.postalCode}</h6>
                     <Badge pill className={`bg-info`} > Food</Badge>{"  "}
                     <Badge pill className={`bg-warn`} > Fitnes</Badge>
                   </Col>

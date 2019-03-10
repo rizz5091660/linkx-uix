@@ -1,9 +1,7 @@
 import React from "react";
 import { Container, Row, Col } from "shards-react";
 
-import PageTitle from "../components/common/PageTitle";
-import UserDetails from "../components/profile/UserDetails";
-import UserAccountDetails from "../components/profile/UserAccountDetails";
+import UserProfileDetail from "../components/profile/UserProfileDetail";
 import Follow from "../components/follow/Follow";
 
 
@@ -13,7 +11,7 @@ const UserProfileLite = () => (
     </Row>
     <Row>
       <Col lg="8">
-        <UserDetails />
+        <UserProfileDetail/>
       </Col>
       <Col lg="4">
         <Follow type="userdetail"/>

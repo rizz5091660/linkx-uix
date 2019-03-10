@@ -9,8 +9,6 @@ import {
   Card,
   CardHeader,
   CardBody,
-  ListGroup,
-  ListGroupItem,
   Row,
   Col
 } from "shards-react";
