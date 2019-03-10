@@ -7,16 +7,17 @@ import Follow from "../components/follow/Follow";
 
 const UserProfileLite = () => (
   <Container fluid className="main-content-container px-4">
-    <Row noGutters className="page-header py-4">
-    </Row>
+    <Row noGutters className="page-header py-4"/>
+    <div className="centerPosition">
     <Row>
-      <Col lg="8">
+      <Col lg="8"> 
         <UserProfileDetail/>
       </Col>
       <Col lg="4">
         <Follow type="userdetail"/>
       </Col>
     </Row>
+    </div>
   </Container>
 );
 
