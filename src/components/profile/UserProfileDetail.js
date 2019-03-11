@@ -1,7 +1,4 @@
 import React from "react";
-import facebook from "../../images/icon/facebook.png";
-import instagram from "../../images/icon/instagram.png";
-import youtube from "../../images/icon/youtube.png";
 import shop from "../../images/icon/online-store.png"
 import Projects from "./Projects";
 import UserStats from "./UserStats";
@@ -13,17 +10,18 @@ import {
   CardBody,
   Badge,
 } from "shards-react";
-import { HashRouter as Router, Route, Link, NavLink } from 'react-router-dom';
 
 class UserDetails extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       profile:{
-        states:{
-          name:""
-        }
+        states:{},
+        socmeds:[{socialMedia:{},socMedStats:{}}],
+        brandSpecs:[{brandSpec:{}}]
       },
+      cloudinary:"https://res.cloudinary.com/dw2ssncv1/image/upload/v1551484135/"
+      ,
       userDetails: {
         name: "Nathan Figueroa",
         backgroundImage: require("./../../images/content-management/channels4_banner.jpg"),
@@ -52,9 +50,9 @@ class UserDetails extends React.Component {
   render() {
     const {
       profile,
-      userDetails
+      userDetails,
+      cloudinary
     } = this.state;
-    console.log(profile);
     return (
       <div>
         <Row>
@@ -78,28 +76,20 @@ class UserDetails extends React.Component {
                     <h4 className="mb-0">{profile.fName} {profile.lName}</h4>
                     <h6>{profile.summary}</h6>
                     <h6>{profile.address}, {profile.states.name} {profile.postalCode}</h6>
-                    <Badge pill className={`bg-info`} > Food</Badge>{"  "}
-                    <Badge pill className={`bg-warn`} > Fitnes</Badge>
+                    {profile.brandSpecs.map((bs) => (
+                      <Badge pill className={bs.brandSpec.badgeColor}>{bs.brandSpec.name}</Badge>
+                    ))}
                   </Col>
                   <Col className="mb-6" style={{marginTop:"10px"}}>
-                    <Row>
+
+                   {profile.socmeds.map((soc) => (
+                    <Row key={soc.id}>
                       <Col className="ml-4" lg="12">
-                        <div style={{display:"inline"}}><a href="https://www.youtube.com/user/natefiggs"><img src={youtube} width="30"/></a> </div>
-                        <div style={{display:"inline"}}><span className="text-muted  mb-2">{userDetails.jobTitle}</span></div>
+                        <div style={{display:"inline"}}><a href="https://www.youtube.com/user/natefiggs"><img src={cloudinary + soc.socialMedia.avatar} width="30"/></a> </div>
+                        <div style={{display:"inline"}}><span className="text-muted  mb-2">{soc.socMedStats.totalFollower} followers</span></div>
                       </Col>
                     </Row>
-                    <Row>
-                      <Col className="ml-4" lg="12">
-                        <div style={{display:"inline"}}><a href="https://www.instagram.com/natefiggs/"><img src={instagram} width="30"/></a> </div>
-                        <div style={{display:"inline"}}><span className="text-muted  mb-2">{userDetails.jobTitle2}</span></div>
-                      </Col>
-                    </Row>
-                    <Row>
-                      <Col className="ml-4" lg="12">
-                        <div style={{display:"inline"}}><a href="https://www.facebook.com/nathan.figueroa.12"><img src={facebook} width="30"/></a> </div>
-                        <div style={{display:"inline"}}><span className="text-muted  mb-2">{userDetails.jobTitle3}</span></div>
-                      </Col>
-                    </Row>
+                    ))}
                     <Row>
                       <Col className="ml-4" lg="12">
                         <div style={{display:"inline"}}><a href="#"><img src={shop} width="30"/></a> </div>
