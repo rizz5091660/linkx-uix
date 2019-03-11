@@ -20,21 +20,7 @@ class UserDetails extends React.Component {
         socmeds:[{socialMedia:{},socMedStats:{}}],
         brandSpecs:[{brandSpec:{}}]
       },
-      cloudinary:"https://res.cloudinary.com/dw2ssncv1/image/upload/v1551484135/"
-      ,
-      userDetails: {
-        name: "Nathan Figueroa",
-        backgroundImage: require("./../../images/content-management/channels4_banner.jpg"),
-        avatar: require("./../../images/avatars/nathanfigueroa.jpg"),
-        jobTitle: "421,420 subscribers",
-        jobTitle2: "1,011 followers",
-        jobTitle3: "3,656 followers",
-        performanceReportTitle: "Workload",
-        performanceReportValue: 74,
-        metaTitle: "Description",
-        metaValue:
-          "Looking forward for food projects!!🍕🍔🌯 "
-      }
+      cloudinary:"https://res.cloudinary.com/dw2ssncv1/image/upload/v1551484135/",
     }
   }
 
@@ -61,13 +47,13 @@ class UserDetails extends React.Component {
               <CardBody>
               <div
                 className="card-post__image"
-                style={{ backgroundImage: `url(${userDetails.backgroundImage})` }} >
+                style={{ backgroundImage: `url(${cloudinary+profile.profileBanner})` }} >
 
                 <div className="card-post__author d-flex">
                   <a
                     href="#"
                     className="card-post__author-avatar" 
-                    style={{ backgroundImage: `url('${userDetails.avatar}')`,width:"5rem",height:"5rem" }}>
+                    style={{ backgroundImage: `url('${cloudinary+profile.avatar}')`,width:"5rem",height:"5rem" }}>
                   </a>
                 </div>
               </div>
@@ -99,9 +85,7 @@ class UserDetails extends React.Component {
                   </Col>
                 </Row>
                 <Row>
-                  <Col className="mb-12 border-top" style={{padding:"10px"}} >
-                     Looking forward for food projects!!🍕🍔🌯 
-                  </Col>
+                  <Col className="mb-12 border-top" style={{padding:"10px"}}>{profile.description} </Col>
                 </Row>
               </CardBody>
             </Card>

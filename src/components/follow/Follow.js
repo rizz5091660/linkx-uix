@@ -60,7 +60,7 @@ class Follow extends React.Component {
             headerTitle = "Add to your feed ";
             card0=
             <Card>
-                <CardHeader className="border-bottom"><b>Marketplace  </b> </CardHeader>
+                <CardHeader className="border-bottom"><b>Workplace  </b> </CardHeader>
                 <CardBody style={{textAlign:"center"}}>
                     <Row>
                         <Col><a href="#"><img src={creator} width="50" /></a><br/>Content Creator</Col>
