@@ -17,8 +17,8 @@ class UserDetails extends React.Component {
     this.state = {
       profile:{
         states:{},
-        socmeds:[{socialMedia:{},socMedStats:{}}],
-        brandSpecs:[{brandSpec:{}}]
+        socmedStats:[{socMed:{}}],
+        brandSpecs:[{}]
       },
       cloudinary:"https://res.cloudinary.com/dw2ssncv1/image/upload/v1551484135/",
     }
@@ -63,16 +63,16 @@ class UserDetails extends React.Component {
                     <h6>{profile.summary}</h6>
                     <h6>{profile.address}, {profile.states.name} {profile.postalCode}</h6>
                     {profile.brandSpecs.map((bs) => (
-                      <Badge pill className={bs.brandSpec.badgeColor}>{bs.brandSpec.name}</Badge>
+                      <Badge pill className={bs.badgeColor}>{bs.name}</Badge>
                     ))}
                   </Col>
                   <Col className="mb-6" style={{marginTop:"10px"}}>
 
-                   {profile.socmeds.map((soc) => (
+                   {profile.socmedStats.map((soc) => (
                     <Row key={soc.id}>
                       <Col className="ml-4" lg="12">
-                        <div style={{display:"inline"}}><a href="https://www.youtube.com/user/natefiggs"><img src={cloudinary + soc.socialMedia.avatar} width="30"/></a> </div>
-                        <div style={{display:"inline"}}><span className="text-muted  mb-2">{soc.socMedStats.totalFollower} followers</span></div>
+                        <div style={{display:"inline"}}><a href="https://www.youtube.com/user/natefiggs"><img src={cloudinary + soc.socMed.avatar} width="30"/></a> </div>
+                        <div style={{display:"inline"}}><span className="text-muted  mb-2">{soc.totalFollower} followers</span></div>
                       </Col>
                     </Row>
                     ))}
