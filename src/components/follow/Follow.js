@@ -24,12 +24,13 @@ class Follow extends React.Component {
         this.state = {
             type:'',
             suggesions:[],
-            follows:[]
+            follows:[],
+            cloudinary:"https://res.cloudinary.com/dw2ssncv1/image/upload/v1551484135/",
         }
     }
 
     componentDidMount() {
-        fetch("http://www.mocky.io/v2/5c79c7644900007e00a5a64d").then((Response) => Response.json()).then((findresponse)=> {
+        fetch("http://localhost:8080/api/account/398765f0-4220-11e9-8972-aca63e449b3c/similar").then((Response) => Response.json()).then((findresponse)=> {
           this.setState({
                  suggesions: findresponse
                 })
@@ -48,7 +49,7 @@ class Follow extends React.Component {
         const {
             follows,
             suggesions,
-            type
+            cloudinary
         } = this.state;
         let card0;
         let card1;
@@ -86,7 +87,7 @@ class Follow extends React.Component {
                             <div style={{float:"left"}}>
                                 <img
                                     className="user-avatar rounded-circle mr-2"
-                                    src={post.authorAvatar}
+                                    src={cloudinary+post.authorAvatar}
                                     alt={post.name}
                                     width="50"
                                 />
@@ -133,19 +134,19 @@ class Follow extends React.Component {
         <Card>
         <CardHeader className="border-bottom"><b>{headerTitle}  </b> </CardHeader>
             <CardBody>
-            {suggesions.map((post, idx) => (
+            {suggesions.map((sgs, idx) => (
                 <Row key={idx}>
                     <Col className="mb-12" style={{paddingTop:"10px"}}>
                         <div style={{float:"left"}}>
                             <img
                                 className="user-avatar rounded-circle mr-2"
-                                src={post.authorAvatar}
-                                alt={post.name}
+                                src={cloudinary+sgs.avatar}
+                                alt={sgs.name}
                                 width="50"
                             />
                         </div>
                     <div style={{float:"left",width:"50%"}}>
-                        <b>{post.name}</b><br/> <span style={{"fontWeight":"300"}}>{post.title}</span>
+                        <b>{sgs.name}</b><br/> <span style={{"fontWeight":"300"}}>{sgs.title} at {sgs.organization}</span>
                     </div>
                     <div style={{float:"left"}}>
                         <Button size="sm" theme="secondary" className="mb-2 mr-1">Follow </Button>
