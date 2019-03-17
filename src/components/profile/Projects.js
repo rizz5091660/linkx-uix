@@ -48,7 +48,7 @@ class Projects extends React.Component {
         <div key={prj.id} className="blog-comments__item d-flex p-3">
           {/* Avatar */}
           <div className="blog-comments__avatar mr-3">
-            <img src={cloudinary+prj.avatar} alt={prj.accountName} />
+            <img src={cloudinary+prj.avatar} alt={prj.clientName} />
           </div>
 
           {/* Content */}
@@ -56,7 +56,7 @@ class Projects extends React.Component {
             {/* Content :: Title */}
             <div className="blog-comments__meta text-mutes">
               <a className="text-secondary" href="#">
-                {prj.accountName}
+                {prj.clientName}
               </a>{" "}
               <span className="text-mutes">- {prj.startDate}</span>
             </div>
