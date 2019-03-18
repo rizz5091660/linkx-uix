@@ -19,8 +19,7 @@ class UserDetails extends React.Component {
         states:{},
         socmedStats:[{socMed:{}}],
         brandSpecs:[{}]
-      },
-      cloudinary:"https://res.cloudinary.com/dw2ssncv1/image/upload/v1551484135/",
+      }
     }
   }
 
@@ -35,9 +34,7 @@ class UserDetails extends React.Component {
 
   render() {
     const {
-      profile,
-      userDetails,
-      cloudinary
+      profile
     } = this.state;
     return (
       <div>
@@ -47,13 +44,13 @@ class UserDetails extends React.Component {
               <CardBody>
               <div
                 className="card-post__image"
-                style={{ backgroundImage: `url(${cloudinary+profile.profileBanner})` }} >
+                style={{ backgroundImage: `url(${profile.profileBannerFullpath})` }} >
 
                 <div className="card-post__author d-flex">
                   <a
                     href="#"
                     className="card-post__author-avatar" 
-                    style={{ backgroundImage: `url('${cloudinary+profile.avatar}')`,width:"5rem",height:"5rem" }}>
+                    style={{ backgroundImage: `url('${profile.avatarFullpath}')`,width:"5rem",height:"5rem" }}>
                   </a>
                 </div>
               </div>
@@ -71,7 +68,7 @@ class UserDetails extends React.Component {
                    {profile.socmedStats.map((soc) => (
                     <Row key={soc.id}>
                       <Col className="ml-4" lg="12">
-                        <div style={{display:"inline"}}><a href="https://www.youtube.com/user/natefiggs"><img src={cloudinary + soc.socMed.avatar} width="30"/></a> </div>
+                        <div style={{display:"inline"}}><a href="https://www.youtube.com/user/natefiggs"><img src={soc.socMed.avatarFullPath} width="30"/></a> </div>
                         <div style={{display:"inline"}}><span className="text-muted  mb-2">{soc.totalFollower} followers</span></div>
                       </Col>
                     </Row>

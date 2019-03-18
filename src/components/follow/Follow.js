@@ -24,8 +24,7 @@ class Follow extends React.Component {
         this.state = {
             type:'',
             suggesions:[],
-            follows:[],
-            cloudinary:"https://res.cloudinary.com/dw2ssncv1/image/upload/v1551484135/",
+            follows:[]
         }
     }
 
@@ -48,8 +47,7 @@ class Follow extends React.Component {
     render() {
         const {
             follows,
-            suggesions,
-            cloudinary
+            suggesions
         } = this.state;
         let card0;
         let card1;
@@ -87,7 +85,7 @@ class Follow extends React.Component {
                             <div style={{float:"left"}}>
                                 <img
                                     className="user-avatar rounded-circle mr-2"
-                                    src={cloudinary+post.authorAvatar}
+                                    src={post.authorAvatar}
                                     alt={post.name}
                                     width="50"
                                 />
@@ -139,7 +137,7 @@ class Follow extends React.Component {
                     <Col className="mb-12" style={{paddingTop:"10px"}}>
                         <div style={{float:"left"}}>
                             <img className="user-avatar rounded-circle mr-2"
-                                src={cloudinary+sgs.avatar}
+                                src={sgs.avatar}
                                 alt={sgs.name}
                                 width="50"
                             />

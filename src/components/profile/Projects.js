@@ -18,7 +18,6 @@ class Projects extends React.Component {
       projects:[{}],
       projectsAll:[{}],
       title: "Projects",
-      cloudinary:"https://res.cloudinary.com/dw2ssncv1/image/upload/v1551484135/",
       isToggleOn: true
     }
      // This binding is necessary to make `this` work in the callback
@@ -54,7 +53,6 @@ class Projects extends React.Component {
 
   render() {
     const {
-      cloudinary,
       title,
       projects,
       isToggleOn
@@ -67,7 +65,7 @@ class Projects extends React.Component {
       {projects.map((prj) => (
         <div key={prj.id} className="blog-comments__item d-flex p-4">
           <div className="blog-comments__avatar mr-3">
-            <img src={cloudinary+prj.avatar} alt={prj.clientName} />
+            <img src={prj.avatar} alt={prj.clientName} />
           </div>
           <div className="blog-comments__content">
             <div className="blog-comments__meta text-mutes">
