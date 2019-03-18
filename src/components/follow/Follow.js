@@ -132,20 +132,19 @@ class Follow extends React.Component {
         headerTitle = "People Also Viewed";
         card1 =
         <Card>
-        <CardHeader className="border-bottom"><b>{headerTitle}  </b> </CardHeader>
             <CardBody>
+            <div className="headline">{headerTitle}</div>
             {suggesions.map((sgs, idx) => (
                 <Row key={idx}>
                     <Col className="mb-12" style={{paddingTop:"10px"}}>
                         <div style={{float:"left"}}>
-                            <img
-                                className="user-avatar rounded-circle mr-2"
+                            <img className="user-avatar rounded-circle mr-2"
                                 src={cloudinary+sgs.avatar}
                                 alt={sgs.name}
                                 width="50"
                             />
                         </div>
-                    <div style={{float:"left",width:"50%"}}>
+                    <div style={{float:"left",width:"45%"}}>
                         <b>{sgs.name}</b><br/> <span style={{"fontWeight":"300"}}>{sgs.title} at {sgs.organization}</span>
                     </div>
                     <div style={{float:"left"}}>

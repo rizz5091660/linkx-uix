@@ -13,8 +13,8 @@ export default class UserAudience extends Component {
   render() {
     return (
       <Card small className="blog-comments">
-      <CardHeader className="border-bottom"> <b> Audience Interest</b></CardHeader>
         <CardBody>
+        <div className="headline">Audience Interest</div>
           <ListGroupItem className="px-3">           
             <div className=" p-3">
               <div style={{display:"inline-block",width:"80px"}}>Food </div> 50%

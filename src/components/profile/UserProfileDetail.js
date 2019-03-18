@@ -62,8 +62,8 @@ class UserDetails extends React.Component {
                     <h4 className="mb-0">{profile.fName} {profile.lName}</h4>
                     <h6>{profile.summary}</h6>
                     <h6>{profile.address}, {profile.states.name} {profile.postalCode}</h6>
-                    {profile.brandSpecs.map((bs) => (
-                      <Badge pill className={bs.badgeColor}>{bs.name}</Badge>
+                    {profile.brandSpecs.map((bs,idx) => (
+                      <Badge key={idx} pill className={bs.badgeColor}>{bs.name}</Badge>
                     ))}
                   </Col>
                   <Col className="mb-6" style={{marginTop:"10px"}}>

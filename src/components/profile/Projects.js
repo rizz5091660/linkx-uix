@@ -16,55 +16,67 @@ class Projects extends React.Component {
     super(props);
     this.state = {
       projects:[{}],
+      projectsAll:[{}],
       title: "Projects",
       cloudinary:"https://res.cloudinary.com/dw2ssncv1/image/upload/v1551484135/",
+      isToggleOn: true
     }
+     // This binding is necessary to make `this` work in the callback
+     this.toggleShowProject = this.toggleShowProject.bind(this);
   }
 
   componentDidMount() {
     fetch("http://localhost:8080/api/project/account/398765f0-4220-11e9-8972-aca63e449b3c").then((Response) => Response.json()).then((findresponse)=> {
       this.setState({
-        projects: findresponse
+        projectsAll: findresponse,
+        projects : (findresponse.length>3)? findresponse.slice(0,3):findresponse.slice(0,findresponse.length)
             })
         }
     )
 }
 
+  toggleShowProject(){
+    this.setState({
+      isToggleOn: !this.state.isToggleOn,
+    });
+    if(this.state.isToggleOn){
+      this.setState({
+        projects:this.state.projectsAll
+      });
+    }else if(!this.state.isToggleOn){
+      this.setState({
+        projects:[],
+        projects: (this.state.projectsAll.length>3)? this.state.projectsAll.slice(0,3): this.state.projectsAll.slice(0,this.state.projectsAll.length)
+      });
+    }
+    console.log(this.state.projects);
+  } 
+
   render() {
     const {
       cloudinary,
       title,
-      projects
+      projects,
+      isToggleOn
     } = this.state;
-    console.log(projects);
+    const DATE_OPTIONS = { year: 'numeric', month: 'short' };
   return(
 <Card>
-    <CardHeader className="border-bottom">
-      <h6 className="m-0">{title}</h6>
-    </CardHeader>
-
     <CardBody className="p-0">
+    <div className="headline p-4">{title}</div>
       {projects.map((prj) => (
-        <div key={prj.id} className="blog-comments__item d-flex p-3">
-          {/* Avatar */}
+        <div key={prj.id} className="blog-comments__item d-flex p-4">
           <div className="blog-comments__avatar mr-3">
             <img src={cloudinary+prj.avatar} alt={prj.clientName} />
           </div>
-
-          {/* Content */}
           <div className="blog-comments__content">
-            {/* Content :: Title */}
             <div className="blog-comments__meta text-mutes">
               <a className="text-secondary" href="#">
                 {prj.clientName}
-              </a>{" "}
-              <span className="text-mutes">- {prj.startDate}</span>
+              </a>{", "}
+              <span className="text-mutes">{(new Date(prj.startDate)).toLocaleDateString('en-US', DATE_OPTIONS)} </span>
             </div>
-
-            {/* Content :: Body */}
             <p className="m-0 my-1 mb-2 text-muted">{prj.jobDesc}</p>
-
-            {/* Content :: Actions */}
             <div className="blog-comments__actions">
               <ButtonGroup size="sm">
                 <Button theme="white">
@@ -75,8 +87,6 @@ class Projects extends React.Component {
                 </Button>
               </ButtonGroup>
             </div>
-
-
           </div>
         </div>
       ))}
@@ -85,8 +95,8 @@ class Projects extends React.Component {
     <CardFooter className="border-top">
       <Row>
         <Col className="text-center view-report">
-          <Button theme="white" type="submit">
-            View All Projects
+          <Button theme="white" type="submit" onClick={this.toggleShowProject}>
+          Show {isToggleOn?" More":"Less" }
           </Button>
         </Col>
       </Row>

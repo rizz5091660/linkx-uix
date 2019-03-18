@@ -13,6 +13,12 @@
     z-index: 1020;
 }
 
+.headline{
+    font-size: 1.5rem;
+    line-height: 1.4;
+    font-weight: 400;
+}
+
 .msg-overlay{
     flex-direction: row;
     align-items: center;
