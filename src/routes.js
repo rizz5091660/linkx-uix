@@ -19,7 +19,7 @@ export default [
     path: "/",
     exact: true,
     layout: DefaultLayout,
-    component: () => <Redirect to="/feed" />
+    component: () => <Redirect to="/login" />
   },
   {
     path: "/profile",
