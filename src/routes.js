@@ -13,6 +13,7 @@ import Tables from "./views/Tables";
 import BlogPosts from "./views/BlogPosts";
 import Feed from "./views/Feed";
 import Login from "./views/Login";
+import EditProfile from "./views/EditProfile"
 
 export default [
   {
@@ -50,6 +51,11 @@ export default [
     path: "/login",
     layout: DefaultLayout,
     component: Login
+  },
+  {
+    path: "/editProfile",
+    layout: DefaultLayout,
+    component: EditProfile
   },
   {
     path: "/blog-posts",
