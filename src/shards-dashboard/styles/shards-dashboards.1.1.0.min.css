@@ -22,7 +22,7 @@
 }
 @media (min-width:1200px){
     .navbar-expand-xl .navbar-nav .nav-link{padding-right:.625rem;padding-left:.625rem}
-    .centerPosition{margin-left: 10%;margin-right:10%}
+    .centerPosition{margin-left: 20%;margin-right:20%}
 
 }
 @media (-webkit-min-device-pixel-ratio:1.5),(min-resolution:144dpi){

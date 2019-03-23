@@ -40,11 +40,24 @@
     font-weight:500;
 }
 
-.feed {
-  padding :0.5rem;
+.feed-number-actions {
+  padding :.5rem 1rem ;
+  text-align: right;
 }
 
-.feed-button{
-    padding :0.5rem;
+.feed-button-container{
+    padding-top :0.5rem;
+    padding-bottom :0.5rem;
     text-align: center;
+}
+.feed-button-action{
+    padding:.25rem 8%;
+    width:30%;
+    display:inline;
+   
+}
+
+.feed-hyperlink-action{
+    text-decoration:none;
+    color: #5a6169;
 }

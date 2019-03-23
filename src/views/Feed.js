@@ -85,11 +85,11 @@ class Feed extends React.Component {
                         </h5>
                         <p className="card-text d-inline-block mb-3">{feed.content}</p> 
                       </CardBody>
-                      <div class="border-top feed">50 comments 20 likes</div>
-                      <div class="border-top feed-button">
-                            <Button size="sm" theme="secondary" className="mb-2 mr-1" style={{flex: 1,width:"30%"}}>like </Button>
-                            <Button size="sm" theme="secondary" className="mb-2 mr-1" style={{flex: 1,width:"30%"}}>Comment </Button>
-                            <Button size="sm" theme="secondary" className="mb-2 mr-1" style={{flex: 1,width:"30%"}}>Share </Button>
+                      <div className="border-top feed-number-actions">50 comments {feed.likes.length} likes</div>
+                      <div className="border-top feed-button-container">
+                           <div className="feed-button-action"><a href="#" className="feed-hyperlink-action"><i className="material-icons mr-1">thumb_up</i>Like</a></div>
+                           <div className="feed-button-action"><a href="#" className="feed-hyperlink-action"><i className="material-icons mr-1">comment</i>Comment</a></div> 
+                           <div className="feed-button-action"><a href="#" className="feed-hyperlink-action"><i className="material-icons mr-1">reply</i>Share</a></div> 
                       </div>
                     </Card>
                   </Col>

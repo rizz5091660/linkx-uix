@@ -94,7 +94,7 @@ class Follow extends React.Component {
                             <b>{post.name}</b><br/> <span style={{"fontWeight":"300"}}>{post.title}</span>
                         </div>
                         <div style={{float:"left"}}>
-                            <Button size="sm" theme="secondary" className="mb-2 mr-1">Follow </Button>
+                            <Button size="sm" theme="primary" className="mb-2 mr-1 btn-outline-primary">Follow </Button>    
                         </div>
                         </Col>
                     </Row>
@@ -146,7 +146,7 @@ class Follow extends React.Component {
                         <b>{sgs.name}</b><br/> <span style={{"fontWeight":"300"}}>{sgs.title} at {sgs.organization}</span>
                     </div>
                     <div style={{float:"left"}}>
-                        <Button size="sm" theme="secondary" className="mb-2 mr-1">Follow </Button>
+                        <button class="mb-2 btn btn-outline-primary btn-sm btn-pill"><i class="material-icons mr-1">person_add</i> Follow</button>
                     </div>
                     </Col>
                 </Row>
