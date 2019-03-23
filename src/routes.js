@@ -13,13 +13,14 @@ import Tables from "./views/Tables";
 import BlogPosts from "./views/BlogPosts";
 import Feed from "./views/Feed";
 import Login from "./views/Login";
+import EditProfile from "./views/EditProfile"
 
 export default [
   {
     path: "/",
     exact: true,
     layout: DefaultLayout,
-    component: () => <Redirect to="/feed" />
+    component: () => <Redirect to="/login" />
   },
   {
     path: "/profile",
@@ -50,6 +51,11 @@ export default [
     path: "/login",
     layout: DefaultLayout,
     component: Login
+  },
+  {
+    path: "/editProfile",
+    layout: DefaultLayout,
+    component: EditProfile
   },
   {
     path: "/blog-posts",
