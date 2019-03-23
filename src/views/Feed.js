@@ -9,6 +9,7 @@ import {
   Card,
   CardBody,
   CardFooter,
+  CardHeader,
   Badge,
   Button
 } from "shards-react";
@@ -23,14 +24,15 @@ class Feed extends React.Component {
   }
 
   componentDidMount() {
-    fetch("http://www.mocky.io/v2/5c79ce794900007000a5a651").then((Response) => Response.json())
-    .then((findresponse) => {this.setState({ feeds: findresponse})})
+    fetch("http://localhost:8080/api/post/account/398765f0-4220-11e9-8972-aca63e449b3c/follow").then((Response) => Response.json())
+      .then((findresponse) => { this.setState({ feeds: findresponse }) })
   }
 
   render() {
     const {
       feeds
     } = this.state;
+    const DATE_OPTIONS = {  month: 'short', day :'numeric' };
     return (
       <Container fluid className="main-content-container px-4">
         <Row noGutters className="page-header py-4" />
@@ -62,42 +64,33 @@ class Feed extends React.Component {
 
 
 
-              {feeds.map((post, idx) => (
-                <Row>
-                  <Col lg="12" md="12" sm="12" className="mb-4" key={idx}>
+              {feeds.map((feed) => (
+                <Row key={feed.id}>
+                  <Col lg="12" md="12" sm="12" className="mb-4">
                     <Card small className="card-post card-post--1">
                       <div style={{ padding: "1rem" }} >
-                        <b><a href="#" className="text-fiord-blue">{post.likeBy}  </a></b> likes this
-                </div>
-                      <div
-                        className="card-post__image"
-                        style={{ backgroundImage: `url('${post.backgroundImage}')` }}
-                      >
-                        <Badge
-                          pill
-                          className={`card-post__category bg-${post.categoryTheme}`}
-                        >
-                          {post.category}
-                        </Badge>
-                        <div className="card-post__author d-flex">
-                          <a
-                            href="#"
-                            className="card-post__author-avatar card-post__author-avatar--small"
-                            style={{ backgroundImage: `url('${post.authorAvatar}')` }}
-                          >
-                            Written by {post.author}
-                          </a>
-                        </div>
-                      </div>
+                          <Badge pill className={`card-post__category bg-dark`}>Business</Badge>                       
+                          <div className="card-post__author-avatar card-post__author-avatar--small" style={{ backgroundImage: `url('${feed.avatar}')` }}></div>
+                          <div className="profile-name-feed">
+                            {feed.firstName + " " + feed.lastName}<br/>
+                            <span className="text-muted">{(new Date(feed.date)).toLocaleDateString('en-US', DATE_OPTIONS)} </span>
+                          </div>
+                     </div>
+                      <div className="card-post__image" style={{ backgroundImage: `url('${feed.postBanner}')` }}></div>
                       <CardBody>
                         <h5 className="card-title">
                           <a href="#" className="text-fiord-blue">
-                            {post.title}
+                            {feed.title}
                           </a>
                         </h5>
-                        <p className="card-text d-inline-block mb-3">{post.body}</p>
-                        <span className="text-muted">{post.date}</span>
+                        <p className="card-text d-inline-block mb-3">{feed.content}</p> 
                       </CardBody>
+                      <div class="border-top feed">50 comments 20 likes</div>
+                      <div class="border-top feed-button">
+                            <Button size="sm" theme="secondary" className="mb-2 mr-1" style={{flex: 1,width:"30%"}}>like </Button>
+                            <Button size="sm" theme="secondary" className="mb-2 mr-1" style={{flex: 1,width:"30%"}}>Comment </Button>
+                            <Button size="sm" theme="secondary" className="mb-2 mr-1" style={{flex: 1,width:"30%"}}>Share </Button>
+                      </div>
                     </Card>
                   </Col>
                 </Row>

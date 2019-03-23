@@ -32,3 +32,19 @@
     cursor: pointer;
     float: right;
 }
+
+.profile-name-feed {
+    top: .9375rem;
+    left: 4rem;
+    position: absolute;
+    font-weight:500;
+}
+
+.feed {
+  padding :0.5rem;
+}
+
+.feed-button{
+    padding :0.5rem;
+    text-align: center;
+}
