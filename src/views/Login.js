@@ -7,7 +7,10 @@ import {
   FormInput,
   FormGroup,
   Button,
-  FormCheckbox
+  FormCheckbox,
+  Card,
+  CardBody,
+  CardHeader
 } from "shards-react";
 
 class Login extends Component {
@@ -91,8 +94,16 @@ class Login extends Component {
     return (
       <Row>
         <Col sm="12" md="5">
-          <div align="center">
-            <strong className="text-muted d-block mb-2">LOGIN</strong>
+        <Card small className="card-post mb-4">
+              <CardHeader
+                className="border-top d-flex"
+                style={{ backgroundColor: "#f3f6f8" }}
+              >
+                <span className="card-post__author-name">
+                  <b style={{ color: "#0073b1" }}>Login</b>
+                </span>
+              </CardHeader>
+              <CardBody>
             <Form onSubmit={this.loginSubmit} id="loginForm">
               <FormGroup>
                 <FormInput
@@ -115,11 +126,20 @@ class Login extends Component {
               </FormGroup>
               <Button type="submit">Login</Button>
             </Form>
-          </div>
+          </CardBody>
+          </Card>
         </Col>
         <Col sm="12" md="6">
-          <div align="left">
-            <strong className="text-muted d-block mb-2">NEW ACCOUNT</strong>
+        <Card small className="card-post mb-4">
+              <CardHeader
+                className="border-top d-flex"
+                style={{ backgroundColor: "#f3f6f8" }}
+              >
+                <span className="card-post__author-name">
+                  <b style={{ color: "#0073b1" }}>Register</b>
+                </span>
+              </CardHeader>
+              <CardBody>
             <Form id="registerForm" onSubmit={this.registerSubmit}>
               <Row form>
                 <Col md="4">
@@ -183,7 +203,8 @@ class Login extends Component {
               </Col>
               <Button type="submit">Create</Button>
             </Form>
-          </div>
+          </CardBody>
+          </Card>
         </Col>
       </Row>
     );
