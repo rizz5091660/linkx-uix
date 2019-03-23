@@ -83,7 +83,7 @@ class Feed extends React.Component {
                             {feed.title}
                           </a>
                         </h5>
-                        <p className="card-text d-inline-block mb-3">{feed.content}</p> 
+                        <p className="card-text d-inline-block">{feed.content}</p> 
                       </CardBody>
                       <div className="border-top feed-number-actions">50 comments {feed.likes.length} likes</div>
                       <div className="border-top feed-button-container">
