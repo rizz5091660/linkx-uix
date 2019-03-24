@@ -1,12 +1,6 @@
 import React from "react";
 import mcdonald from "../../images/icon/mcdonald.png";
 import avatar from "../../images/avatars/nathanfigueroa.jpg";
-import creator from "../../images/icon/social-media.png";
-import megaphone from "../../images/icon/megaphone.png";
-import community from "../../images/icon/community.png";
-import equipment from "../../images/icon/video-camera.png";
-import mentor from "../../images/icon/presentation.png";
-import crew from "../../images/icon/staff.png";
 import UserAudience from "../audience/UserAudience";
 
 import {
@@ -40,8 +34,7 @@ class Follow extends React.Component {
                    follows: findresponse
                   })
               }
-          )
-        
+          )        
     }
 
     render() {
@@ -57,24 +50,6 @@ class Follow extends React.Component {
 
         if(this.props.type=='feed'){
             headerTitle = "Add to your feed ";
-            card0=
-            <Card>
-                <CardHeader className="border-bottom"><b>Workplace  </b> </CardHeader>
-                <CardBody style={{textAlign:"center"}}>
-                    <Row>
-                        <Col><a href="#"><img src={creator} width="50" /></a><br/>Content Creator</Col>
-                        <Col><a href="#"><img src={megaphone} width="50" /></a><br/>Marketer</Col>
-                    </Row>
-                    <Row>
-                        <Col><a href="#"><img src={crew} width="50" /></a><br/>Crew</Col>
-                        <Col><a href="#"><img src={mentor} width="50" /></a><br/>Mentor</Col>
-                    </Row>
-                    <Row>
-                        <Col><a href="#"><img src={equipment} width="50" /></a><br/>Equipment</Col>
-                        <Col><a href="#"><img src={community} width="50" /></a><br/>Community</Col>
-                    </Row>                    
-                </CardBody>
-            </Card>
             card1 =
             <Card>
                 <CardHeader className="border-bottom"><b>{headerTitle}  </b> </CardHeader>
@@ -154,20 +129,11 @@ class Follow extends React.Component {
             <a href="#"><b>View all recommendations</b></a>
         </CardBody>
          </Card>;
-            audience=<div><UserAudience/> </div>
-            
+            audience=<div><UserAudience/> </div>            
 }
-
         return (
-
-           <div>
-                {card0}               
-                {card1}
-                {card2}
-                {audience}
-                </div>
+           <div className="suggestionDisplay">{card0}{card1}{card2}{audience}</div>
         );
-
     }
 }
 export default Follow;

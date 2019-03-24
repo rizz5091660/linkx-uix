@@ -12,16 +12,6 @@ class UserProfileOverview extends React.Component {
   constructor(props) {
     super(props);
     this.state={
-      userDetails: {
-        jobTitle: "421,420 followers",
-        jobTitle2: "1,011 followers",
-        jobTitle3: "3,656 followers",
-        performanceReportTitle: "Workload",
-        performanceReportValue: 74,
-        metaTitle: "Description",
-        metaValue:
-          "Looking forward for food projects!!🍕🍔🌯 "
-      },
       profile:{
         accSocMedStats:[{socMed:{}}],
         accLinkxStats:{}
@@ -34,7 +24,6 @@ class UserProfileOverview extends React.Component {
   }
   render(){
     const {
-      userDetails,
       profile
     }= this.state;
     return(
@@ -54,8 +43,8 @@ class UserProfileOverview extends React.Component {
         </NavLink>
       </CardHeader>
       <CardBody>
-      {profile.accSocMedStats.map((asm) => (
-        <Row>
+      {profile.accSocMedStats.map((asm,idx) => (
+        <Row key={idx}>
         <Col className="ml-4" lg="12">
           <div style={{ display: "inline" }}><a href="https://www.youtube.com/user/natefiggs"><img src={asm.socMed.avatarFullPath} width="30" /></a> </div>
           <div style={{ display: "inline" }}><span className="text-muted  mb-2">{asm.totalFollower} followers</span></div>
@@ -70,7 +59,7 @@ class UserProfileOverview extends React.Component {
         </Row>
         <div className="border-bottom p-2 mb-2"></div>
         <Row>
-        <Col lg="12"> <span>Who's requested for collaboration</span><strong className="text-muted  mb-2"> </strong> {profile.accLinkxStats.nReqCollab} <img src={signal} width="30" /></Col>
+          <Col lg="12"> <span>Who's want to collab</span><strong className="text-muted  mb-2"> </strong> {profile.accLinkxStats.nReqCollab} <img src={signal} width="30" /></Col>
           <Col lg="12"><span>Who's viewed your profile</span><strong className="text-muted  mb-2"> {profile.accLinkxStats.nViewProfile} </strong> </Col>
           <Col lg="12"><span>Who's viewed of your post</span><strong className="text-muted mb-2"> {profile.accLinkxStats.nViewPost}  </strong></Col>
         </Row>
