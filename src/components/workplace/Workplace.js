@@ -33,7 +33,7 @@ class Workplace extends React.Component {
                 <CardHeader className="border-bottom"><b>Explore</b> </CardHeader>
                 <CardBody>
                 {this.state.explores.map((exp) => (
-                    <Row key={exp.id}>
+                    <Row className="p-1" key={exp.id}>
                     <Col><a className="feed-hyperlink-action" href={exp.link}><img src={exp.avatar} width="25" /><span className="p-2">{exp.label}</span></a> </Col>
                     </Row>
                 ))}
