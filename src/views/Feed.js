@@ -75,9 +75,7 @@ class Feed extends React.Component {
                 <Col lg="12" sm="12" >
                   <Card small className="card-post mb-4">
                     <CardBody>
-                      <h5 className="card-title">
-                        Start a post
-                  </h5>
+                      <h5 className="card-title">Start a post</h5>
                       <p className="card-text text-muted">
 
                       </p>
@@ -90,9 +88,6 @@ class Feed extends React.Component {
                   </Card>
                 </Col>
               </Row>
-
-
-
               {feeds.map((feed,idx) => (
                 <Row key={feed.id}>
                   <Col lg="12" md="12" sm="12" className="mb-4">

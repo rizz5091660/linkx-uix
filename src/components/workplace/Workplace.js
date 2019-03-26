@@ -1,18 +1,11 @@
 import React from "react";
-import creator from "../../images/icon/social-media.png";
-import megaphone from "../../images/icon/megaphone.png";
-import community from "../../images/icon/community.png";
-import equipment from "../../images/icon/video-camera.png";
-import mentor from "../../images/icon/presentation.png";
-import crew from "../../images/icon/staff.png";
-
+import { HashRouter as Router, Route, Link, NavLink } from 'react-router-dom';
 import {
     Row,
     Col,
     Card,
     CardBody,
-    CardHeader,
-    Container
+    CardHeader
 } from "shards-react";
 
 class Workplace extends React.Component {
@@ -34,7 +27,7 @@ class Workplace extends React.Component {
                 <CardBody>
                 {this.state.explores.map((exp) => (
                     <Row className="p-1" key={exp.id}>
-                    <Col><a className="feed-hyperlink-action" href={exp.link}><img src={exp.avatar} width="25" /><span className="p-2">{exp.label}</span></a> </Col>
+                    <Col> <NavLink to={exp.link}><img src={exp.avatar} width="25" /><span className="p-2">{exp.label}</span></NavLink></Col>
                     </Row>
                 ))}
                 </CardBody>

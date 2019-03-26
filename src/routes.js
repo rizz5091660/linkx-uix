@@ -9,11 +9,11 @@ import UserProfile from "./views/UserProfile";
 import AddNewPost from "./views/AddNewPost";
 import Errors from "./views/Errors";
 import ComponentsOverview from "./views/ComponentsOverview";
-import Tables from "./views/Tables";
 import BlogPosts from "./views/BlogPosts";
 import Feed from "./views/Feed";
 import Login from "./views/Login";
 import EditProfile from "./views/EditProfile"
+import SearchProject from "./views/SearchProject";
 
 export default [
   {
@@ -31,6 +31,11 @@ export default [
     path: "/feed",
     layout: DefaultLayout,
     component: Feed
+  },
+  {
+    path: "/project",
+    layout: DefaultLayout,
+    component: SearchProject
   },
   {
     path: "/add-new-post",

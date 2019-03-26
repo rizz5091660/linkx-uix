@@ -25,7 +25,7 @@ class Projects extends React.Component {
   }
 
   componentDidMount() {
-    fetch("http://localhost:8080/api/project/account/398765f0-4220-11e9-8972-aca63e449b3c").then((Response) => Response.json()).then((findresponse)=> {
+    fetch("http://localhost:8080/api/accproject/account/398765f0-4220-11e9-8972-aca63e449b3c").then((Response) => Response.json()).then((findresponse)=> {
       this.setState({
         projectsAll: findresponse,
         projects : (findresponse.length>3)? findresponse.slice(0,3):findresponse.slice(0,findresponse.length)
