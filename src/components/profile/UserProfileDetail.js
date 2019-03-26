@@ -1,6 +1,6 @@
 import React from "react";
 import shop from "../../images/icon/online-store.png"
-import Projects from "./Projects";
+import AccountProjects from "./AccountProjects";
 import UserStats from "./UserStats";
 
 import {
@@ -95,7 +95,7 @@ class UserDetails extends React.Component {
         </Row>
         <Row>
         <Col lg="12" className="mb-2">
-            <Projects />
+            <AccountProjects />
           </Col>
         </Row>
       </div>
