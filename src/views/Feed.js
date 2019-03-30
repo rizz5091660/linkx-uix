@@ -20,7 +20,8 @@ class Feed extends React.Component {
     this.state = {
       feeds: [{comments:[{}]}],
       likes :[],
-      modalShow : false
+      modalShow : false,
+      accountId :"398765f0-4220-11e9-8972-aca63e449b3c"
     }
     this.showLikes = this.showLikes.bind(this);
     this.handleClose = this.handleClose.bind(this);
@@ -58,6 +59,7 @@ class Feed extends React.Component {
       feeds,
       likes,
       modalShow,
+      accountId
     } = this.state;
     let modalClose = () => this.setState({ modalShow: false });
     const DATE_OPTIONS = {  month: 'short', day :'numeric' };
@@ -67,8 +69,8 @@ class Feed extends React.Component {
         <div className="centerPosition">
           <Row>
             <Col lg="3">
-              <UserProfileOverview />
-              <Workplace/>
+              <UserProfileOverview accountId={accountId}/>
+              <Workplace accountId ={accountId}/>
             </Col>
             <Col lg="5">
               <Row>

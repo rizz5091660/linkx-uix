@@ -33,7 +33,7 @@ export default [
     component: Feed
   },
   {
-    path: "/project",
+    path: "/project/",
     layout: DefaultLayout,
     component: SearchProject
   },

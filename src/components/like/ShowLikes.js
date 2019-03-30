@@ -15,16 +15,9 @@ class ShowLikes extends React.Component {
 
     render() {
       return (
-        <Modal
-          {...this.props}
-          size="md"
-          aria-labelledby="contained-modal-title-vcenter"
-          centered
-        >
+        <Modal {...this.props} size="md" aria-labelledby="contained-modal-title-vcenter" centered >
           <Modal.Header closeButton className="p-3">
-            <Modal.Title id="contained-modal-title-vcenter">
-            {this.props.likes.length} Likes
-            </Modal.Title>
+            <Modal.Title id="contained-modal-title-vcenter"> {this.props.likes.length} Likes </Modal.Title>
           </Modal.Header>
           <Modal.Body style={{padding: "0rem"}}>
           {this.props.likes.map((like,idx) => (

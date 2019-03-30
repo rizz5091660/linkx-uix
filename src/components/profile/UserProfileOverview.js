@@ -16,7 +16,7 @@ class UserProfileOverview extends React.Component {
     }
   }
   componentDidMount() {
-    fetch("http://localhost:8080/api/account/398765f0-4220-11e9-8972-aca63e449b3c/summary").then((Response) => Response.json())
+    fetch("http://localhost:8080/api/account/"+this.props.accountId+"/summary").then((Response) => Response.json())
     .then((findresponse) => {this.setState({ profile: findresponse})})
   }
   render(){
@@ -50,8 +50,8 @@ class UserProfileOverview extends React.Component {
       ))}
         <Row>
           <Col className="ml-4" lg="12">
-            <div style={{ display: "inline" }}><a href="#"><img src={shop} width="30" /></a> </div>
-            <div style={{ display: "inline" }}><span className="text-muted  mb-2">My Shop</span></div>
+            <div style={{ display: "inline" }}><a href="#"><img src="https://res.cloudinary.com/dw2ssncv1/image/upload/v1553439430/explore/offer.png" width="30" /></a> </div>
+            <div style={{ display: "inline" }}><span className="text-muted  mb-2">My Offers</span></div>
           </Col>
         </Row>
         <div className="border-bottom p-2 mb-2"></div>
