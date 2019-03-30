@@ -5,41 +5,40 @@ import {
     Col,
     Card,
     CardBody,
-    CardFooter,
     Form,
     FormInput,
-    FormFeedback,
     Button,
     Alert
 } from "shards-react";
-
-import ProjectCriteria from "../components/search-criteria/ProjectCriteria"
-import ProjectListSummary from "../components/search-list-summary/ProjectListSummary"
+import Pagination from 'react-bootstrap/Pagination';
+import ProjectListSummary from "../components/search-list-summary/ProjectListSummary";
 import ProjectDetail from "../components/search-item-detail/ProjectDetail";
-
 
 class SearchProject extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            projects: [],
+            searchResult: { projects: [], totalRecord: 0 },
             project: {},
-            modalShowApplied: false
+            modalShowApplied: false,
+            activePage: 1,
+            totalPage: 5
         }
         this.getProjectDetail = this.getProjectDetail.bind(this);
         this.showAlert = this.showAlert.bind(this);
     }
 
     componentDidMount() {
-        this.searchProject()
+        this.searchProject(1)
     }
 
-    searchProject() {
-        fetch("http://localhost:8080/api/project").then((Response) => Response.json()).then((findresponse) => {
+    searchProject(offset) {
+        fetch("http://localhost:8080/api/project/criteria?offset=" + offset).then((Response) => Response.json()).then((findresponse) => {
             this.setState({
-                projects: findresponse
+                searchResult: findresponse,
+                activePage: offset
             })
-            this.getProjectDetail(this.state.projects[0].id);
+            this.getProjectDetail(this.state.searchResult.projects[0].id);
         }
         )
     }
@@ -53,19 +52,30 @@ class SearchProject extends React.Component {
         )
     }
 
-    showAlert(isShow){
-        this.setState({ modalShowApplied:isShow});
+    showAlert(isShow) {
+        this.setState({ modalShowApplied: isShow });
     }
 
 
+    handlePageChange(pageNumber) {
+        this.searchProject(pageNumber);
+    }
+
     render() {
         const {
-            projects,
+            searchResult,
             project,
-            modalShowApplied
+            modalShowApplied,
+            activePage,
         } = this.state;
-        let alert= (modalShowApplied)? <Alert className="mb-0"> <i className="material-icons mr-1" style={{fontSize:"25px",fontWeight: "bold"}}>done</i><span>Your Application Has Been Submitted</span></Alert>:<div></div>;
-       console.log("alert "+modalShowApplied);
+        let alert = (modalShowApplied) ? <Alert className="mb-0"> <i className="material-icons mr-1" style={{ fontSize: "25px", fontWeight: "bold" }}>done</i><span>Your Application Has Been Submitted</span></Alert> : <div></div>;
+        let items = [];
+        let totalNpage = Math.ceil(searchResult.totalRecord / 10);
+        for (let number = 1; number <= totalNpage; number++) {
+            items.push(
+                <Pagination.Item key={number} active={number === activePage} onClick={this.handlePageChange.bind(this, number)}>{number}</Pagination.Item>,
+            );
+        }
         return (
             <Container fluid className="main-content-container">
                 <Row>
@@ -89,15 +99,16 @@ class SearchProject extends React.Component {
                 </Row>
                 <Row >
                     <Col style={{ paddingLeft: 0, paddingRight: 0 }}>
-                       {alert}
+                        {alert}
                     </Col>
                 </Row>
                 <div className="centerPosition">
                     <Row className="py-4">
-                        <Col md="4">
-                            <ProjectListSummary projects={projects} getProjectDetail={this.getProjectDetail} showAlert={this.showAlert}  />
+                        <Col md="5" style={{ padding: "0 2px" }}>
+                            <ProjectListSummary projects={searchResult.projects} getProjectDetail={this.getProjectDetail} showAlert={this.showAlert} />
+                            <div style={{marginTop:"1rem"}}> <Pagination>{items}</Pagination> </div>
                         </Col>
-                        <Col md="7">
+                        <Col md="7" style={{ padding: "0 2px" }}>
                             <ProjectDetail project={project} accountId={this.props.location.state.accountId} showAlert={this.showAlert} />
                         </Col>
                     </Row>
@@ -105,6 +116,5 @@ class SearchProject extends React.Component {
             </Container>
         );
     }
-
 }
 export default SearchProject;

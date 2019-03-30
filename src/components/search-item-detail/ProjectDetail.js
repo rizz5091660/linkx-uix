@@ -68,7 +68,7 @@ class ProjectDetail extends React.Component {
         let modalCloseApplying = () => this.setState({ modalShowApplying: false });  
         const DATE_OPTIONS = { year: 'numeric', month: 'short', day: 'numeric' };
         return (
-            <Card>
+            <Card className="scroll">
                 <CardBody>
                     <Row>
                         <Col>
@@ -78,9 +78,9 @@ class ProjectDetail extends React.Component {
                                     <div className="feed profile-name-feed">
                                         <span style={{ fontSize: "18px" }}> {prj.name}</span><br />
                                         <b> {prj.organizationName}</b><br />
-                                        <span className="text-muted">{(new Date(prj.startDate)).toLocaleDateString('en-US', DATE_OPTIONS)} </span> {" - "}
-                                        <span className="text-muted">{(new Date(prj.endDate)).toLocaleDateString('en-US', DATE_OPTIONS)} </span>
-                                        <span>{" at"} {prj.cityName},{prj.statesName},{prj.countryName} </span>
+                                        <span className="text-muted">{(new Date(prj.startDate)).toLocaleDateString('en-US', DATE_OPTIONS)} {" - "}
+                                        {(new Date(prj.endDate)).toLocaleDateString('en-US', DATE_OPTIONS)} </span><br/>
+                                        <span className="text-muted">{" at"} {prj.cityName},{prj.statesName},{prj.countryName} </span>
                                     </div>
                                 </div>
                                 <div style={{ position: "absolute", right: "50px", top: "15px" }}>

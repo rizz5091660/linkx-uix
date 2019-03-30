@@ -58,3 +58,8 @@
     text-decoration:none;
     color: #5a6169;
 }
+
+.scroll {
+    max-height: 600px;
+    overflow-y: auto;
+}
