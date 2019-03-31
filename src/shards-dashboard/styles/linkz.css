@@ -63,3 +63,8 @@
     max-height: 600px;
     overflow-y: auto;
 }
+
+.cardLogin{
+   background-color:"transparent";
+   box-shadow:0
+}

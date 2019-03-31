@@ -6,14 +6,13 @@ import { DefaultLayout } from "./layouts";
 
 // Route Views
 import UserProfile from "./views/UserProfile";
-import AddNewPost from "./views/AddNewPost";
 import Errors from "./views/Errors";
 import ComponentsOverview from "./views/ComponentsOverview";
-import BlogPosts from "./views/BlogPosts";
 import Feed from "./views/Feed";
 import Login from "./views/Login";
 import EditProfile from "./views/EditProfile"
 import SearchProject from "./views/SearchProject";
+import LoginLayout from "./layouts/Login";
 
 export default [
   {
@@ -38,11 +37,6 @@ export default [
     component: SearchProject
   },
   {
-    path: "/add-new-post",
-    layout: DefaultLayout,
-    component: AddNewPost
-  },
-  {
     path: "/errors",
     layout: DefaultLayout,
     component: Errors
@@ -58,13 +52,13 @@ export default [
     component: Login
   },
   {
+    path: "/login2",
+    layout: LoginLayout,
+    component: Login
+  },
+  {
     path: "/editProfile",
     layout: DefaultLayout,
     component: EditProfile
-  },
-  {
-    path: "/blog-posts",
-    layout: DefaultLayout,
-    component: BlogPosts
   }
 ];

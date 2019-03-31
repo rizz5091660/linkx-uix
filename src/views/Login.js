@@ -12,11 +12,11 @@ import {
   CardBody,
   CardHeader
 } from "shards-react";
+import { Container } from "react-bootstrap";
 
 class Login extends Component {
   constructor() {
     super();
-    this.loginSubmit = this.loginSubmit.bind(this);
     this.registerSubmit = this.registerSubmit.bind(this);
     this.state = {};
   }
@@ -27,32 +27,6 @@ class Login extends Component {
     });
   }
 
-  loginSubmit(event) {
-    event.preventDefault();
-
-    const formLogin = {
-      username: this.state.loginName,
-      password: this.state.loginPassword
-    };
-
-    fetch("http://localhost:8080/api/login/login", {
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json"
-      },
-      method: "POST",
-      body: JSON.stringify(formLogin)
-    })
-      .then(response => response.json())
-      .then(response => {
-        console.log(response);
-        if (response != null && response.responseCode == "0") {
-          this.setState({ redirect: true });
-        } else {
-          alert("Login error :: " + response.desc);
-        }
-      });
-  }
 
   registerSubmit(event) {
     event.preventDefault();
@@ -92,57 +66,17 @@ class Login extends Component {
       return <Redirect push to="/feed" />;
     }
     return (
-      <Row>
-        <Col sm="12" md="5">
-        <Card small className="card-post mb-4">
-              <CardHeader
-                className="border-top d-flex"
-                style={{ backgroundColor: "#f3f6f8" }}
-              >
-                <span className="card-post__author-name">
-                  <b style={{ color: "#0073b1" }}>Login</b>
-                </span>
-              </CardHeader>
-              <CardBody>
-            <Form onSubmit={this.loginSubmit} id="loginForm">
-              <FormGroup>
-                <FormInput
-                  required
-                  placeholder="Username or email"
-                  name="loginName"
-                  value={this.state.loginName}
-                  onChange={e => this.handleChange(e)}
-                />
-              </FormGroup>
-              <FormGroup>
-                <FormInput
-                  required
-                  type="password"
-                  placeholder="Password"
-                  name="loginPassword"
-                  value={this.state.loginPassword}
-                  onChange={e => this.handleChange(e)}
-                />
-              </FormGroup>
-              <Button type="submit">Login</Button>
-            </Form>
-          </CardBody>
-          </Card>
-        </Col>
-        <Col sm="12" md="6">
-        <Card small className="card-post mb-4">
-              <CardHeader
-                className="border-top d-flex"
-                style={{ backgroundColor: "#f3f6f8" }}
-              >
-                <span className="card-post__author-name">
-                  <b style={{ color: "#0073b1" }}>Register</b>
-                </span>
-              </CardHeader>
-              <CardBody>
+      <Container style={{ height: "100%" }} className="py-4">
+        <Row>
+          <Col md="6"></Col>
+          <Col md="6" style={{ paddingRight: "10%" }}>
             <Form id="registerForm" onSubmit={this.registerSubmit}>
+            <FormGroup>
+                  <h4 style={{ color: "#0073b1" }}>Create an account</h4>
+                  <span><b>One step closer to be a Professional Influencer</b></span>
+                </FormGroup>
               <Row form>
-                <Col md="4">
+                <Col md="6">
                   <FormInput
                     required
                     placeholder="First Name"
@@ -151,7 +85,7 @@ class Login extends Component {
                     onChange={e => this.handleChange(e)}
                   />
                 </Col>
-                <Col md="4" className="form-group">
+                <Col md="6" className="form-group">
                   <FormInput
                     required
                     placeholder="Last Name"
@@ -190,23 +124,20 @@ class Login extends Component {
                   onChange={e => this.handleChange(e)}
                 />
               </FormGroup>
-              <Col>
                 <FormGroup>
                   <FormCheckbox
                     value={this.state.regAgree}
                     name="regAgree"
                     onChange={e => this.handleChange(e)}
                   >
-                  {/* eslint-disable-next-line */} I agree with your <a href="#">Privacy Policy</a>.
+                    {/* eslint-disable-next-line */} I agree with your <a href="#">Privacy Policy</a>.
                   </FormCheckbox>
                 </FormGroup>
-              </Col>
               <Button type="submit">Create</Button>
             </Form>
-          </CardBody>
-          </Card>
-        </Col>
-      </Row>
+          </Col>
+        </Row>
+      </Container>
     );
   }
 }

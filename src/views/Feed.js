@@ -5,7 +5,7 @@ import UserProfileOverview from "../components/profile/UserProfileOverview";
 import Follow from "../components/follow/Follow";
 import Workplace from "../components/workplace/Workplace";
 import InfiniteScroll from "react-infinite-scroll-component";
-//import InfiniteScroll from 'react-infinite-scroller';
+import {FeedService} from "../services/Feed.service";
 
 import {
   Container,
@@ -35,30 +35,33 @@ class Feed extends React.Component {
   }
 
   showFeed(){
-    fetch("http://localhost:8080/api/post/account/398765f0-4220-11e9-8972-aca63e449b3c/follow").then((Response) => Response.json())
-      .then((findresponse) => { this.setState({ feeds: findresponse }) })
+     FeedService.showFeed("398765f0-4220-11e9-8972-aca63e449b3c")
+    .then((result) => this.setState({  feeds:result }))
+  }
+
+  showLikes(pPostId) {
+    FeedService.showLikes(pPostId)
+    .then((result) => { this.setState({ likes: result, modalShow: true }) })
+  }
+  
+  showComment(feed, idx) {
+    let comments = [];
+    FeedService.showComment(feed,idx)
+    .then((result) => {
+      comments = result;
+      const newFeeds = [...this.state.feeds];
+      newFeeds[idx].comments = comments;
+      this.setState({ feeds: newFeeds });
+    }
+    );
   }
 
   handleClose() {
     this.setState({ show: false });
   }
 
-  showLikes(pPostId) {
-    fetch("http://localhost:8080/api/post/" + pPostId + "/like").then((Response) => Response.json())
-      .then((findresponse) => { this.setState({ likes: findresponse, modalShow: true }) })
-  }
 
-  showComment(feed, idx) {
-    let comments = [];
-    fetch("http://localhost:8080/api/post/" + feed.id + "/comment").then((Response) => Response.json())
-      .then((findresponse) => {
-        comments = findresponse;
-        const newFeeds = [...this.state.feeds];
-        newFeeds[idx].comments = comments;
-        this.setState({ feeds: newFeeds });
-      }
-      )
-  }
+ 
 
   fetchMoreData = () => {
     // a fake async api call like which sends

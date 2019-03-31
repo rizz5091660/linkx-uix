@@ -13,6 +13,7 @@ import {
     Badge
 } from "shards-react";
 import { Modal } from 'react-bootstrap';
+import {ProjectService} from "../../services/Project.service";
 
 
 class ProjectDetail extends React.Component {
@@ -27,24 +28,13 @@ class ProjectDetail extends React.Component {
     }
 
     applyProject(){
-        fetch('http://localhost:8080/api/projectacc', {
-            method: 'POST',
-            headers : {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body:JSON.stringify({prjId:this.state.projectId, accId:this.props.accountId})
-        }).then((res) => res.json())
+        ProjectService.applyProject(this.state.projectId,this.props.accountId)
         .then((data) => { 
-            console.log(data);
-            this.setState({
-                modalShowApplying:false,
-            });
+            this.setState({ modalShowApplying:false, });
             this.props.showAlert(true);
         })
         .catch((err)=>console.log(err))
     }
-
 
     openApplyProjectModal(pPrjId,pProjectName,pOrgName) {
         this.setState({

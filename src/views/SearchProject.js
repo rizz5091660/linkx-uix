@@ -13,6 +13,7 @@ import {
 import Pagination from 'react-bootstrap/Pagination';
 import ProjectListSummary from "../components/search-list-summary/ProjectListSummary";
 import ProjectDetail from "../components/search-item-detail/ProjectDetail";
+import {ProjectService} from "../services/Project.service"; 
 
 class SearchProject extends React.Component {
     constructor(props) {
@@ -33,29 +34,21 @@ class SearchProject extends React.Component {
     }
 
     searchProject(offset) {
-        fetch("http://localhost:8080/api/project/criteria?offset=" + offset).then((Response) => Response.json()).then((findresponse) => {
-            this.setState({
-                searchResult: findresponse,
-                activePage: offset
-            })
+        ProjectService.searchProject(offset)
+        .then((result) => {
+            this.setState({ searchResult: result, activePage: offset})
             this.getProjectDetail(this.state.searchResult.projects[0].id);
-        }
-        )
+        })
     }
 
     getProjectDetail(projectId) {
-        fetch("http://localhost:8080/api/project/" + projectId).then((Response) => Response.json()).then((findresponse) => {
-            this.setState({
-                project: findresponse
-            })
-        }
-        )
+        ProjectService.getProjectDetail(projectId)
+        .then((result) => { this.setState({ project: result})})
     }
 
     showAlert(isShow) {
         this.setState({ modalShowApplied: isShow });
     }
-
 
     handlePageChange(pageNumber) {
         this.searchProject(pageNumber);
