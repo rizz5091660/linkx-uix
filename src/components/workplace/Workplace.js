@@ -16,18 +16,10 @@ class Workplace extends React.Component {
         this.state = {
             explores: []
         }
-        this.goToProject = this.goToProject.bind(this);
     }
     componentDidMount() {
         fetch("http://localhost:8080/api/config/explore").then((Response) => Response.json())
             .then((findresponse) => { this.setState({ explores: findresponse }) })
-    }
-
-    goToProject(url){
-        this.props.history.push({
-            pathname: url,
-            state: { accountId: this.props.accountId }
-          })
     }
     
     render() {

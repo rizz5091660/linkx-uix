@@ -2,7 +2,7 @@ import React from "react";
 import shop from "../../images/icon/online-store.png"
 import AccountProjects from "./AccountProjects";
 import UserStats from "./UserStats";
-
+import {connect} from 'react-redux'
 import {
   Row,
   Col,
@@ -26,9 +26,7 @@ class UserDetails extends React.Component {
   }
 
   componentDidMount() {
-    let accountId = (this.props.accountId!=null)?this.props.accountId:"398765f0-4220-11e9-8972-aca63e449b3c";
-    console.log(accountId);
-    fetch("http://localhost:8080/api/account/"+accountId).then((Response) => Response.json()).then((findresponse)=> {
+    fetch("http://localhost:8080/api/account/"+this.props.accountId).then((Response) => Response.json()).then((findresponse)=> {
       this.setState({
         profile: findresponse
             })
@@ -106,4 +104,13 @@ class UserDetails extends React.Component {
     );
   }
 }
-export default UserDetails;
+
+
+// Map Redux state to component props
+function mapStateToProps(state) {
+  return {
+      accountId : state.LinkxReducer.accountId
+  }
+}
+
+export default connect(mapStateToProps)(UserDetails);

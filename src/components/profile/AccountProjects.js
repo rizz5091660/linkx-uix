@@ -1,8 +1,6 @@
 import React from "react";
-import PropTypes from "prop-types";
 import {
   Card,
-  CardHeader,
   CardBody,
   CardFooter,
   ButtonGroup,
@@ -10,6 +8,7 @@ import {
   Row,
   Col
 } from "shards-react";
+import {connect} from 'react-redux'
 
 class Projects extends React.Component {
   constructor(props) {
@@ -25,8 +24,7 @@ class Projects extends React.Component {
   }
 
   componentDidMount() {
-    let accountId = (this.props.accountId!=null)?this.props.accountId:"398765f0-4220-11e9-8972-aca63e449b3c";
-    fetch("http://localhost:8080/api/accproject/account/"+accountId).then((Response) => Response.json()).then((findresponse)=> {
+    fetch("http://localhost:8080/api/accproject/account/"+this.props.accountId).then((Response) => Response.json()).then((findresponse)=> {
       let temp = null;
       if(findresponse!=null && findresponse.length > 0){
         if(findresponse.length>3){
@@ -114,4 +112,12 @@ class Projects extends React.Component {
   </Card>
   )};
 }
-export default Projects;
+
+// Map Redux state to component props
+function mapStateToProps(state) {
+  return {
+      accountId : state.LinkxReducer.accountId
+  }
+}
+
+export default connect(mapStateToProps)(Projects)

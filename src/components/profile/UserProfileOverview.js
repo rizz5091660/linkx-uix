@@ -17,17 +17,6 @@ class UserProfileOverview extends React.Component {
       }
     }
   }
-
-  goToProfile(pAccountId,url){
-    console.log(this.props.accountId);
-   /*
-    this.props.history.push({
-        pathname: url,
-        state: { accountId: pAccountId }
-      })
-*/
-  }
-
   componentDidMount() {
     fetch("http://localhost:8080/api/account/"+this.props.accountId+"/summary").then((Response) => Response.json())
     .then((findresponse) => {this.setState({ profile: findresponse})})
