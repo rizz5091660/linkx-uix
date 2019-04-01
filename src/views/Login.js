@@ -8,11 +8,9 @@ import {
   FormGroup,
   Button,
   FormCheckbox,
-  Card,
-  CardBody,
-  CardHeader
 } from "shards-react";
 import { Container } from "react-bootstrap";
+import { UserService } from "../services/User.service";
 
 class Login extends Component {
   constructor() {
@@ -27,37 +25,25 @@ class Login extends Component {
     });
   }
 
+  goToProfile(pAccountId,url){
+    this.props.history.push({
+        pathname: url,
+        state: { accountId: pAccountId }
+      })
+  }
 
   registerSubmit(event) {
     event.preventDefault();
-
-    if (this.state.regPassword === this.state.regConfirmPassword) {
-      const formRegister = {
-        firstName: this.state.regFirstName,
-        lastName: this.state.regLastName,
-        email: this.state.regEmail,
-        password: this.state.regPassword
-      };
-
-      fetch("http://localhost:8080/api/account/create", {
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json"
-        },
-        method: "POST",
-        body: JSON.stringify(formRegister)
-      })
-        .then(response => response.json())
+    let isValid = UserService.validate(this.state.regFirstName, this.state.regLastName, this.state.regEmail, this.state.regPassword, this.state.regConfirmPassword);
+    if (isValid) {
+      UserService.add(this.state.regFirstName, this.state.regLastName, this.state.regEmail, this.state.regPassword)
         .then(response => {
-          console.log(response);
-          if (response != null && response.responseCode == "0") {
-            alert("Registration Success, please Login!");
+          if (response.status == 200) {
+            this.goToProfile(response.data,"/profile");
           } else {
-            alert("Registration error :: " + response.desc);
+            alert("Registration error :: " + response.message);
           }
         });
-    } else {
-      alert("Password doesn't match");
     }
   }
 
@@ -71,10 +57,10 @@ class Login extends Component {
           <Col md="6"></Col>
           <Col md="6" style={{ paddingRight: "10%" }}>
             <Form id="registerForm" onSubmit={this.registerSubmit}>
-            <FormGroup>
-                  <h4 style={{ color: "#0073b1" }}>Create an account</h4>
-                  <span><b>One step closer to be a Professional Influencer</b></span>
-                </FormGroup>
+              <FormGroup>
+                <h4 style={{ color: "#0073b1" }}>Create an account</h4>
+                <span><b>One step closer to be a Professional Influencer</b></span>
+              </FormGroup>
               <Row form>
                 <Col md="6">
                   <FormInput
@@ -124,15 +110,15 @@ class Login extends Component {
                   onChange={e => this.handleChange(e)}
                 />
               </FormGroup>
-                <FormGroup>
-                  <FormCheckbox
-                    value={this.state.regAgree}
-                    name="regAgree"
-                    onChange={e => this.handleChange(e)}
-                  >
-                    {/* eslint-disable-next-line */} I agree with your <a href="#">Privacy Policy</a>.
+              <FormGroup>
+                <FormCheckbox
+                  value={this.state.regAgree}
+                  name="regAgree"
+                  onChange={e => this.handleChange(e)}
+                >
+                  {/* eslint-disable-next-line */} I agree with your <a href="#">Privacy Policy</a>.
                   </FormCheckbox>
-                </FormGroup>
+              </FormGroup>
               <Button type="submit">Create</Button>
             </Form>
           </Col>

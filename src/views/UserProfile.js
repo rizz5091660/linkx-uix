@@ -3,22 +3,36 @@ import { Container, Row, Col } from "shards-react";
 
 import UserProfileDetail from "../components/profile/UserProfileDetail";
 import Follow from "../components/follow/Follow";
+import {connect} from 'react-redux'
 
+export class UserProfileLite extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+  render() {
+    return (
+      <Container fluid className="main-content-container px-4">
+        <Row noGutters className="page-header py-4" />
+        <div className="centerPosition">
+          <Row>
+            <Col lg="8">
+              <UserProfileDetail accountId={this.props.accountId} />
+            </Col>
+            <Col lg="4">
+              <Follow type="userdetail" />
+            </Col>
+          </Row>
+        </div>
+      </Container>
+    );
+  }
+}
 
-const UserProfileLite = () => (
-  <Container fluid className="main-content-container px-4">
-    <Row noGutters className="page-header py-4"/>
-    <div className="centerPosition">
-    <Row>
-      <Col lg="8"> 
-        <UserProfileDetail/>
-      </Col>
-      <Col lg="4">
-        <Follow type="userdetail"/>
-      </Col>
-    </Row>
-    </div>
-  </Container>
-);
+// Map Redux state to component props
+function mapStateToProps(state) {
+  return {
+      accountId : state.LinkxReducer.accountId
+  }
+}
 
-export default UserProfileLite;
+export default connect(mapStateToProps)(UserProfileLite)

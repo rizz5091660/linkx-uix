@@ -14,6 +14,7 @@ import Pagination from 'react-bootstrap/Pagination';
 import ProjectListSummary from "../components/search-list-summary/ProjectListSummary";
 import ProjectDetail from "../components/search-item-detail/ProjectDetail";
 import {ProjectService} from "../services/Project.service"; 
+import {connect} from 'react-redux'
 
 class SearchProject extends React.Component {
     constructor(props) {
@@ -102,7 +103,7 @@ class SearchProject extends React.Component {
                             <div style={{marginTop:"1rem"}}> <Pagination>{items}</Pagination> </div>
                         </Col>
                         <Col md="7" style={{ padding: "0 2px" }}>
-                            <ProjectDetail project={project} accountId={this.props.location.state.accountId} showAlert={this.showAlert} />
+                            <ProjectDetail project={project} accountId={this.props.accountId} showAlert={this.showAlert} />
                         </Col>
                     </Row>
                 </div>
@@ -110,4 +111,11 @@ class SearchProject extends React.Component {
         );
     }
 }
-export default SearchProject;
+// Map Redux state to component props
+function mapStateToProps(state) {
+    return {
+        accountId : state.LinkxReducer.accountId
+    }
+  }
+  
+export default connect(mapStateToProps)(SearchProject)

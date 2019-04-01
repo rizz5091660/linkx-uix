@@ -6,6 +6,7 @@ import Follow from "../components/follow/Follow";
 import Workplace from "../components/workplace/Workplace";
 import InfiniteScroll from "react-infinite-scroll-component";
 import {FeedService} from "../services/Feed.service";
+import {connect} from 'react-redux'
 
 import {
   Container,
@@ -23,8 +24,7 @@ class Feed extends React.Component {
     this.state = {
       feeds: [{ comments: [{}] }],
       likes: [],
-      modalShow: false,
-      accountId: "398765f0-4220-11e9-8972-aca63e449b3c"
+      modalShow: false
     }
     this.showLikes = this.showLikes.bind(this);
     this.handleClose = this.handleClose.bind(this);
@@ -35,7 +35,7 @@ class Feed extends React.Component {
   }
 
   showFeed(){
-     FeedService.showFeed("398765f0-4220-11e9-8972-aca63e449b3c")
+     FeedService.showFeed(this.props.accountId)
     .then((result) => this.setState({  feeds:result }))
   }
 
@@ -79,8 +79,8 @@ class Feed extends React.Component {
       feeds,
       likes,
       modalShow,
-      accountId
     } = this.state;
+    const {accountId} = this.props
     let modalClose = () => this.setState({ modalShow: false });
     const DATE_OPTIONS = { month: 'short', day: 'numeric' };
     return (
@@ -89,8 +89,8 @@ class Feed extends React.Component {
         <div className="centerPosition">
           <Row>
             <Col lg="3">
-              <UserProfileOverview accountId={accountId} />
-              <Workplace accountId={accountId} />
+              <UserProfileOverview/>
+              <Workplace />
             </Col>
             <Col lg="5">
               <Row>
@@ -169,5 +169,11 @@ class Feed extends React.Component {
   }
 
 }
+// Map Redux state to component props
+function mapStateToProps(state) {
+  return {
+      accountId : state.LinkxReducer.accountId
+  }
+}
 
-export default Feed;
+export default connect(mapStateToProps)(Feed)

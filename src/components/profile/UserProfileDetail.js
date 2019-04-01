@@ -18,13 +18,17 @@ class UserDetails extends React.Component {
       profile:{
         states:{},
         socmedStats:[{socMed:{}}],
-        brandSpecs:[{}]
-      }
+        brandSpecs:[{}],
+        fName:null,
+        lName:null
+      },
     }
   }
 
   componentDidMount() {
-    fetch("http://localhost:8080/api/account/398765f0-4220-11e9-8972-aca63e449b3c").then((Response) => Response.json()).then((findresponse)=> {
+    let accountId = (this.props.accountId!=null)?this.props.accountId:"398765f0-4220-11e9-8972-aca63e449b3c";
+    console.log(accountId);
+    fetch("http://localhost:8080/api/account/"+accountId).then((Response) => Response.json()).then((findresponse)=> {
       this.setState({
         profile: findresponse
             })
@@ -50,7 +54,7 @@ class UserDetails extends React.Component {
                   <a
                     href="#"
                     className="card-post__author-avatar" 
-                    style={{ backgroundImage: `url('${profile.avatarFullpath}')`,width:"5rem",height:"5rem" }}>
+                    style={{ backgroundImage: `url('${profile.avatarFullpath}')`,width:"7rem",height:"7rem" }}>
                   </a>
                 </div>
               </div>
@@ -95,7 +99,7 @@ class UserDetails extends React.Component {
         </Row>
         <Row>
         <Col lg="12" className="mb-2">
-            <AccountProjects />
+            <AccountProjects accountId={this.props.accountId}/>
           </Col>
         </Row>
       </div>

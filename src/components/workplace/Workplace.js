@@ -1,5 +1,6 @@
 import React from "react";
-import { HashRouter as Router, Route, Link, NavLink,withRouter } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
+import {connect} from 'react-redux'
 import {
     Row,
     Col,
@@ -28,6 +29,7 @@ class Workplace extends React.Component {
             state: { accountId: this.props.accountId }
           })
     }
+    
     render() {
         return (
             <div style={{ paddingBottom: "1.5rem" }}>
@@ -36,7 +38,14 @@ class Workplace extends React.Component {
                     <CardBody>
                         {this.state.explores.map((exp) => (
                             <Row className="p-1" key={exp.id}>
-                                <Col>  <div style={{cursor:"pointer"}} onClick={this.goToProject.bind(this,exp.link)}><img src={exp.avatar} width="25" /><span className="p-2">{exp.label}</span></div></Col>
+                                <Col>  
+                                <NavLink to={exp.link}>
+                                     <div style={{cursor:"pointer"}}>
+                                     <img src={exp.avatar} width="25" />
+                                     <span className="p-2">{exp.label}
+                                     </span></div>
+                                </NavLink>
+                                </Col>
                             </Row>
                         ))}
                     </CardBody>
@@ -45,4 +54,12 @@ class Workplace extends React.Component {
         );
     }
 }
-export default withRouter(Workplace);
+
+// Map Redux state to component props
+function mapStateToProps(state) {
+    return {
+        accountId : state.LinkxReducer.accountId
+    }
+  }
+  
+export default connect(mapStateToProps)(Workplace)

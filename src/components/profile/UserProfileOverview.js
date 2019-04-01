@@ -3,7 +3,9 @@ import PropTypes from "prop-types";
 import shop from "../../images/icon/online-store.png"
 import signal from "../../images/icon/signal.gif"
 import {Card,CardHeader,CardBody,Row,Col} from "shards-react";
-import { HashRouter as Router, Route, Link, NavLink } from 'react-router-dom';
+import * as actions from '../../actions';
+import {connect} from 'react-redux'
+import { NavLink, Route } from 'react-router-dom'
 
 class UserProfileOverview extends React.Component {
   constructor(props) {
@@ -15,18 +17,31 @@ class UserProfileOverview extends React.Component {
       }
     }
   }
+
+  goToProfile(pAccountId,url){
+    console.log(this.props.accountId);
+   /*
+    this.props.history.push({
+        pathname: url,
+        state: { accountId: pAccountId }
+      })
+*/
+  }
+
   componentDidMount() {
     fetch("http://localhost:8080/api/account/"+this.props.accountId+"/summary").then((Response) => Response.json())
     .then((findresponse) => {this.setState({ profile: findresponse})})
   }
+  
   render(){
     const {
       profile
     }= this.state;
+    const {accountId} = this.props
     return(
       <Card small className="mb-4 pt-3">
       <CardHeader className="border-bottom text-center">
-        <NavLink to="/profile">
+      <NavLink to="/profile">
           <div className="mb-3 mx-auto">
             <img
               className="rounded-circle"
@@ -74,4 +89,12 @@ class UserProfileOverview extends React.Component {
   }
 }
 
-export default UserProfileOverview;
+// Map Redux state to component props
+function mapStateToProps(state) {
+  return {
+      accountId : state.LinkxReducer.accountId
+  }
+}
+
+export default connect(mapStateToProps)(UserProfileOverview)
+

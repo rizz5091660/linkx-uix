@@ -25,12 +25,21 @@ class Projects extends React.Component {
   }
 
   componentDidMount() {
-    fetch("http://localhost:8080/api/accproject/account/398765f0-4220-11e9-8972-aca63e449b3c").then((Response) => Response.json()).then((findresponse)=> {
+    let accountId = (this.props.accountId!=null)?this.props.accountId:"398765f0-4220-11e9-8972-aca63e449b3c";
+    fetch("http://localhost:8080/api/accproject/account/"+accountId).then((Response) => Response.json()).then((findresponse)=> {
+      let temp = null;
+      if(findresponse!=null && findresponse.length > 0){
+        if(findresponse.length>3){
+          temp = findresponse.slice(0,3);
+        }else{
+          temp = findresponse.slice(0,findresponse.length);
+        }
+      }
       this.setState({
         projectsAll: findresponse,
-        projects : (findresponse.length>3)? findresponse.slice(0,3):findresponse.slice(0,findresponse.length)
-            })
-        }
+        projects : temp
+          })
+      }
     )
 }
 
@@ -48,7 +57,6 @@ class Projects extends React.Component {
         projects: (this.state.projectsAll.length>3)? this.state.projectsAll.slice(0,3): this.state.projectsAll.slice(0,this.state.projectsAll.length)
       });
     }
-    console.log(this.state.projects);
   } 
 
   render() {
@@ -58,11 +66,24 @@ class Projects extends React.Component {
       isToggleOn
     } = this.state;
     const DATE_OPTIONS = { year: 'numeric', month: 'short' };
+    const projectArr = projects || [] ;
+    const shoWMoreButton = <div></div>;
+    if(projectArr > 3){
+      shoWMoreButton = <CardFooter className="border-top">
+      <Row>
+        <Col className="text-center view-report">
+          <Button theme="white" type="submit" onClick={this.toggleShowProject}>
+          Show {isToggleOn?" More":"Less" }
+          </Button>
+        </Col>
+      </Row>
+    </CardFooter>;
+    }
   return(
 <Card>
     <CardBody className="p-0">
     <div className="headline p-4">{title}</div>
-      {projects.map((prj) => (
+      {projectArr.map((prj) => (
         <div key={prj.id} className="blog-comments__item d-flex p-4">
           <div className="blog-comments__avatar mr-3">
             <img src={prj.avatar} alt={prj.clientName} />
@@ -89,16 +110,7 @@ class Projects extends React.Component {
         </div>
       ))}
     </CardBody>
-
-    <CardFooter className="border-top">
-      <Row>
-        <Col className="text-center view-report">
-          <Button theme="white" type="submit" onClick={this.toggleShowProject}>
-          Show {isToggleOn?" More":"Less" }
-          </Button>
-        </Col>
-      </Row>
-    </CardFooter>
+      {shoWMoreButton}
   </Card>
   )};
 }
