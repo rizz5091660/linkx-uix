@@ -1,11 +1,8 @@
 import React from "react";
-import PropTypes from "prop-types";
-import shop from "../../images/icon/online-store.png"
 import signal from "../../images/icon/signal.gif"
 import {Card,CardHeader,CardBody,Row,Col} from "shards-react";
-import * as actions from '../../actions';
 import {connect} from 'react-redux'
-import { NavLink, Route } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 
 class UserProfileOverview extends React.Component {
   constructor(props) {

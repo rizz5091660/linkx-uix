@@ -121,7 +121,7 @@ class Follow extends React.Component {
                         <b>{sgs.name}</b><br/> <span style={{"fontWeight":"300"}}>{sgs.title} at {sgs.organization}</span>
                     </div>
                     <div style={{float:"left"}}>
-                        <button class="mb-2 btn btn-outline-primary btn-sm btn-pill"><i class="material-icons mr-1">person_add</i> Follow</button>
+                        <button className="mb-2 btn btn-outline-primary btn-sm btn-pill"><i className="material-icons mr-1">person_add</i> Follow</button>
                     </div>
                     </Col>
                 </Row>

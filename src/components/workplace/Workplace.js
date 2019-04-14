@@ -6,8 +6,7 @@ import {
     Col,
     Card,
     CardBody,
-    CardHeader,
-    Button
+    CardHeader
 } from "shards-react";
 
 class Workplace extends React.Component {

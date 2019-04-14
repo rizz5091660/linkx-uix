@@ -7,9 +7,6 @@ import {
     Form,
 } from "shards-react";
 class ProjectListSummary extends React.Component {
-    constructor(props) {
-        super(props);
-    }
     getProjectDetail(id) {
         this.props.getProjectDetail(id);
         this.props.showAlert(false);

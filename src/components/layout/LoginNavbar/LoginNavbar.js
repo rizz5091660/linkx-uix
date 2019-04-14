@@ -1,17 +1,14 @@
 import React from "react";
-import PropTypes from "prop-types";
 import classNames from "classnames";
 import {
-  Container, Navbar, Form,
+  Container, 
+  Form,
   FormInput,
-  FormGroup,
   Button,
   Row,
   Col
 } from "shards-react";
 
-import NavbarNav from "./NavbarNav/NavbarNav";
-import LoginNavbarToggle from "./LoginNavbarToggle";
 import {LoginService} from "../../../services/Login.service";
 
 class LoginNavbar extends React.Component {
