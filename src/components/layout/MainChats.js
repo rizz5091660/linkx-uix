@@ -11,9 +11,12 @@ export default class MainChats extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      chats: 0,
       data: [],
       messageList: []
     };
+
+    this.IncrementItem = this.IncrementItem.bind(this);
   }
 
   componentDidMount() {
@@ -33,13 +36,23 @@ export default class MainChats extends React.Component {
     });
   }
 
+  itemClick(event) {
+    alert(event.id + " " + event.title);
+  }
+
+  IncrementItem(event) {
+    this.setState({ chats: this.state.chats + 1 });
+  }
+  DecreaseItem(event){
+    this.setState({ chats: this.state.chats - 1 });
+  }
+
   render() {
-    return (
-      <div>
-        <div
-          style={{ right: "360px" }}
-          class="ml4 msg-overlay-conversation-bubble msg-overlay-conversation-bubble--default-inactive 
-        msg-overlay-conversation-bubble--is-active msg-overlay-conversation-bubble--petite ember-view"
+    const children = [];
+    const ChildComponent = props => (
+       <div
+          style={{ right: props.number + "px" }}
+          class="ml4 msg-overlay-conversation-bubble"
         >
           <MessageList
             className="message-list"
@@ -51,7 +64,7 @@ export default class MainChats extends React.Component {
           <Input
             placeholder="Insert your message here"
             defaultValue=""
-            ref="input"
+            // ref="input"
             multiline={true}
             // buttonsFloat='left'
             onKeyPress={e => {
@@ -59,7 +72,7 @@ export default class MainChats extends React.Component {
                 return true;
               }
               if (e.charCode === 13) {
-                this.refs.input.clear();
+                // this.refs.input.clear();
                 this.addMessage();
                 e.preventDefault();
                 return false;
@@ -70,7 +83,20 @@ export default class MainChats extends React.Component {
             }
           />
         </div>
+    );
+    const ParentComponent = props => (
+      <div>
+        {props.children}
+      </div>
+    );
+    for (var i = 0; i < this.state.chats; i += 1) {
+      var x = (i+1) * 360;
+      children.push(<ChildComponent key={x} number={x} />);
+    }
 
+    return (
+      <div>
+        <ParentComponent>{children}</ParentComponent>
         <footer style={{ position: "fixed", bottom: "0", right: "0" }}>
           <Container style={{ height: "100%", width: "350px" }}>
             <Row>
@@ -98,6 +124,7 @@ export default class MainChats extends React.Component {
                 <ChatList
                   className="chat-rce-container-clist"
                   dataSource={this.state.data}
+                  onClick={this.IncrementItem}
                 />
               </div>
             </Row>
