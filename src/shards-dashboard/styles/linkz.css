@@ -11,6 +11,8 @@
     position: sticky;
     bottom: 0;
     z-index: 1020;
+    bottom: 0;
+    right: 0;
 }
 
 .headline{
@@ -67,4 +69,358 @@
 .cardLogin{
    background-color:"transparent";
    box-shadow:0
+}
+
+.rce-container-clist {
+    display: block;
+    overflow: auto;
+}
+
+.rce-container-clist {
+    display: block;
+    overflow: auto;
+}
+
+.rce-container-citem {
+    flex-direction: column;
+    display: block;
+    overflow: hidden;
+    min-width: 240px;
+}
+
+.rce-citem {
+    position: relative;
+    background: white;
+    display: flex;
+    flex-direction: row;
+    height: 72px;
+    cursor: pointer;
+    user-select: none;
+    max-width: 100%;
+    overflow: hidden;
+    min-width: 240px;
+}
+
+.rce-citem:hover {
+    background: #f9f9f9;
+}
+
+.rce-citem-avatar {
+    position: relative;
+    padding: 0 15px 0 13px;
+    justify-content: center;
+    display: flex;
+    align-items: center;
+}
+
+.rce-citem-status {
+    width: 20px;
+    height: 20px;
+    bottom: 10px;
+    right: 10px;
+    position: absolute;
+    border-radius: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #ccc;
+}
+
+.rce-citem-avatar img {
+    width: 50px;
+    height: 50px;
+    border: none !important;
+    background: #ccc;
+    border-radius: 100%;
+    overflow: hidden;
+    font-size: 10px;
+    text-align: center;
+    line-height: 50px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.rce-citem-body {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    display: flex;
+    justify-content: center;
+    padding-right: 15px;
+    border-bottom: 1px solid rgba(0,0,0,.05);
+    overflow: hidden;
+}
+
+.rce-citem-body--top {
+    display: flex;
+}
+
+.rce-citem-body--bottom {
+    margin-top: 4px;
+    display: flex;
+}
+
+.rce-citem-body--bottom-title, .rce-citem-body--top-title {
+    flex: 1;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    color: #5a6169;
+}
+
+.rce-citem-body--top-title {
+    font-size: 16px;
+}
+
+.rce-citem-body--bottom-title {
+    color: #555;
+    font-size: 15px;
+}
+
+.rce-citem-body--top-time {
+    font-size: 12px;
+    color: rgba(0,0,0,0.4)
+}
+
+.rce-citem-body--bottom-status {
+    margin-left: 3px;
+}
+
+.rce-citem-body--bottom-status span {
+    width: 18px;
+    height: 18px;
+    font-size: 12px;
+    color: white;
+    font-weight: bold;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    border-radius: 100%;
+    background: red;
+}
+
+.msg-overlay-conversation-bubble {
+    position: fixed;
+    height: 300px;
+    width: 300px;
+    bottom: 0;
+    background: linear-gradient(to bottom,transparent 2px,#fff 2px);
+    transform: translateY(0);
+    transition-timing-function: cubic-bezier(0,0,.2,1);
+    transition-duration: 167ms;
+}
+.msg-overlay-conversation-bubble, .msg-overlay-list-bubble {
+    border-radius: 2px 2px 0 0;
+    box-shadow: 0 0 0 1px rgba(0,0,0,.1), 0 4px 6px rgba(0,0,0,.2);
+}
+.mh4, .ml4 {
+    margin-left: 16px;
+}
+
+
+.rce-container-input {
+    display: flex;
+    min-width: 100%;
+    box-sizing: border-box;
+    flex-direction: row;
+    background: #fff;
+    align-items: center;
+}
+
+.rce-input {
+    flex: 1;
+    height: 40px;
+    padding: 0 5px;
+    border: none;
+    border-radius: 5px;
+    color: #333;
+    font-size: 14px;
+    box-sizing: border-box;
+    outline: none;
+}
+
+.rce-input-textarea {
+    height: 37px;
+    padding: 10px 5px;
+    resize: none;
+}
+
+.rce-input-buttons {
+    display: flex;
+    flex-direction: row;
+    margin: 5px;
+}
+
+.rce-input-buttons > * {
+    display: flex;
+    flex-direction: row;
+}
+
+.rce-input-buttons .rce-button:nth-child(even) {
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.rce-input-buttons .rce-button:last-child {
+    margin-right: 0;
+}
+
+.rce-left-padding {
+    padding-left: 10px;
+    padding-right: 0px !important;
+}
+
+.rce-right-padding {
+    padding-right: 10px;
+    padding-left: 0px !important;
+}
+
+.rce-input::placeholder {
+    color: #afafaf;
+}
+
+.rce-container-mlist {
+    position: relative;
+    display: flex;
+}
+
+.rce-mlist {
+    display: block;
+    overflow: auto;
+    position: relative;
+    flex: 1;
+}
+
+.rce-mlist-down-button {
+    position: absolute;
+    right: 10px;
+    bottom: 15px;
+    width: 40px;
+    height: 40px;
+    background: #fff;
+    box-shadow: 0 1px 1px 0 rgba(0,0,0,0.05), 0 2px 5px 0 rgba(0,0,0,0.1);
+    border-radius: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #333;
+    cursor: pointer;
+    transition: 200ms;
+}
+
+.rce-mlist-down-button:hover {
+    opacity: 0.7;
+}
+
+.rce-mlist-down-button--badge {
+    position: absolute;
+    right: -5px;
+    top: -5px;
+    background: red;
+    width: 20px;
+    height: 20px;
+    border-radius: 100%;
+    font-size: 12px;
+    display: flex;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-weight: 700;
+}
+
+.rce-button {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    padding: 8px;
+    text-align: center;
+    box-sizing: border-box;
+    background: #3979aa;
+    color: white;
+    transition: all 0.15s ease;
+    user-select: none;
+    border: none;
+    outline: none;
+    border: none;
+    position: relative;
+}
+
+.rce-button-icon--container {
+    display: flex;
+    align-items: center;
+}
+
+.rce-button:hover {
+    opacity: 0.8;
+}
+
+.rce-button:active {
+    opacity: 0.6;
+}
+
+.rce-button.outline {
+    background: rgba(0, 0, 0, 0) !important;
+    border: 1px solid #3979aa;
+    color: #3979aa;
+}
+
+.rce-button.outline:hover {
+    opacity: 0.6;
+}
+
+.rce-button.outline:active {
+    opacity: 0.3;
+}
+
+.rce-button.transparent {
+    background: rgba(0, 0, 0, 0) !important;
+}
+
+.rce-button.transparent:hover {
+    opacity: 0.6;
+}
+
+.rce-button.transparent:active {
+    opacity: 0.3;
+}
+
+.rce-button-icon {
+    position: relative;
+    font-size: 18px;
+    display: flex;
+    padding: 0 3px;
+}
+
+.rce-button-badge{
+    border-radius: 4px;
+    padding: 4px;
+    background: #f64b34;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    right: -7px;
+    top:-7px;
+    font-size: 10px;
+}
+
+.rce-button.circle {
+    min-width: 35px;
+    min-height: 35px;
+    border: 1px solid #3979aa;
+    border-radius: 100%;
+}
+
+.message-list {
+	flex: 1;
+    width: 140px;
+    height: 250px;
+    overflow: auto;
 }
