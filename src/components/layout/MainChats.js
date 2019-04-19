@@ -20,6 +20,10 @@ export default class MainChats extends React.Component {
     fetch("http://127.0.0.1:8040/test/dataSourceChat.php")
       .then(res => res.json())
       .then(json => this.setState({ data: json }));
+
+    fetch("http://127.0.0.1:8040/test/dataChat.php")
+      .then(res => res.json())
+      .then(json => this.setState({ messageList: json }));
   }
 
   addMessage() {
@@ -40,7 +44,7 @@ export default class MainChats extends React.Component {
           <MessageList
             className="message-list"
             lockable={true}
-            downButtonBadge={10}
+            downButtonBadge={1}
             dataSource={this.state.messageList}
           />
 
