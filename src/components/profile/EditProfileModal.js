@@ -168,11 +168,25 @@ class EditProfileModal extends React.Component {
                         <Row form>
                             <Col md="12" className="form-group">
                             <label htmlFor="description">Category</label>
-                            <ReactTags className="react-tags"
+                            <ReactTags
                                 tags={profile.brandSpecs}
                                 suggestions={this.state.suggestions}
                                 handleDelete={this.props.handleTagsDelete}
-                                handleAddition={this.props.handleTagsAddition} />
+                                handleAddition={this.props.handleTagsAddition} 
+                                classNames={{
+                                    searchInput: "tagInputFieldClass",
+                                    /*
+                                    tags: 'tagsClass',
+                                    tagInput: 'tagInputClass',
+                                   
+                                    selected: 'selectedClass',
+                                    tag: 'tagClass',
+                                    remove: 'removeClass',
+                                    suggestions: 'suggestionsClass',
+                                    activeSuggestion: 'activeSuggestionClass'
+                                    */
+                                }}
+                              />
                             </Col>
                         </Row>
                     </Modal.Body>

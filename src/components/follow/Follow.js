@@ -2,7 +2,7 @@ import React from "react";
 import mcdonald from "../../images/icon/mcdonald.png";
 import avatar from "../../images/avatars/nathanfigueroa.jpg";
 import UserAudience from "../audience/UserAudience";
-
+import { connect } from 'react-redux'
 import {
     Card,
     CardHeader,
@@ -11,36 +11,45 @@ import {
     Row,
     Col,
 } from "shards-react";
+import {FollowService }from '../../services/Follow.service';
 
 class Follow extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             type:'',
-            suggesions:[],
+            suggestion:[],
             follows:[]
         }
+        this.followSuggestion=this.followSuggestion.bind(this);
+    }
+
+    followSuggestion(event,accountFollowId){
+        event.preventDefault();
+        FollowService.followAccount(this.props.accountId,accountFollowId);
     }
 
     componentDidMount() {
-        fetch("http://localhost:8080/api/account/398765f0-4220-11e9-8972-aca63e449b3c/similar").then((Response) => Response.json()).then((findresponse)=> {
+        FollowService.accountSimilarTag(this.props.accountId)
+        .then((findresponse)=> {
           this.setState({
-                 suggesions: findresponse
+                suggestion: findresponse
                 })
             }
         )
-        fetch("http://www.mocky.io/v2/5c79c5d84900005400a5a64b").then((Response) => Response.json()).then((findresponse)=> {
-            this.setState({
-                   follows: findresponse
-                  })
-              }
-          )        
+        FollowService.organizationSimilarTag(this.props.accountId)
+        .then((findresponse)=> {
+          this.setState({
+            follows: findresponse
+                })
+            }
+        )       
     }
 
     render() {
         const {
             follows,
-            suggesions
+            suggestion
         } = this.state;
         let card0;
         let card1;
@@ -54,19 +63,19 @@ class Follow extends React.Component {
             <Card>
                 <CardHeader className="border-bottom"><b>{headerTitle}  </b> </CardHeader>
                 <CardBody>
-                {follows.map((post, idx) => (
+                {follows.map((follow, idx) => (
                     <Row key={idx}>
                         <Col style={{paddingTop:"10px",paddingRight:"0px"}}>
                             <div style={{float:"left"}}>
                                 <img
                                     className="user-avatar rounded-circle mr-2"
-                                    src={post.authorAvatar}
-                                    alt={post.name}
+                                    src={follow.avatar}
+                                    alt={follow.name}
                                     width="50"
                                 />
                             </div>
                         <div style={{float:"left",width:"50%"}}>
-                            <b>{post.name}</b><br/> <span style={{"fontWeight":"300"}}>{post.title}</span>
+                            <b>{follow.name}</b><br/> <span style={{"fontWeight":"300"}}>{follow.title}</span>
                         </div>
                         <div style={{float:"left"}}>
                             <Button size="sm" theme="primary" className="mb-2 mr-1 btn-outline-primary">Follow </Button>    
@@ -107,7 +116,7 @@ class Follow extends React.Component {
         <Card>
             <CardBody>
             <div className="headline">{headerTitle}</div>
-            {suggesions.map((sgs, idx) => (
+            {suggestion.map((sgs, idx) => (
                 <Row key={idx}>
                     <Col className="mb-12" style={{paddingTop:"10px"}}>
                         <div style={{float:"left"}}>
@@ -121,7 +130,7 @@ class Follow extends React.Component {
                         <b>{sgs.name}</b><br/> <span style={{"fontWeight":"300"}}>{sgs.title} at {sgs.organization}</span>
                     </div>
                     <div style={{float:"left"}}>
-                        <button className="mb-2 btn btn-outline-primary btn-sm btn-pill"><i className="material-icons mr-1">person_add</i> Follow</button>
+                        <button className="btn btn-outline-primary btn-sm btn-pill" onClick={e => this.followSuggestion(e,sgs.id)}><i className="material-icons mr-1">person_add</i> Follow</button>
                     </div>
                     </Col>
                 </Row>
@@ -136,4 +145,14 @@ class Follow extends React.Component {
         );
     }
 }
-export default Follow;
+
+// Map Redux state to component props
+function mapStateToProps(state) {
+    return {
+      accountId: state.LinkxReducer.accountId
+    }
+  }
+
+export default connect(mapStateToProps)(Follow);  
+  
+

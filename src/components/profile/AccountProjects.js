@@ -16,7 +16,7 @@ class Projects extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      projects: [{youtubeStatistics:[]}],
+      projects: [{socmed:{}}],
       projectsAll: [{}],
       title: "Projects",
       isToggleOn: true
@@ -30,7 +30,8 @@ class Projects extends React.Component {
   }
 
   getAccountProjects() {
-    fetch("http://localhost:8080/api/accproject/account/" + this.props.accountId).then((Response) => Response.json()).then((findresponse) => {
+    AccountProjectService.getAccountProjects(this.props.accountId).
+    then((findresponse) => {
       let temp = null;
       if (findresponse != null && findresponse.length > 0) {
         temp = findresponse;
@@ -124,19 +125,18 @@ class Projects extends React.Component {
                   <Row>
                   <Col>
                   <div style={{ float: "left" }}>
-                    <img src={prj.thumbnail} width="160px" height="90px" />
+                    <img src={prj.thumbnail}  height="90px" />
                     </div>
                     <div className="projectStats" style={{ height: "90px", backgroundColor: "#f2f3f5", padding: "5px",float: "left"  }}>
-                    <img src="https://s3.amazonaws.com/linkz-us-east-1554525925157/company-logo/youtube.png" width="50px" /><br/>
-                      <span><a style={{ color: "#868e96", fontWeight: "400", fontSize: "13px" }} href={"https://www.youtube.com/"+prj.url} target="new" >Koreksi 10 Kesalahan Bahasa Inggris</a></span><br />
-                      <span style={{ fontWeight: "200", fontSize: "12px", marginRight: "5px" }}>March 19, 2019</span><br />
-                      <span style={{ fontWeight: "200", fontSize: "12px", marginRight: "5px" }}><i className="material-icons mr-1">play_circle_filled</i>  : {prj.youtubeStatistics.viewCount}</span>
-                      <span style={{ fontWeight: "200", fontSize: "12px", margin: "0 5px" }}><i className="material-icons mr-1">thumb_up</i>  : {prj.youtubeStatistics.likeCount}</span>
-                      <span style={{ fontWeight: "200", fontSize: "12px", margin: "0 5px" }}><i className="material-icons mr-1">thumb_down</i> : {prj.youtubeStatistics.dislikeCount}</span>
-                      <span style={{ fontWeight: "200", fontSize: "12px", margin: "0 5px" }}><i className="material-icons mr-1">comment</i> : {prj.youtubeStatistics.commentCount}</span>
+                    <img src={prj.socmed.avatarFullPath} width="50px" /><br/>
+                      <span><a style={{ color: "#868e96", fontWeight: "400", fontSize: "13px" }} href={prj.urlFullPath} target="new" >{prj.projectTitle}</a></span><br />
+                      <span style={{ fontWeight: "200", fontSize: "12px", marginRight: "5px" }}><i className="material-icons mr-1">play_circle_filled</i>  : {prj.nView}</span>
+                      <span style={{ fontWeight: "200", fontSize: "12px", margin: "0 5px" }}><i className="material-icons mr-1">thumb_up</i>  : {prj.nLike}</span>
+                      <span style={{ fontWeight: "200", fontSize: "12px", margin: "0 5px" }}><i className="material-icons mr-1">thumb_down</i> : {prj.nDislike}</span>
+                      <span style={{ fontWeight: "200", fontSize: "12px", margin: "0 5px" }}><i className="material-icons mr-1">comment</i> : {prj.nComment}</span>
                     </div>
                   </Col>
-
+            
                 </Row>
               </Col>
             </Row>
