@@ -1,6 +1,4 @@
 import React from "react";
-import mcdonald from "../../images/icon/mcdonald.png";
-import avatar from "../../images/avatars/nathanfigueroa.jpg";
 import UserAudience from "../audience/UserAudience";
 import { connect } from 'react-redux'
 import {
@@ -26,7 +24,8 @@ class Follow extends React.Component {
 
     followSuggestion(event,accountFollowId){
         event.preventDefault();
-        FollowService.followAccount(this.props.accountId,accountFollowId);
+        FollowService.followAccount(this.props.accountId,accountFollowId)
+        .then(response => {console.log(response)} );
     }
 
     componentDidMount() {
@@ -61,8 +60,8 @@ class Follow extends React.Component {
             headerTitle = "Add to your feed ";
             card1 =
             <Card>
-                <CardHeader className="border-bottom"><b>{headerTitle}  </b> </CardHeader>
                 <CardBody>
+                <div className="headline">{headerTitle}</div>
                 {follows.map((follow, idx) => (
                     <Row key={idx}>
                         <Col style={{paddingTop:"10px",paddingRight:"0px"}}>
@@ -92,8 +91,8 @@ class Follow extends React.Component {
         <CardBody> 
             <Row>
                 <Col className="mb-12 text-center mb-4">
-                     <img  className="user-avatar rounded-circle mr-2" src={avatar} width="50"/> {"      "}
-                     <img  className="user-avatar rounded-circle mr-2" src={mcdonald} width="50"/>
+                     <img  className="user-avatar rounded-circle mr-2" src="https://s3.amazonaws.com/linkz-us-east-1554525925157/profile-pict/nathanfigueroa.jpg" width="50"/> {"      "}
+                     <img  className="user-avatar rounded-circle mr-2" src="https://s3.amazonaws.com/linkz-us-east-1554525925157/company-logo/mcdonald.png" width="50"/>
                  </Col>
             </Row>
             <Row>

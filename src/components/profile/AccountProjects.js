@@ -35,13 +35,11 @@ class Projects extends React.Component {
       let temp = null;
       if (findresponse != null && findresponse.length > 0) {
         temp = findresponse;
-        /*
         if (findresponse.length > 3) {
           temp = findresponse.slice(0, 3);
         } else {
           temp = findresponse.slice(0, findresponse.length);
-        }*/
-
+        }
       }
       this.setState({
         projectsAll: findresponse,
@@ -71,8 +69,9 @@ class Projects extends React.Component {
     this.editAccProjectChild.current.showEditModal();
   }
 
-  addProjectSubmit(value, title, startDate, jobDesc) {
-    AccountProjectService.add(value, title, startDate, jobDesc, "398765f0-4220-11e9-8972-aca63e449b3c");
+  
+  addProjectSubmit(url, value, startDate, jobDesc,jobTitle) {
+    AccountProjectService.add(url, value, startDate, jobDesc, jobTitle,"398765f0-4220-11e9-8972-aca63e449b3c");
     //.then((response) => {this.getAccountProjects()});
   }
 
@@ -82,10 +81,11 @@ class Projects extends React.Component {
       projects,
       isToggleOn
     } = this.state;
-    const DATE_OPTIONS = { year: 'numeric', month: 'short' };
+    const DATE_OPTIONS = { year: 'numeric', month: 'short', day: 'numeric' };
     const projectArr = projects || [];
-    const shoWMoreButton = <div></div>;
-    if (projectArr > 3) {
+    let shoWMoreButton = <div></div>;
+    console.log("size arr "+projectArr.length );
+   // if (projectArr.length > 3) {
       shoWMoreButton = <CardFooter className="border-top">
         <Row>
           <Col className="text-center view-report">
@@ -95,7 +95,7 @@ class Projects extends React.Component {
           </Col>
         </Row>
       </CardFooter>;
-    }
+   // }
     return (
       <Card>
         <CardBody className="p-0">
@@ -111,10 +111,9 @@ class Projects extends React.Component {
                     <div className="blog-comments__avatar mr-3" style={{ float: "left" }}>
                       <img src={prj.avatar} alt={prj.clientName} />
                     </div>
-                    <div style={{ float: "left" }}>
-                      
-                      <span className="my-1 mb-2" style={{ fontWeight: "500",fontSize:"16px" }}>{prj.jobDesc}</span><br/>
-                      <span><a className="text-secondary" href="#">{prj.clientName}</a>{", "}</span>
+                    <div style={{ float: "left" }}>                      
+                      <span className="my-1 mb-2" style={{ fontWeight: "500",fontSize:"16px" }}>{prj.jobTitle}</span><br/>
+                      <span><a className="text-secondary" href="#">{prj.clientName}</a>{". "}</span>
                       <span className="text-muted">{(new Date(prj.startDate)).toLocaleDateString('en-US', DATE_OPTIONS)} </span>                      
                       <ButtonGroup size="sm">
                           <Button theme="white" className="mx-3" style={{padding:"2px 2px"}}><span className="text-success"> <i className="material-icons">check</i> </span>{" "}Details</Button>
@@ -129,7 +128,7 @@ class Projects extends React.Component {
                     </div>
                     <div className="projectStats" style={{ height: "90px", backgroundColor: "#f2f3f5", padding: "5px",float: "left"  }}>
                     <img src={prj.socmed.avatarFullPath} width="50px" /><br/>
-                      <span><a style={{ color: "#868e96", fontWeight: "400", fontSize: "13px" }} href={prj.urlFullPath} target="new" >{prj.projectTitle}</a></span><br />
+                      <span><a style={{ color: "#868e96", fontWeight: "400", fontSize: "13px" }} href={prj.url} target="new" >{prj.projectTitle}</a></span><br />
                       <span style={{ fontWeight: "200", fontSize: "12px", marginRight: "5px" }}><i className="material-icons mr-1">play_circle_filled</i>  : {prj.nView}</span>
                       <span style={{ fontWeight: "200", fontSize: "12px", margin: "0 5px" }}><i className="material-icons mr-1">thumb_up</i>  : {prj.nLike}</span>
                       <span style={{ fontWeight: "200", fontSize: "12px", margin: "0 5px" }}><i className="material-icons mr-1">thumb_down</i> : {prj.nDislike}</span>

@@ -1,5 +1,5 @@
 import React from "react";
-import shop from "../../images/icon/online-store.png"
+import offericon from "../../images/icon/hot-sale.png"
 import AccountProjects from "./AccountProjects";
 import UserStats from "./UserStats";
 import { connect } from 'react-redux'
@@ -10,7 +10,7 @@ import {
   CardBody,
   Badge
 } from "shards-react";
-import EditProfileModal from "./EditProfileModal";
+import ProfileModal from "./ProfileModal";
 import {UserService} from "../../services/User.service"; 
 
 
@@ -167,8 +167,8 @@ handleTagsDrag(tag, currPos, newPos) {
                     ))}
                     <Row>
                       <Col lg="12">
-                        <div style={{ display: "inline" }}><a href="#"><img src={shop} width="30" /></a> </div>
-                        <div style={{ display: "inline" }}><span className="text-muted  mb-2">My Shop</span></div>
+                        <div style={{ display: "inline" }}><a href="#"><img src={offericon} width="30" /></a> </div>
+                        <div style={{ display: "inline" }}><span className="text-muted  mb-2">My Offer</span></div>
                       </Col>
                     </Row>
                   </Col>
@@ -190,7 +190,7 @@ handleTagsDrag(tag, currPos, newPos) {
             <AccountProjects accountId={this.props.accountId} />
           </Col>
         </Row>
-            <EditProfileModal ref={this.editProfileChild} profile ={profile} handleChange={this.handleChange} 
+            <ProfileModal ref={this.editProfileChild} profile ={profile} handleChange={this.handleChange} 
             handleCtryDDChange={this.handleCtryDDChange} handleStatesDDChange={this.handleStatesDDChange}  
             handleTagsDelete ={this.handleTagsDelete} handleTagsAddition ={this.handleTagsAddition} handleTagsDrag={this.handleTagsDrag}
             />

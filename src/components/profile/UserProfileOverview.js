@@ -3,26 +3,21 @@ import signal from "../../images/icon/signal.gif"
 import {Card,CardHeader,CardBody,Row,Col} from "shards-react";
 import {connect} from 'react-redux'
 import { NavLink } from 'react-router-dom'
+import offericon from '../../images/icon/hot-sale.png';
 
 class UserProfileOverview extends React.Component {
   constructor(props) {
     super(props);
-    this.state={
-      profile:{
-        accSocMedStats:[{socMed:{}}],
-        accLinkxStats:{}
-      }
-    }
   }
   componentDidMount() {
-    fetch("http://localhost:8080/api/account/"+this.props.accountId+"/summary").then((Response) => Response.json())
-    .then((findresponse) => {this.setState({ profile: findresponse})})
+   // fetch("http://localhost:8080/api/account/"+this.props.accountId+"/summary").then((Response) => Response.json())
+   // .then((findresponse) => {this.setState({ profile: findresponse})})
   }
   
   render(){
     const {
       profile
-    }= this.state;
+    }= this.props;
     const {accountId} = this.props
     return(
       <Card small className="mb-4 pt-3">
@@ -51,7 +46,7 @@ class UserProfileOverview extends React.Component {
       ))}
         <Row>
           <Col className="ml-4" lg="12">
-            <div style={{ display: "inline" }}><a href="#"><img src="https://res.cloudinary.com/dw2ssncv1/image/upload/v1553439430/explore/offer.png" width="30" /></a> </div>
+            <div style={{ display: "inline" }}><a href="#"><img src={offericon} width="30" /></a> </div>
             <div style={{ display: "inline" }}><span className="text-muted  mb-2">My Offers</span></div>
           </Col>
         </Row>

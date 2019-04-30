@@ -24,7 +24,7 @@ class ProjectListSummary extends React.Component {
                                         <div className="feed profile-name-feed">
                                             <span style={{ fontSize: "18px" }}> {prj.name}</span><br />  <b> {prj.organizationName}</b>
                                         </div>
-                                        <div style={{ wordWrap: "break-word", paddingleft: "10rem", paddingTop: "1rem" }}><span className="text-muted"> {prj.description} </span></div>
+                                        <div style={{ wordWrap: "break-word", paddingleft: "10rem", paddingTop: "1rem" }}><span className="text-muted"><span dangerouslySetInnerHTML={{__html:prj.description}}></span> </span></div>
                                     </div>
                                 </Col>
                             </Row>

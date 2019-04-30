@@ -3,40 +3,52 @@ import React from "react";
 import ShowLikes from "../components/like/ShowLikes";
 import UserProfileOverview from "../components/profile/UserProfileOverview";
 import Follow from "../components/follow/Follow";
-import Workplace from "../components/workplace/Workplace";
+import Explore from "../components/explore/Explore";
 import InfiniteScroll from "react-infinite-scroll-component";
 import {FeedService} from "../services/Feed.service";
 import {connect} from 'react-redux'
+import projecticon from '../images/icon/project.png'
+import offericon from '../images/icon/hot-sale.png'
 
 import {
-  Container,
-  Row,
-  Col,
-  Card,
-  CardBody,
-  CardFooter,
-  Badge,
+  Container, Row, Col, Card, CardBody, CardFooter, Badge, Button
 } from "shards-react";
+import FeedModal from "../components/feed/FeedModal";
 
 class Feed extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      profile:{
+        accSocMedStats:[{socMed:{}}],
+        accLinkxStats:{}
+      },
       feeds: [{ comments: [{}] }],
       likes: [],
       modalShow: false
     }
     this.showLikes = this.showLikes.bind(this);
     this.handleClose = this.handleClose.bind(this);
+    this.feedModal = React.createRef();
   }
 
   componentDidMount() {
+    this.getSummaryAccount();
     this.showFeed();
+  }
+
+  showEditModal(type){
+    this.feedModal.current.showEditModal(type);
   }
 
   showFeed(){
      FeedService.showFeed(this.props.accountId)
     .then((result) => this.setState({  feeds:result }))
+  }
+
+  getSummaryAccount(){
+    fetch("http://localhost:8080/api/account/"+this.props.accountId+"/summary").then((Response) => Response.json())
+    .then((findresponse) => {this.setState({ profile: findresponse})})
   }
 
   showLikes(pPostId) {
@@ -79,6 +91,7 @@ class Feed extends React.Component {
       feeds,
       likes,
       modalShow,
+      profile
     } = this.state;
     const {accountId} = this.props
     let modalClose = () => this.setState({ modalShow: false });
@@ -89,24 +102,42 @@ class Feed extends React.Component {
         <div className="centerPosition">
           <Row>
             <Col lg="3">
-              <UserProfileOverview/>
-              <Workplace />
+              <UserProfileOverview profile={profile}/>
+              <Explore />
             </Col>
             <Col lg="5">
               <Row>
                 <Col lg="12" sm="12" >
-                  <Card small className="card-post mb-4">
-                    <CardBody>
-                      <h5 className="card-title">Start a post</h5>
-                      <p className="card-text text-muted">
-
-                      </p>
+                  <Card className="card-post mb-4">
+                    <CardBody style={{padding:"0rem"}} >     
+                     <Row>
+                        <Col style={{padding:"1rem 2rem"}}>
+                            <div style={{float:"left"}}>
+                                <img
+                                    className="user-avatar rounded-circle mr-2"
+                                    src={profile.avatar}
+                                    alt={profile.name}
+                                    width="30"
+                                />
+                            </div>
+                        <div style={{float:"left", width:"70%", height:"100%",cursor:"pointer"}}>
+                          <b style={{ color: "#0073b1", fontSize:"20px" }}>Start a post</b>
+                        </div>  
+                        </Col>
+                        <Col>
+                        <div style={{float:"right", height:"100%", padding:"10% 10% 10% 10%", textAlign:"center", cursor: "pointer",borderStyle:"solid", borderWidth:"1px",}}
+                          onClick={this.showEditModal.bind(this,'offer')}
+                        >
+                           <img src={offericon} alt="Offer" width="30"/>  
+                        </div>
+                        <div style={{float:"right", height:"100%", padding:"10% 10% 10% 10%", textAlign:"center",cursor: "pointer",borderStyle:"solid", borderWidth:"1px",}}
+                           onClick={this.showEditModal.bind(this,'collab')}
+                        >
+                        <img src={projecticon} alt="Project" width="30"/>  
+                        </div>
+                        </Col>
+                    </Row>
                     </CardBody>
-                    <CardFooter className="border-top d-flex" style={{ backgroundColor: "#f3f6f8" }}>
-                      <span className="card-post__author-name">
-                        <b style={{ color: "#0073b1" }}>Share a project</b> on LinkedIn
-                      </span>
-                    </CardFooter>
                   </Card>
                 </Col>
               </Row>
@@ -163,6 +194,7 @@ class Feed extends React.Component {
               <Follow type="feed" />
             </Col>
           </Row>
+          <FeedModal ref={this.feedModal} accountId={this.props.accountId}/>
         </div>
       </Container>
     );

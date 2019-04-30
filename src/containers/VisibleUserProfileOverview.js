@@ -23,12 +23,6 @@ function mapDispatchToProps(dispatch) {
 }
 
 // Connected Component
-/*
-const VisibleCounter = connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(Counter);
-*/
 const VisibleUserProfileOverview = connect(
     mapStateToProps,
     mapDispatchToProps

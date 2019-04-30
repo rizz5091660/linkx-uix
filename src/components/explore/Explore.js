@@ -9,7 +9,7 @@ import {
     CardHeader
 } from "shards-react";
 
-class Workplace extends React.Component {
+class Explore extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -25,8 +25,8 @@ class Workplace extends React.Component {
         return (
             <div style={{ paddingBottom: "1.5rem" }}>
                 <Card small>
-                    <CardHeader className="border-bottom"><b>Explore</b> </CardHeader>
                     <CardBody>
+                    <div className="headline"><b>Explore</b></div>
                         {this.state.explores.map((exp) => (
                             <Row className="p-1" key={exp.id}>
                                 <Col>  
@@ -53,4 +53,4 @@ function mapStateToProps(state) {
     }
   }
   
-export default connect(mapStateToProps)(Workplace)
+export default connect(mapStateToProps)(Explore)

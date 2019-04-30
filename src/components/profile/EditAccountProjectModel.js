@@ -19,9 +19,10 @@ class EditAccountProjectModel extends React.Component {
             accountProject: { clientName: '', clientId: '', name: '', applyDate: null, endDate: null, jobDesc: '' },
             suggestions: [],
             value: '',
-            title:'',
-            jobDesc:'',
-            applyDate:null,
+            jobDesc: '',
+            url:'',
+            jobTitle:'',
+            applyDate: null,
             companies: []
         }
     }
@@ -32,8 +33,8 @@ class EditAccountProjectModel extends React.Component {
 
     addProjectSubmit(e) {
         e.preventDefault();
-        this.setState({modalOpen:false});
-        this.props.addProjectSubmit(this.state.value,this.state.title,this.state.applyDate,this.state.jobDesc);
+        this.setState({ modalOpen: false });
+        this.props.addProjectSubmit(this.state.url,this.state.value, this.state.applyDate, this.state.jobDesc,this.state.jobTitle);
     }
 
     onChange = (event, { newValue }) => {
@@ -66,15 +67,12 @@ class EditAccountProjectModel extends React.Component {
         return this.state.companies;
     };
 
-    // Autosuggest will call this function every time you need to update suggestions.
-    // You already implemented this logic above, so just use it.
     onSuggestionsFetchRequested = ({ value }) => {
         this.setState({
             suggestions: this.getSuggestions(value)
         });
     };
 
-    // Autosuggest will call this function every time you need to clear suggestions.
     onSuggestionsClearRequested = () => {
         this.setState({
             suggestions: []
@@ -83,7 +81,6 @@ class EditAccountProjectModel extends React.Component {
 
     getSuggestionValue = suggestion => suggestion.name;
 
-    // Use your imagination to render suggestions.
     renderSuggestion = suggestion => (
         <div>
             <b>{suggestion.name}</b>
@@ -93,22 +90,23 @@ class EditAccountProjectModel extends React.Component {
     handleInputChange(event) {
         const target = event.target;
         const value = target.type === 'checkbox' ? target.checked : target.value;
-        const name = target.name;   
+        const name = target.name;
         this.setState({
-          [name]: value
+            [name]: value
         });
-      }
-      handleCalendarChange(value){
-        this.setState({ applyDate: value});
-      }
+    }
+    handleCalendarChange(value) {
+        this.setState({ applyDate: value });
+    }
     render() {
         const {
             modalOpen,
             accountProject,
-            value, 
+            value,
             suggestions,
-            title,
-            jobDesc
+            jobDesc,
+            url,
+            jobTitle
         } = this.state;
         let modalClose = () => this.setState({ modalOpen: false });
         const inputProps = {
@@ -121,6 +119,12 @@ class EditAccountProjectModel extends React.Component {
                 <form id="updateProfileForm" onSubmit={this.addProjectSubmit.bind(this)}>
                     <Modal.Header closeButton className="p-3">Update Profile</Modal.Header>
                     <Modal.Body>
+                    <Row form>
+                            <Col md="12" className="form-group">
+                                <label htmlFor="url">URL</label>
+                                <FormInput name="url" value={url} onChange={this.handleInputChange.bind(this)} style={{ width: "90%" }} />
+                            </Col>
+                        </Row>
                         <Row form>
                             <Col md="12" className="form-group">
                                 <label htmlFor="client">Client</label>
@@ -134,28 +138,29 @@ class EditAccountProjectModel extends React.Component {
                                     inputProps={inputProps}
                                 />
                             </Col>
-                            </Row>
-                            <Row form>
-                                <Col md="12" className="form-group">
-                                    <label htmlFor="title">Title</label>
-                                    <FormInput name="title"  value={title}  onChange={this.handleInputChange.bind(this)} style={{width:"90%"}}/>
-                                </Col>
-                            </Row>
-                            <Row form>
+                        </Row>
+                        <Row form>
                             <Col md="12" className="form-group">
-                                    <label htmlFor="applyDate">Date</label><br/>
-                                    <DatePicker
-                                selected={this.state.applyDate}
-                                onChange={this.handleCalendarChange.bind(this)}
-                            />
-                                </Col>
-                            </Row>
-                            <Row form>
-                                <Col md="12" className="form-group">
-                                    <label htmlFor="jobDesc">Job Description</label><br/>
-                                   <FormTextarea value={jobDesc} row="5" name="jobDesc" onChange={this.handleInputChange.bind(this)} style={{width:"90%"}} />
-                                </Col>
-                            </Row>
+                                <label htmlFor="jobTitle">Title</label>
+                                <FormInput name="jobTitle" value={jobTitle} onChange={this.handleInputChange.bind(this)} style={{ width: "90%" }} />
+                            </Col>
+                        </Row>
+                        <Row form>
+                            <Col md="12" className="form-group">
+                                <label htmlFor="applyDate">Date</label><br />
+                                <DatePicker
+                                    selected={this.state.applyDate}
+                                    onChange={this.handleCalendarChange.bind(this)}
+                                    dateFormat="yyyy/MM/dd"
+                                />
+                            </Col>
+                        </Row>
+                        <Row form>
+                            <Col md="12" className="form-group">
+                                <label htmlFor="jobDesc">Job Description</label><br />
+                                <FormTextarea value={jobDesc} row="5" name="jobDesc" onChange={this.handleInputChange.bind(this)} style={{ width: "90%" }} />
+                            </Col>
+                        </Row>
 
                     </Modal.Body>
                     <Modal.Footer>

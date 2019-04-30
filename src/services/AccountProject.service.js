@@ -1,16 +1,18 @@
 export const AccountProjectService ={
     add,
-    getAccountProjects
+    getAccountProjects 
 };
 
-function add(clientName,title,startDate,jobDesc,accountId){
+function add(url,clientName,startDate,jobDesc,jobTitle,accountId){
     const AccountProject = {
+        url: url,
         clientName: clientName,
         startDateStr: startDate,
         jobDesc: jobDesc,
-        title: title,
+        jobTitle: jobTitle,
         accountId:accountId
     };
+    console.log(AccountProject);
     return fetch("http://localhost:8080/api/accproject", {
         headers: {
             Accept: "application/json",

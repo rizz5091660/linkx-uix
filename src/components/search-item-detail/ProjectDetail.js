@@ -78,7 +78,7 @@ class ProjectDetail extends React.Component {
                                 </div>
 
                                 <div style={{ paddingleft: "10rem", paddingTop: "4rem" }}> <span style={{ fontSize: "20px" }} >Project Description</span></div>
-                                <div style={{ wordWrap: "break-word", paddingleft: "10rem", paddingTop: "1rem" }}><span className="text-muted"> {prj.description} </span></div>
+                                <div style={{ wordWrap: "break-word", paddingleft: "10rem", paddingTop: "1rem" }}><span className="text-muted"><span dangerouslySetInnerHTML={{__html:prj.description}}></span></span></div>
                             </div>
                         </Col>
                         <Modal size="md" aria-labelledby="contained-modal-title-vcenter" centered show={modalShowApplying} onHide={modalCloseApplying}>

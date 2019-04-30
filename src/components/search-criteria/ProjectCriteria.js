@@ -18,6 +18,17 @@ import {
 class ProjectCriteria extends React.Component {
     constructor(props) {
         super(props);
+        this.state ={
+            countries:[]
+        }
+    }
+
+    componentDidMount() {
+        getCountries();
+    }
+    getCountries() {
+        MasterDataService.getCountries()
+            .then((result) => { this.setState({ countries: result }); });
     }
 
     render() {
@@ -27,8 +38,7 @@ class ProjectCriteria extends React.Component {
                     <Form>
                         <Row form>
                             <Col md="12" style={{ display: "flex", flexDirection: "row",textAlign:"center", padding:"0 15%"}}>
-                                <FormInput  placeholder="Enter Keywords" required  onChange={() => { }}  style={{flexGrow: "2",marginRight: "10px",flexBasis: "33%"}} />       
-                                <FormInput  placeholder="Any Classification" required  onChange={() => { }} style={{flexGrow: "2",marginRight: "10px",flexBasis: "33%"}} />                          
+                                <FormInput  placeholder="Enter Keywords" required  onChange={() => { }}  style={{flexGrow: "2",marginRight: "10px",flexBasis: "33%"}} />                             
                                 <FormInput  placeholder="Location" required  onChange={() => { }} style={{flexGrow: "2",marginRight: "10px",flexBasis: "33%"}} />
                                 <Button theme="primary" className="mb-2 mr-1">Search</Button>
                             </Col>

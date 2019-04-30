@@ -1,17 +1,10 @@
 import React from "react";
 import { Modal } from 'react-bootstrap';
-import {
-    Row,
-    Col,
-    FormInput,
-    Button,
-
-} from "shards-react";
+import { Row, Col, FormInput, Button,} from "shards-react";
 import Select from 'react-select';
 import { MasterDataService } from "../../services/MasterData.service";
 import { UserService } from "../../services/User.service";
 import ReactDOM from 'react-dom';
-
 import  ReactTags  from 'react-tag-autocomplete';
 
 
@@ -22,7 +15,7 @@ const KeyCodes = {
 
   const delimiters = [KeyCodes.comma, KeyCodes.enter];
 
-class EditProfileModal extends React.Component {
+class ProfileModal extends React.Component {
     constructor(props) {
         super(props);
         this.updateProfileSubmit = this.updateProfileSubmit.bind(this);
@@ -199,4 +192,4 @@ class EditProfileModal extends React.Component {
     }
 }
 
-export default EditProfileModal;
+export default ProfileModal;
