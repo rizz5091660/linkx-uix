@@ -5,7 +5,10 @@ import { Link } from "react-router-dom";
 import MainChats from "./MainChats";
 
 const MainFooter = ({ contained, menuItems, copyright}) => (
-  <MainChats />
+  //<MainChats />
+  <div>
+    
+  </div>
 );
 
 MainFooter.propTypes = {

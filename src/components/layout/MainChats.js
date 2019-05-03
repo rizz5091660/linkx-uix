@@ -17,6 +17,7 @@ export default class MainChats extends React.Component {
     };
 
     this.IncrementItem = this.IncrementItem.bind(this);
+    this.addMessage = this.addMessage.bind(this);
   }
 
   componentDidMount() {
@@ -29,7 +30,8 @@ export default class MainChats extends React.Component {
       .then(json => this.setState({ messageList: json }));
   }
 
-  addMessage() {
+  addMessage(e) {
+    alert(e)
     var list = this.state.messageList;
     this.setState({
       messageList: list
@@ -65,6 +67,7 @@ export default class MainChats extends React.Component {
             placeholder="Insert your message here"
             defaultValue=""
             // ref="input"
+            id="btn1" 
             multiline={true}
             // buttonsFloat='left'
             onKeyPress={e => {
@@ -79,7 +82,7 @@ export default class MainChats extends React.Component {
               }
             }}
             rightButtons={
-              <Button text="Send" onClick={this.addMessage.bind(this)} />
+              <Button text="Send" onClick={this.addMessage} />
             }
           />
         </div>
