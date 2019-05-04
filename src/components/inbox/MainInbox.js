@@ -6,6 +6,7 @@ import { ChatList, MessageList, Input, Button } from "react-chat-elements";
 import write from "../../images/icon/edit.png";
 import settings from "../../images/icon/settings.png";
 import routes from "../../routes";
+import { InboxService } from "../../services/Inbox.service";
 
 export default class MainInbox extends React.Component {
   constructor(props) {
@@ -14,22 +15,55 @@ export default class MainInbox extends React.Component {
       chats: 0,
       data: [],
       messageList: [],
-      inputValue: ""
+      inputValue: "",
+      friendId: ""
     };
 
     this.addMessage = this.addMessage.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.itemClick = this.itemClick.bind(this);
+    this.loadData = this.loadData.bind(this);
+  }
+
+  async loadData() {
+    try {
+      if (this.state.friendId !== "") {
+        const res = await fetch(
+          "http://localhost:8080/api/chat/msg/0c26efd8-45e8-11e9-a64b-2afa6a2473d7/" +
+            this.state.friendId
+        );
+        const json = await res.json();
+
+        this.setState({
+          messageList: json
+        });
+      }
+    } catch (e) {
+      console.log(e);
+    }
   }
 
   componentDidMount() {
-    fetch("http://localhost:8080/api/chat/list/0c26efd8-45e8-11e9-a64b-2afa6a2473d7")
+    fetch(
+      "http://localhost:8080/api/chat/list/0c26efd8-45e8-11e9-a64b-2afa6a2473d7"
+    )
       .then(res => res.json())
       .then(json => this.setState({ data: json }));
+    setInterval(this.loadData, 1000);
   }
 
   addMessage(e) {
-    alert(this.state.inputValue)
+    InboxService.addMSg(
+      "0c26efd8-45e8-11e9-a64b-2afa6a2473d7",
+      this.state.friendId,
+      this.state.inputValue
+    ).then(response => {
+      if (response.status == 200) {
+        alert("Chat success :: " + response.message);
+      } else {
+        alert("Chat error :: " + response.message);
+      }
+    });
     this.refs.input.clear();
     var list = this.state.messageList;
     list.push();
@@ -45,10 +79,15 @@ export default class MainInbox extends React.Component {
   }
 
   itemClick(event) {
-    alert(event.id + " " + event.title);
-    fetch("http://localhost:8080/api/chat/msg/0c26efd8-45e8-11e9-a64b-2afa6a2473d7/" + event.id)
-    .then(res => res.json())
-    .then(json => this.setState({ messageList: json }));
+    this.setState({
+      friendId: event.id
+    });
+    fetch(
+      "http://localhost:8080/api/chat/msg/0c26efd8-45e8-11e9-a64b-2afa6a2473d7/" +
+        event.id
+    )
+      .then(res => res.json())
+      .then(json => this.setState({ messageList: json }));
   }
 
   render() {
@@ -110,7 +149,7 @@ export default class MainInbox extends React.Component {
                     return true;
                   }
                   if (e.charCode === 13) {
-                    this.handleChange(e)
+                    this.handleChange(e);
                     this.addMessage();
                     e.preventDefault();
                     return false;
