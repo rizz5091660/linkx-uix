@@ -16,7 +16,9 @@ export default class MainInbox extends React.Component {
       data: [],
       messageList: [],
       inputValue: "",
-      friendId: ""
+      friendId: "",
+      friendName: "",
+      accId: "0c26efd8-45e8-11e9-a64b-2afa6a2473d7"
     };
 
     this.addMessage = this.addMessage.bind(this);
@@ -29,7 +31,9 @@ export default class MainInbox extends React.Component {
     try {
       if (this.state.friendId !== "") {
         const res = await fetch(
-          "http://localhost:8080/api/chat/msg/0c26efd8-45e8-11e9-a64b-2afa6a2473d7/" +
+          "http://localhost:8080/api/chat/msg/" +
+            this.state.accId +
+            "/" +
             this.state.friendId
         );
         const json = await res.json();
@@ -59,7 +63,7 @@ export default class MainInbox extends React.Component {
       this.state.inputValue
     ).then(response => {
       if (response.status == 200) {
-        alert("Chat success :: " + response.message);
+        // alert("Chat success :: " + response.message);
       } else {
         alert("Chat error :: " + response.message);
       }
@@ -79,8 +83,10 @@ export default class MainInbox extends React.Component {
   }
 
   itemClick(event) {
+    alert(event.title)
     this.setState({
-      friendId: event.id
+      friendId: event.id,
+      friendName: event.title
     });
     fetch(
       "http://localhost:8080/api/chat/msg/0c26efd8-45e8-11e9-a64b-2afa6a2473d7/" +
@@ -94,11 +100,11 @@ export default class MainInbox extends React.Component {
     return (
       <div>
         <Row>
-          <Col>
+          <Col style={{ width: "100%", background: "#FFFFFF", border: "1px solid black" }}>
             <Container style={{ height: "100%", width: "100%" }}>
               <Row>
                 <div
-                  className="border-top ml-auto my-auto mr-2 msg-overlay"
+                  className="border-top ml-auto my-auto mr-2 msg-overlay-white"
                   style={{ width: "100%" }}
                 >
                   <div style={{ display: "inline", padding: "0 5px 0 170px" }}>
@@ -111,7 +117,7 @@ export default class MainInbox extends React.Component {
               </Row>
               <Row>
                 <div
-                  className="border-top ml-auto my-auto mr-2 msg-overlay"
+                  className="border-top ml-auto my-auto mr-2 msg-overlay-white"
                   style={{
                     width: "100%",
                     overflow: "auto",
@@ -127,37 +133,52 @@ export default class MainInbox extends React.Component {
               </Row>
             </Container>
           </Col>
-          <Col>
-            <div style={{ width: "100%" }}>
-              <MessageList
-                className="message-inbox"
-                lockable={true}
-                downButtonBadge={1}
-                dataSource={this.state.messageList}
-              />
+          <Col style={{ background: "#FFFFFF" }}>
+            <Container style={{ height: "100%", width: "100%" }}>
+              <Row>
+                <div
+                  className="border-top ml-auto my-auto mr-2 msg-overlay-white"
+                  style={{ width: "100%" }}
+                >
+                  { this.state.friendName } <br />
+                  title
+                </div>
+              </Row>
+              <Row>
+                <div style={{ width: "100%" }}>
+                  <MessageList
+                    className="message-inbox"
+                    lockable={true}
+                    downButtonBadge={1}
+                    dataSource={this.state.messageList}
+                  />
 
-              <Input
-                placeholder="Insert your message here"
-                defaultValue=""
-                ref="input"
-                name="btn1"
-                multiline={true}
-                // buttonsFloat='left'
-                onChange={e => this.handleChange(e)}
-                onKeyPress={e => {
-                  if (e.shiftKey && e.charCode === 13) {
-                    return true;
-                  }
-                  if (e.charCode === 13) {
-                    this.handleChange(e);
-                    this.addMessage();
-                    e.preventDefault();
-                    return false;
-                  }
-                }}
-                rightButtons={<Button text="Send" onClick={this.addMessage} />}
-              />
-            </div>
+                  <Input
+                    placeholder="Insert your message here"
+                    defaultValue=""
+                    ref="input"
+                    name="btn1"
+                    multiline={true}
+                    // buttonsFloat='left'
+                    onChange={e => this.handleChange(e)}
+                    onKeyPress={e => {
+                      if (e.shiftKey && e.charCode === 13) {
+                        return true;
+                      }
+                      if (e.charCode === 13) {
+                        this.handleChange(e);
+                        this.addMessage();
+                        e.preventDefault();
+                        return false;
+                      }
+                    }}
+                    rightButtons={
+                      <Button text="Send" onClick={this.addMessage} />
+                    }
+                  />
+                </div>
+              </Row>
+            </Container>
           </Col>
         </Row>
       </div>

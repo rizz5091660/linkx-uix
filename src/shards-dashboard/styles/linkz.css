@@ -35,6 +35,20 @@
     float: right;
 }
 
+.msg-overlay-white{
+    flex-direction: row;
+    align-items: center;
+    padding: 15px 12px;
+    min-height: 43px;
+    position: relative;
+    color: #000000;
+    background: #FFFFFF;
+    border-bottom: 1px solid rgba(0,0,0,.15);
+    border-radius: 2px 2px 0 0;
+    cursor: pointer;
+    float: right;
+}
+
 .profile-name-feed {
     top: .9375rem;
     padding-left: 3rem;
