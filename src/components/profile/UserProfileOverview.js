@@ -9,10 +9,6 @@ class UserProfileOverview extends React.Component {
   constructor(props) {
     super(props);
   }
-  componentDidMount() {
-   // fetch("http://localhost:8080/api/account/"+this.props.accountId+"/summary").then((Response) => Response.json())
-   // .then((findresponse) => {this.setState({ profile: findresponse})})
-  }
   
   render(){
     const {

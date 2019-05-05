@@ -12,8 +12,7 @@ function add(url,clientName,startDate,jobDesc,jobTitle,accountId){
         jobTitle: jobTitle,
         accountId:accountId
     };
-    console.log(AccountProject);
-    return fetch("http://localhost:8080/api/accproject", {
+    return fetch(process.env.REACT_APP_API+"accproject", {
         headers: {
             Accept: "application/json",
             "Content-Type": "application/json"
@@ -25,6 +24,6 @@ function add(url,clientName,startDate,jobDesc,jobTitle,accountId){
 }
 
 function getAccountProjects(accountId){
-    return fetch("http://localhost:8080/api/accproject/account/" + accountId)
+    return fetch(process.env.REACT_APP_API+"accproject/account/" + accountId)
     .then((Response) => Response.json());
 }

@@ -5,8 +5,8 @@ import UserProfileOverview from "../components/profile/UserProfileOverview";
 import Follow from "../components/follow/Follow";
 import Explore from "../components/explore/Explore";
 import InfiniteScroll from "react-infinite-scroll-component";
-import {FeedService} from "../services/Feed.service";
-import {connect} from 'react-redux'
+import { FeedService } from "../services/Feed.service";
+import { connect } from 'react-redux'
 import projecticon from '../images/icon/project.png'
 import offericon from '../images/icon/hot-sale.png'
 
@@ -19,9 +19,9 @@ class Feed extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      profile:{
-        accSocMedStats:[{socMed:{}}],
-        accLinkxStats:{}
+      profile: {
+        accSocMedStats: [{ socMed: {} }],
+        accLinkxStats: {}
       },
       feeds: [{ comments: [{}] }],
       likes: [],
@@ -37,35 +37,35 @@ class Feed extends React.Component {
     this.showFeed();
   }
 
-  showEditModal(type){
+  showEditModal(type) {
     this.feedModal.current.showEditModal(type);
   }
 
-  showFeed(){
-     FeedService.showFeed(this.props.accountId)
-    .then((result) => this.setState({  feeds:result }))
+  showFeed() {
+    FeedService.showFeed(this.props.accountId)
+      .then((result) => this.setState({ feeds: result }))
   }
 
-  getSummaryAccount(){
-    fetch("http://localhost:8080/api/account/"+this.props.accountId+"/summary").then((Response) => Response.json())
-    .then((findresponse) => {this.setState({ profile: findresponse})})
+  getSummaryAccount() {
+    fetch(process.env.REACT_APP_API+"account/" + this.props.accountId + "/summary").then((Response) => Response.json())
+      .then((findresponse) => { this.setState({ profile: findresponse }) })
   }
 
   showLikes(pPostId) {
     FeedService.showLikes(pPostId)
-    .then((result) => { this.setState({ likes: result, modalShow: true }) })
+      .then((result) => { this.setState({ likes: result, modalShow: true }) })
   }
-  
+
   showComment(feed, idx) {
     let comments = [];
-    FeedService.showComment(feed,idx)
-    .then((result) => {
-      comments = result;
-      const newFeeds = [...this.state.feeds];
-      newFeeds[idx].comments = comments;
-      this.setState({ feeds: newFeeds });
-    }
-    );
+    FeedService.showComment(feed, idx)
+      .then((result) => {
+        comments = result;
+        const newFeeds = [...this.state.feeds];
+        newFeeds[idx].comments = comments;
+        this.setState({ feeds: newFeeds });
+      }
+      );
   }
 
   handleClose() {
@@ -73,7 +73,7 @@ class Feed extends React.Component {
   }
 
 
- 
+
 
   fetchMoreData = () => {
     // a fake async api call like which sends
@@ -93,7 +93,7 @@ class Feed extends React.Component {
       modalShow,
       profile
     } = this.state;
-    const {accountId} = this.props
+    const { accountId } = this.props
     let modalClose = () => this.setState({ modalShow: false });
     const DATE_OPTIONS = { month: 'short', day: 'numeric' };
     return (
@@ -102,41 +102,41 @@ class Feed extends React.Component {
         <div className="centerPosition">
           <Row>
             <Col lg="3">
-              <UserProfileOverview profile={profile}/>
+              <UserProfileOverview profile={profile} />
               <Explore />
             </Col>
             <Col lg="5">
               <Row>
                 <Col lg="12" sm="12" >
                   <Card className="card-post mb-4">
-                    <CardBody style={{padding:"0rem"}} >     
-                     <Row>
-                        <Col style={{padding:"1rem 2rem"}}>
-                            <div style={{float:"left"}}>
-                                <img
-                                    className="user-avatar rounded-circle mr-2"
-                                    src={profile.avatar}
-                                    alt={profile.name}
-                                    width="30"
-                                />
-                            </div>
-                        <div style={{float:"left", width:"70%", height:"100%",cursor:"pointer"}}>
-                          <b style={{ color: "#0073b1", fontSize:"20px" }}>Start a post</b>
-                        </div>  
+                    <CardBody style={{ padding: "0rem" }} >
+                      <Row>
+                        <Col style={{ padding: "1rem 2rem" }}>
+                          <div style={{ float: "left" }}>
+                            <img
+                              className="user-avatar rounded-circle mr-2"
+                              src={profile.avatar}
+                              alt={profile.name}
+                              width="30"
+                            />
+                          </div>
+                          <div style={{ float: "left", width: "70%", height: "100%", cursor: "pointer" }}>
+                            <b style={{ color: "#0073b1", fontSize: "20px" }}>Start a post</b>
+                          </div>
                         </Col>
                         <Col>
-                        <div style={{float:"right", height:"100%", padding:"10% 10% 10% 10%", textAlign:"center", cursor: "pointer",borderStyle:"solid", borderWidth:"1px",}}
-                          onClick={this.showEditModal.bind(this,'offer')}
-                        >
-                           <img src={offericon} alt="Offer" width="30"/>  
-                        </div>
-                        <div style={{float:"right", height:"100%", padding:"10% 10% 10% 10%", textAlign:"center",cursor: "pointer",borderStyle:"solid", borderWidth:"1px",}}
-                           onClick={this.showEditModal.bind(this,'collab')}
-                        >
-                        <img src={projecticon} alt="Project" width="30"/>  
-                        </div>
+                          <div style={{ float: "right", height: "100%", padding: "10% 10% 10% 10%", textAlign: "center", cursor: "pointer", borderStyle: "solid", borderWidth: "1px", }}
+                            onClick={this.showEditModal.bind(this, 'offer')}
+                          >
+                            <img src={offericon} alt="Offer" width="30" />
+                          </div>
+                          <div style={{ float: "right", height: "100%", padding: "10% 10% 10% 10%", textAlign: "center", cursor: "pointer", borderStyle: "solid", borderWidth: "1px", }}
+                            onClick={this.showEditModal.bind(this, 'collab')}
+                          >
+                            <img src={projecticon} alt="Project" width="30" />
+                          </div>
                         </Col>
-                    </Row>
+                      </Row>
                     </CardBody>
                   </Card>
                 </Col>
@@ -160,13 +160,25 @@ class Feed extends React.Component {
                         </div>
                         <div className="card-post__image" style={{ backgroundImage: `url('${feed.postBanner}')` }}></div>
                         <CardBody>
-                          <h5 className="card-title feed">
-                            <a href="#" className="text-fiord-blue">
-                              {feed.title}
-                            </a>
-                          </h5>
+                          {feed.projectId == null &&
+                            <h5 className="card-title feed">
+                              <a href="#" className="text-fiord-blue">
+                                {feed.title}
+                              </a>
+                            </h5>
+                          }
                           <p className="feed card-text d-inline-block">{feed.content}</p>
-
+                          {feed.projectId != null &&
+                            <div>
+                              <div className="border-top feed-number-actions" />
+                              <h5 className="card-title feed">
+                                <a href="#" className="text-fiord-blue">
+                                  {feed.projectName}
+                                </a>
+                              </h5>
+                            </div>
+                          }
+                          <span dangerouslySetInnerHTML={{__html:feed.projectDesc}}></span>
                           <div className="border-top feed-number-actions"><span onClick={() => this.showComment(feed, idx)}>{feed.nComment} comments </span> <span onClick={() => this.showLikes(feed.id)}>{feed.nLike} likes</span></div>
                           <div className="border-top feed-button-container">
                             <div className="feed-button-action"><a href="#" className="feed-hyperlink-action"><i className="material-icons mr-1">thumb_up</i>Like</a></div>
@@ -186,15 +198,15 @@ class Feed extends React.Component {
                       </Card>
                     </Col>
                   </Row>
-                ))} 
-              </InfiniteScroll> 
+                ))}
+              </InfiniteScroll>
               <ShowLikes show={modalShow} onHide={modalClose} likes={likes} />
             </Col>
             <Col lg="4">
               <Follow type="feed" />
             </Col>
           </Row>
-          <FeedModal ref={this.feedModal} accountId={this.props.accountId}/>
+          <FeedModal ref={this.feedModal} accountId={this.props.accountId} />
         </div>
       </Container>
     );
@@ -204,7 +216,7 @@ class Feed extends React.Component {
 // Map Redux state to component props
 function mapStateToProps(state) {
   return {
-      accountId : state.LinkxReducer.accountId
+    accountId: state.LinkxReducer.accountId
   }
 }
 

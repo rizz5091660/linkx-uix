@@ -7,7 +7,7 @@ function login(pUsername,pPassowrd){
         username: pUsername,
         password: pPassowrd
       };
-    return   fetch("http://localhost:8080/api/login/login", {
+    return   fetch(process.env.REACT_APP_API+"login/login", {
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json"

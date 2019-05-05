@@ -17,7 +17,7 @@ class Explore extends React.Component {
         }
     }
     componentDidMount() {
-        fetch("http://localhost:8080/api/config/explore").then((Response) => Response.json())
+        fetch(process.env.REACT_APP_API+"config/explore").then((Response) => Response.json())
             .then((findresponse) => { this.setState({ explores: findresponse }) })
     }
     

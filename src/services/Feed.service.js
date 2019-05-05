@@ -6,16 +6,16 @@ export const FeedService= {
 }
 
 function showFeed(accountId){
-    return fetch("http://localhost:8080/api/post/account/"+accountId+"/follow")
+    return fetch(process.env.REACT_APP_API+"post/account/"+accountId+"/follow")
     .then((Response) => Response.json())
 }
 
 function showLikes(pPostId) {
-    return fetch("http://localhost:8080/api/post/" + pPostId + "/like")
+    return fetch(process.env.REACT_APP_API+"post/" + pPostId + "/like")
     .then((Response) => Response.json())
   }
 
 function showComment(feed, idx){
-   return fetch("http://localhost:8080/api/post/" + feed.id + "/comment")
+   return fetch(process.env.REACT_APP_API+"post/" + feed.id + "/comment")
     .then((Response) => Response.json())
 }

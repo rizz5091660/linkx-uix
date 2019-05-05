@@ -8,7 +8,7 @@ export const MasterDataService ={
 }
 
 function getCountries(){
-    return fetch("http://localhost:8080/api/data/countrydd", {
+    return fetch(process.env.REACT_APP_API+"data/countrydd", {
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json"
@@ -19,7 +19,7 @@ function getCountries(){
 }
 
 function getStatesByName(name){
-    return fetch("http://localhost:8080/api/data/states/autocomplete/"+name, {
+    return fetch(process.env.REACT_APP_API+"data/states/autocomplete/"+name, {
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json"
@@ -30,7 +30,7 @@ function getStatesByName(name){
 }
 
 function getStatesByCountryId(countryId){
-    return fetch("http://localhost:8080/api/data/states/country/"+countryId,{
+    return fetch(process.env.REACT_APP_API+"data/states/country/"+countryId,{
         headers: {
             Accept: "application/json",
             "Content-Type": "application/json"
@@ -41,7 +41,7 @@ function getStatesByCountryId(countryId){
 }  
 
 function getGenericLocationsByName(name){
-    return fetch("http://localhost:8080/api/data/generic/location/"+name,{
+    return fetch(process.env.REACT_APP_API+"data/generic/location/"+name,{
         headers: {
             Accept: "application/json",
             "Content-Type": "application/json"
@@ -53,7 +53,7 @@ function getGenericLocationsByName(name){
 
 
 function getSponsoredItemsSuggestionByName(name){
-    return  fetch("http://localhost:8080/api/data/sponsoreditem/autocomplete/" + name, {
+    return  fetch(process.env.REACT_APP_API+"data/sponsoreditem/autocomplete/" + name, {
         headers: {
             Accept: "application/json",
             "Content-Type": "application/json"
@@ -64,7 +64,7 @@ function getSponsoredItemsSuggestionByName(name){
 }
 
 function getSkillsSuggestionByName(name){
-    return fetch("http://localhost:8080/api/data/skill/autocomplete/" + name, {
+    return fetch(process.env.REACT_APP_API+"data/skill/autocomplete/" + name, {
         headers: {
             Accept: "application/json",
             "Content-Type": "application/json"

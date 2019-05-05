@@ -48,7 +48,7 @@ class EditAccountProjectModel extends React.Component {
         const inputValue = value.trim().toLowerCase();
         const inputLength = inputValue.length;
 
-        fetch("http://localhost:8080/api/data/organization/autocomplete/" + value, {
+        fetch(process.env.REACT_APP_API+"data/organization/autocomplete/" + value, {
             headers: {
                 Accept: "application/json",
                 "Content-Type": "application/json"

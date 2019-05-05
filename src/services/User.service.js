@@ -18,7 +18,7 @@ function add(regFirstName, regLastName, regEmail, regPassword) {
         email: regEmail,
         password: regPassword
     };
-    return fetch("http://localhost:8080/api/account/create", {
+    return fetch(process.env.REACT_APP_API+"account/create", {
         headers: {
             Accept: "application/json",
             "Content-Type": "application/json"
@@ -30,7 +30,7 @@ function add(regFirstName, regLastName, regEmail, regPassword) {
 }
 
 function get(id){
-    return  fetch("http://localhost:8080/api/account/" + id,
+    return  fetch(process.env.REACT_APP_API+"account/" + id,
     {
         headers: {
             Accept: "application/json",
@@ -42,7 +42,7 @@ function get(id){
 
 
 function updateProfileOverview(profile){
-    return fetch("http://localhost:8080/api/account/updateOverview", {
+    return fetch(process.env.REACT_APP_API+"account/updateOverview", {
         headers: {
             Accept: "application/json",
             "Content-Type": "application/json"

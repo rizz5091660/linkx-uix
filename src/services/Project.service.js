@@ -12,7 +12,7 @@ function searchProject(keyword,location,offset) {
         location:location,
         offset:offset
     }
-    return fetch("http://localhost:8080/api/project/criteria", {
+    return fetch(process.env.REACT_APP_API+"project/criteria", {
         method: 'POST',
         headers : {
             'Accept': 'application/json',
@@ -23,12 +23,12 @@ function searchProject(keyword,location,offset) {
 }
 
 function getProjectDetail(projectId){
-    return fetch("http://localhost:8080/api/project/" + projectId)
+    return fetch(process.env.REACT_APP_API+"project/" + projectId)
     .then((Response) => Response.json())
 }
 
 function  applyProject(projectId,accountId){
-   return fetch('http://localhost:8080/api/projectacc', {
+   return fetch(process.env.REACT_APP_API+'projectacc', {
         method: 'POST',
         headers : {
             'Accept': 'application/json',
@@ -52,8 +52,7 @@ function add(name,collabType, startDate, endDate, statesValue, description, skil
         organizationId:organizationId
 
     };
-    console.log(Project);
-    return fetch('http://localhost:8080/api/project', {
+    return fetch(process.env.REACT_APP_API+'project', {
         method: 'POST',
         headers : {
             'Accept': 'application/json',
