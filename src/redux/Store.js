@@ -1,6 +1,6 @@
 import {createStore} from 'redux'
 import {combineReducers} from 'redux'
-import LinkxReducer from './reducers/LinkxReducer'
+import LinkxReducer from './Reducer'
 
 const reducer = combineReducers({
     LinkxReducer

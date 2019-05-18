@@ -1,17 +1,15 @@
-import React from "react";
-import { Redirect } from "react-router-dom";
+import React from 'react';
+import { Redirect } from 'react-router-dom';
 
-// Layout Types
-import { DefaultLayout } from "./layouts";
+import { DefaultLayout } from './layouts';
 
-// Route Views
-import UserProfile from "./views/UserProfile";
-import Errors from "./views/Errors";
-import ComponentsOverview from "./views/ComponentsOverview";
-import Feed from "./views/Feed";
-import Login from "./views/Login";
-import EditProfile from "./views/EditProfile"
-import SearchProject from "./views/SearchProject";
+import UserProfile from './views/profile/Index';
+import ComponentsOverview from './views/ComponentsOverview';
+import Feed from './views/feed/Index';
+import Login from './views/Login';
+import EditProfile from './views/profile/Edit';
+import SearchProject from './views/project/Index';
+import SearchOffer from './views/offer/Index';
 import LoginLayout from "./layouts/Login";
 
 export default [
@@ -37,9 +35,9 @@ export default [
     component: SearchProject
   },
   {
-    path: "/errors",
+    path: "/offer",
     layout: DefaultLayout,
-    component: Errors
+    component: SearchOffer
   },
   {
     path: "/components-overview",

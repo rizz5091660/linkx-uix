@@ -1,5 +1,5 @@
 import React from "react";
-import UserAudience from "../audience/UserAudience";
+import UserAudience from "../audience/Index";
 import { connect } from 'react-redux'
 import {
     Card,

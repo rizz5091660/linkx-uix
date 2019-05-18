@@ -27,8 +27,8 @@ class ProjectDetail extends React.Component {
         }
     }
 
-    applyProject(){
-        ProjectService.applyProject(this.state.projectId,this.props.accountId)
+    apply(){
+        ProjectService.apply(this.state.projectId,this.props.accountId)
         .then((data) => { 
             this.setState({ modalShowApplying:false, });
             this.props.showAlert(true);
@@ -36,7 +36,7 @@ class ProjectDetail extends React.Component {
         .catch((err)=>console.log(err))
     }
 
-    openApplyProjectModal(pPrjId,pProjectName,pOrgName) {
+    openApplyModal(pPrjId,pProjectName,pOrgName) {
         this.setState({
             modalShowApplying: true,
             projectName : pProjectName,
@@ -74,7 +74,7 @@ class ProjectDetail extends React.Component {
                                     </div>
                                 </div>
                                 <div style={{ position: "absolute", right: "50px", top: "15px" }}>
-                                    <Button theme="primary" className="mb-2 mr-1" onClick={this.openApplyProjectModal.bind(this,prj.id,prj.name,prj.organizationName)}>Apply</Button>
+                                    <Button theme="primary" className="mb-2 mr-1" onClick={this.openApplyModal.bind(this,prj.id,prj.name,prj.organizationName)}>Apply</Button>
                                 </div>
 
                                 <div style={{ paddingleft: "10rem", paddingTop: "4rem" }}> <span style={{ fontSize: "20px" }} >Project Description</span></div>
@@ -89,7 +89,7 @@ class ProjectDetail extends React.Component {
 
                             </Modal.Body>
                             <Modal.Footer>
-                                <Button theme="primary" className="mb-2 mr-1" onClick={this.applyProject.bind(this)}>Submit</Button>
+                                <Button theme="primary" className="mb-2 mr-1" onClick={this.apply.bind(this)}>Submit</Button>
                             </Modal.Footer>
                         </Modal>
                     </Row>

@@ -5,8 +5,8 @@ export const FeedService= {
     showComment
 }
 
-function showFeed(accountId){
-    return fetch(process.env.REACT_APP_API+"post/account/"+accountId+"/follow")
+function showFeed(accountId,index){
+    return fetch(process.env.REACT_APP_API+"post/account/"+accountId+"/"+index+"/follow")
     .then((Response) => Response.json())
 }
 

@@ -1,8 +1,8 @@
 import React from "react";
 import { Container, Row, Col } from "shards-react";
 
-import UserProfileDetail from "../components/profile/UserProfileDetail";
-import Follow from "../components/follow/Follow";
+import UserProfileDetail from "../offer/UserProfileDetail";
+import Follow from "../follow/Index";
 import {connect} from 'react-redux'
 
 export class UserProfileLite extends React.Component {

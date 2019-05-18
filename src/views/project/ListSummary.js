@@ -20,9 +20,9 @@ class ProjectListSummary extends React.Component {
                             <Row key={idx}>
                                 <Col>
                                     <div className="border-bottom" style={{ padding: "1rem", cursor: "pointer" }} onClick={this.getProjectDetail.bind(this, prj.id)}>
-                                        <div className="card-post__author-avatar card-post__author-avatar--small" style={{ backgroundImage: `url('${prj.organizationAvatar}')` }}></div>
+                                        <div className="card-post__author-avatar card-post__author-avatar--small" style={{ backgroundImage: `url('${prj.providerAvatar}')` }}></div>
                                         <div className="feed profile-name-feed">
-                                            <span style={{ fontSize: "18px" }}> {prj.name}</span><br />  <b> {prj.organizationName}</b>
+                                            <span style={{ fontSize: "18px" }}> {prj.name}</span><br />  <b> {prj.providerName}</b>
                                         </div>
                                         <div style={{ wordWrap: "break-word", paddingleft: "10rem", paddingTop: "1rem" }}><span className="text-muted"><span dangerouslySetInnerHTML={{__html:prj.description}}></span> </span></div>
                                     </div>

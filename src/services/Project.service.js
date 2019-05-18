@@ -1,13 +1,13 @@
 export const ProjectService ={
-    searchProject,
-    getProjectDetail,
-    applyProject,
+    search,
+    getDetail,
+    apply,
     add
 }
 
-function searchProject(keyword,location,offset) {
+function search(keyword,location,offset) {
     console.log(location);
-    const SearchProjectCriteria ={
+    const SearchCriteria ={
         keyword:keyword,
         location:location,
         offset:offset
@@ -18,27 +18,27 @@ function searchProject(keyword,location,offset) {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
         },
-        body:JSON.stringify(SearchProjectCriteria)
+        body:JSON.stringify(SearchCriteria)
     }).then((Response) => Response.json());
 }
 
-function getProjectDetail(projectId){
-    return fetch(process.env.REACT_APP_API+"project/" + projectId)
+function getDetail(id){
+    return fetch(process.env.REACT_APP_API+"project/" + id)
     .then((Response) => Response.json())
 }
 
-function  applyProject(projectId,accountId){
+function apply(id,accountId){
    return fetch(process.env.REACT_APP_API+'projectacc', {
         method: 'POST',
         headers : {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
         },
-        body:JSON.stringify({prjId:projectId, accId:accountId})
+        body:JSON.stringify({prjId:id, accId:accountId})
     }).then((res) => res.json());
 }
 
-function add(name,collabType, startDate, endDate, statesValue, description, skillValue, sponsorValue, accountId, organizationId){
+function add(name,collabType, startDate, endDate, statesValue, description, skillValue, sponsorValue, accountId, organizationId,offerCategory){
     const Project = {
         name: name,
         collabType: collabType.value,
@@ -49,7 +49,8 @@ function add(name,collabType, startDate, endDate, statesValue, description, skil
         skillValue: skillValue,
         sponsorValue:sponsorValue,
         accountId:accountId,
-        organizationId:organizationId
+        organizationId:organizationId,
+        offerCategory:offerCategory
 
     };
     return fetch(process.env.REACT_APP_API+'project', {

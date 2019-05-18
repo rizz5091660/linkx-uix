@@ -7,9 +7,9 @@ import ReactQuill from 'react-quill'; // ES6
 import 'react-quill/dist/quill.snow.css'; // ES6 
 import Autosuggest from 'react-autosuggest';
 import DatePicker from 'react-datepicker';
-import {MasterDataService} from '../../services/MasterData.service';
-import {ProjectService} from '../../services/Project.service';
-
+import { MasterDataService } from '../../services/MasterData.service';
+import { ProjectService } from '../../services/Project.service';
+import { OfferService } from '../../services/Offer.service';
 
 class FeedModal extends React.Component {
     constructor(props) {
@@ -17,7 +17,7 @@ class FeedModal extends React.Component {
         this.state = {
             modalOpen: false,
             labelTitle: 'Collaboration',
-            type: { value: 'collaboration', label: 'Collaboration' },
+            type: '',
             title: '',
             description: '',
             startDate: '',
@@ -33,13 +33,28 @@ class FeedModal extends React.Component {
             skillValue: '',
             startDate: null,
             endDate: null,
+            offerCategories: [],
+            offerCategory: ''
         }
     }
 
     showEditModal(type) {
+        let title = '';
+        if (type == 'offer') {
+            title = 'Offer';
+        } else if (type == 'project') {
+            title = 'Project';
+        }
         this.setState({
-            modalOpen: true
+            modalOpen: true,
+            type: type,
+            title: title
         });
+        MasterDataService.getOfferCategory()
+            .then(response => {
+                this.setState({ offerCategories: response });
+            });
+
     }
 
 
@@ -53,8 +68,12 @@ class FeedModal extends React.Component {
         this.setState({ description: value })
     }
 
-    handleDDChange(event) {
-        this.setState({ collabType: event });
+    handleDDChange(source, event) {
+        console.log(`event ${event} source ${source}`);
+        if (source === 'collabType')
+            this.setState({ collabType: event });
+        else if (source === 'offerCategory')
+            this.setState({ offerCategory: event });
     }
 
     getSkillSuggestions = value => {
@@ -190,12 +209,26 @@ class FeedModal extends React.Component {
         this.setState({ [name]: value });
     }
 
+    addSubmit(e) {
+        e.preventDefault();
+        if (this.state.type === 'project') {
+            this.addProjectSubmit(e);
+        } else if (this.state.type === 'offer') {
+            this.addOfferSubmit(e);
+        }
+    }
+
     addProjectSubmit(e) {
         e.preventDefault();
         this.setState({ modalOpen: false });
-       ProjectService.add(this.state.name,this.state.collabType,this.state.startDate,this.state.endDate,this.state.statesValue, this.state.description, this.state.skillValue, this.state.sponsorValue, this.props.accountId,null);
+        ProjectService.add(this.state.name, this.state.collabType, this.state.startDate, this.state.endDate, this.state.statesValue, this.state.description, this.state.skillValue, this.state.sponsorValue, this.props.accountId, null);
     }
 
+    addOfferSubmit(e) {
+        e.preventDefault();
+        this.setState({ modalOpen: false });
+        OfferService.add(this.state.name,this.state.startDate, this.state.endDate, this.state.statesValue, this.state.description, this.state.accountId, this.state.organizationId)
+    }
 
     render() {
         const {
@@ -214,7 +247,10 @@ class FeedModal extends React.Component {
             sponsorValue,
             skillValue,
             statesValue,
-            states
+            states,
+            offerCategories,
+            offerCategory
+
         } = this.state;
         let modalClose = () => this.setState({ modalOpen: false });
         const inputSkillProps = {
@@ -232,9 +268,10 @@ class FeedModal extends React.Component {
             value: statesValue,
             onChange: this.onStatesChange
         };
+        let contentForm;
         let suggestionContainer;
 
-        if (collabType.value == 'skill') {
+        if (collabType.value === 'skill') {
             suggestionContainer = <Row form>
                 <Col className="form-group">
                     <label htmlFor="skillName">Skill Name</label>
@@ -249,7 +286,7 @@ class FeedModal extends React.Component {
                     />
                 </Col>
             </Row>;
-        } else if (collabType.value == 'sponsor') {
+        } else if (collabType.value === 'sponsor') {
             suggestionContainer = <Row form>
                 <Col className="form-group">
                     <label htmlFor="skillName">Sponsored Item</label>
@@ -266,11 +303,78 @@ class FeedModal extends React.Component {
             </Row>
         }
 
+
+        if (type === 'project') {
+            contentForm = <div>
+                <Row form>
+                    <Col className="form-group">
+                        <label htmlFor="collabType">Looking For</label>
+                        <Select
+                            value={collabType}
+                            onChange={this.handleDDChange.bind(this, 'collabType')}
+                            options={collabTypes}
+                        />
+                    </Col>
+                </Row>
+                {suggestionContainer}
+                <Row form>
+                    <Col md="6" className="form-group">
+                        <label htmlFor="startDate">Start Date</label><br />
+                        <DatePicker
+                            selected={startDate}
+                            onChange={this.handleCalendarChange.bind(this, 'startDate')}
+                            dateFormat="yyyy/MM/dd"
+                        />
+                    </Col>
+                    <Col md="6" className="form-group">
+                        <label htmlFor="endDate">End Date</label><br />
+                        <DatePicker
+                            selected={endDate}
+                            onChange={this.handleCalendarChange.bind(this, 'endDate')}
+                            dateFormat="yyyy/MM/dd"
+                        />
+                    </Col>
+                </Row>
+            </div>
+        } else if (type === 'offer') {
+            contentForm = <div>
+                <Row form>
+                    <Col className="form-group">
+                        <label htmlFor="offerCategory">Select a Category</label>
+                        <Select
+                            value={offerCategory}
+                            onChange={this.handleDDChange.bind(this, 'offerCategory')}
+                            options={offerCategories}
+                        />
+                    </Col>
+                </Row>
+                <Row form>
+                    <Col md="6" className="form-group">
+                        <label htmlFor="startDate">Start Date</label><br />
+                        <DatePicker
+                            selected={startDate}
+                            onChange={this.handleCalendarChange.bind(this, 'startDate')}
+                            dateFormat="yyyy/MM/dd"
+                        />
+                    </Col>
+                    <Col md="6" className="form-group">
+                        <label htmlFor="endDate">End Date</label><br />
+                        <DatePicker
+                            selected={endDate}
+                            onChange={this.handleCalendarChange.bind(this, 'endDate')}
+                            dateFormat="yyyy/MM/dd"
+                        />
+                    </Col>
+                </Row>
+            </div>
+        }
+
+
         return (
 
             <Modal size="md" aria-labelledby="contained-modal-title-vcenter" centered show={modalOpen} onHide={modalClose}>
-                <form id="updateProfileForm" onSubmit={this.addProjectSubmit.bind(this)}>
-                    <Modal.Header closeButton className="p-3">Post Project</Modal.Header>
+                <form id="updateProfileForm" onSubmit={this.addSubmit.bind(this)}>
+                    <Modal.Header closeButton className="p-3">Post {title}</Modal.Header>
                     <Modal.Body>
                         <Row form>
                             <Col className="form-group">
@@ -283,35 +387,7 @@ class FeedModal extends React.Component {
                                 />
                             </Col>
                         </Row>
-                        <Row form>
-                            <Col className="form-group">
-                                <label htmlFor="collabType">Looking For</label>
-                                <Select
-                                    value={collabType}
-                                    onChange={this.handleDDChange.bind(this)}
-                                    options={collabTypes}
-                                />
-                            </Col>
-                        </Row>
-                        {suggestionContainer}
-                        <Row form>
-                            <Col md="6" className="form-group">
-                                <label htmlFor="startDate">Start Date</label><br />
-                                <DatePicker
-                                    selected={startDate}
-                                    onChange={this.handleCalendarChange.bind(this, 'startDate')}
-                                    dateFormat="yyyy/MM/dd"
-                                />
-                            </Col>
-                            <Col md="6" className="form-group">
-                                <label htmlFor="endDate">End Date</label><br />
-                                <DatePicker
-                                    selected={endDate}
-                                    onChange={this.handleCalendarChange.bind(this, 'endDate')}
-                                    dateFormat="yyyy/MM/dd"
-                                />
-                            </Col>
-                        </Row>
+                        {contentForm}
                         <Row form>
                             <Col className="form-group">
                                 <label htmlFor="location">Location</label>
@@ -336,7 +412,7 @@ class FeedModal extends React.Component {
                         <Row form style={{ paddingTop: "3rem" }}>
                             <Col className="form-group">
                                 <label>Upload Image</label>
-                                <Button theme="primary" style={{marginLeft:"30px"}} className="mb-2 mr-1" >Upload</Button>
+                                <Button theme="primary" style={{ marginLeft: "30px" }} className="mb-2 mr-1" >Upload</Button>
                             </Col>
                         </Row>
                         <Row form>

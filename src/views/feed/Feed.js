@@ -1,19 +1,24 @@
 
 import React from "react";
-import ShowLikes from "../components/like/ShowLikes";
-import UserProfileOverview from "../components/profile/UserProfileOverview";
-import Follow from "../components/follow/Follow";
-import Explore from "../components/explore/Explore";
+import ShowLikes from "../../components/like/ShowLikes";
+import UserProfileOverview from "../../components/profile/UserProfileOverview";
+import Follow from "../../components/follow/Follow";
+import Explore from "../../components/explore/Explore";
 import InfiniteScroll from "react-infinite-scroll-component";
-import { FeedService } from "../services/Feed.service";
+import { FeedService } from "../../services/Feed.service";
 import { connect } from 'react-redux'
-import projecticon from '../images/icon/project.png'
-import offericon from '../images/icon/hot-sale.png'
+import projecticon from '../../images/icon/project.png'
+import offericon from '../../images/icon/hot-sale.png'
+import {
+  FloatingMenu,
+  MainButton,
+  ChildButton,
+} from 'react-floating-button-menu';
 
 import {
   Container, Row, Col, Card, CardBody, CardFooter, Badge, Button
 } from "shards-react";
-import FeedModal from "../components/feed/FeedModal";
+import FeedModal from "./Modal";
 
 class Feed extends React.Component {
   constructor(props) {
@@ -23,9 +28,11 @@ class Feed extends React.Component {
         accSocMedStats: [{ socMed: {} }],
         accLinkxStats: {}
       },
-      feeds: [{ comments: [{}] }],
+      feeds: [],
       likes: [],
-      modalShow: false
+      modalShow: false,
+      index: 1,
+      isOpen: false
     }
     this.showLikes = this.showLikes.bind(this);
     this.handleClose = this.handleClose.bind(this);
@@ -38,16 +45,12 @@ class Feed extends React.Component {
   }
 
   showEditModal(type) {
+    this.setState({isOpen:false});
     this.feedModal.current.showEditModal(type);
   }
 
-  showFeed() {
-    FeedService.showFeed(this.props.accountId)
-      .then((result) => this.setState({ feeds: result }))
-  }
-
   getSummaryAccount() {
-    fetch(process.env.REACT_APP_API+"account/" + this.props.accountId + "/summary").then((Response) => Response.json())
+    fetch(process.env.REACT_APP_API + "account/" + this.props.accountId + "/summary").then((Response) => Response.json())
       .then((findresponse) => { this.setState({ profile: findresponse }) })
   }
 
@@ -72,17 +75,26 @@ class Feed extends React.Component {
     this.setState({ show: false });
   }
 
-
-
+  showFeed() {
+    this.setState({ index: this.state.index + 1 });
+    FeedService.showFeed(this.props.accountId, this.state.index)
+      .then((result) => {
+        if (this.state.feeds.length >= 1) {
+          this.setState(
+            {
+              feeds: this.state.feeds.concat(result)
+            })
+        } else {
+          this.setState({ feeds: result })
+        }
+      }
+      )
+  }
 
   fetchMoreData = () => {
-    // a fake async api call like which sends
-    // 20 more records in 1.5 secs
     setTimeout(() => {
-      this.setState({
-        feeds: this.state.feeds.concat(this.state.feeds)
-      });
-    }, 1500);
+      this.showFeed();
+    }, 1000);
   };
 
 
@@ -109,7 +121,7 @@ class Feed extends React.Component {
               <Row>
                 <Col lg="12" sm="12" >
                   <Card className="card-post mb-4">
-                    <CardBody style={{ padding: "0rem" }} >
+                  <CardBody style={{ padding: "0rem" }} >
                       <Row>
                         <Col style={{ padding: "1rem 2rem" }}>
                           <div style={{ float: "left" }}>
@@ -158,19 +170,22 @@ class Feed extends React.Component {
                             <span className="text-muted">{(new Date(feed.date)).toLocaleDateString('en-US', DATE_OPTIONS)} </span>
                           </div>
                         </div>
-                        <div className="card-post__image" style={{ backgroundImage: `url('${feed.postBanner}')` }}></div>
+                        {feed.postBanner != null &&
+                          <div className="card-post__image" style={{ backgroundImage: `url('${feed.postBanner}')` }}></div>
+                        }
                         <CardBody>
                           {feed.projectId == null &&
-                            <h5 className="card-title feed">
-                              <a href="#" className="text-fiord-blue">
-                                {feed.title}
-                              </a>
-                            </h5>
+                            <div>
+                              <h5 className="card-title feed">
+                                <a href="#" className="text-fiord-blue">
+                                  {feed.title}
+                                </a>
+                              </h5>
+                              <p className="feed card-text d-inline-block">{feed.content}</p>
+                            </div>
                           }
-                          <p className="feed card-text d-inline-block">{feed.content}</p>
                           {feed.projectId != null &&
                             <div>
-                              <div className="border-top feed-number-actions" />
                               <h5 className="card-title feed">
                                 <a href="#" className="text-fiord-blue">
                                   {feed.projectName}
@@ -178,7 +193,7 @@ class Feed extends React.Component {
                               </h5>
                             </div>
                           }
-                          <span dangerouslySetInnerHTML={{__html:feed.projectDesc}}></span>
+                          <span dangerouslySetInnerHTML={{ __html: feed.projectDesc }}></span>
                           <div className="border-top feed-number-actions"><span onClick={() => this.showComment(feed, idx)}>{feed.nComment} comments </span> <span onClick={() => this.showLikes(feed.id)}>{feed.nLike} likes</span></div>
                           <div className="border-top feed-button-container">
                             <div className="feed-button-action"><a href="#" className="feed-hyperlink-action"><i className="material-icons mr-1">thumb_up</i>Like</a></div>

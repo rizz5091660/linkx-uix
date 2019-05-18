@@ -4,7 +4,8 @@ export const MasterDataService ={
     getStatesByName,
     getGenericLocationsByName,
     getSponsoredItemsSuggestionByName,
-    getSkillsSuggestionByName
+    getSkillsSuggestionByName,
+    getOfferCategory
 }
 
 function getCountries(){
@@ -72,4 +73,15 @@ function getSkillsSuggestionByName(name){
         method: "GET"
     })
     .then(response => response.json());
+}
+
+function getOfferCategory(){
+    return fetch(process.env.REACT_APP_API+"data/offercategorydd", {
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json"
+        },
+        method: "GET"
+      })
+      .then(response => response.json());
 }

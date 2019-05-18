@@ -1,19 +1,19 @@
-import React from "react";
+import React from 'react';
 import { Container, Row, Col, Card, CardBody,Form,FormInput, Button, Alert } from "shards-react";
 import Pagination from 'react-bootstrap/Pagination';
-import ProjectListSummary from "../components/search-list-summary/ProjectListSummary";
-import ProjectDetail from "../components/search-item-detail/ProjectDetail";
-import {ProjectService} from "../services/Project.service"; 
+import ProjectListSummary from "./ListSummary";
+import ProjectDetail from "./Detail";
+import {ProjectService} from "../../services/Project.service"; 
 import {connect} from 'react-redux';
 import Autosuggest from 'react-autosuggest';
-import {MasterDataService} from '../services/MasterData.service';
+import {MasterDataService} from '../../services/MasterData.service';
 
 class SearchProject extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             searchResult: { projects: [], totalRecord: 0 },
-            project: {},
+            detail: {},
             modalShowApplied: false,
             activePage: 1,
             totalPage: 5,
@@ -21,17 +21,15 @@ class SearchProject extends React.Component {
             states:[],
             keyword:'',
         }
-        this.getProjectDetail = this.getProjectDetail.bind(this);
+        this.getDetail = this.getDetail.bind(this);
         this.showAlert = this.showAlert.bind(this);
         this.keywordChange = this.keywordChange.bind(this);
 
     }
 
     componentDidMount() {
-        this.loadProject(1);
-      //  this.getCountries();
+        this.load(1);
     }
-
 
     getSuggestions = value => {
         const inputValue = value.trim().toLowerCase();
@@ -49,15 +47,12 @@ class SearchProject extends React.Component {
         return this.state.states;
     };
 
-     // Autosuggest will call this function every time you need to update suggestions.
-    // You already implemented this logic above, so just use it.
     onSuggestionsFetchRequested = ({ value }) => {
         this.setState({
             states: this.getSuggestions(value)
         });
     };
 
-    // Autosuggest will call this function every time you need to clear suggestions.
     onSuggestionsClearRequested = () => {
         this.setState({
             states: []
@@ -66,31 +61,32 @@ class SearchProject extends React.Component {
 
     getSuggestionValue = suggestion => suggestion.name;
 
-    // Use your imagination to render suggestions.
     renderSuggestion = suggestion => (
         <div style={{textAlign:"left"}}>
             <b>{suggestion.name}</b>
         </div>
     );
 
-    loadProject(pageNumber) {
-        ProjectService.searchProject(this.state.keyword,this.state.value,pageNumber)
+    load(pageNumber) {
+        ProjectService.search(this.state.keyword,this.state.value,pageNumber)
         .then((result) => {
             this.setState({ searchResult: result, activePage: pageNumber, project:[] })
             if(this.state.searchResult.projects && this.state.searchResult.projects.length ){
-                this.getProjectDetail(this.state.searchResult.projects[0].id);
+                this.getDetail(this.state.searchResult.projects[0].id);
+            }else{
+                 this.setState({ detail:null})
             }
         })
     }
 
-    searchProject(e) {
+    search(e) {
         e.preventDefault();
-        this.loadProject(1);
+        this.load(1);
     }
 
-    getProjectDetail(projectId) {
-        ProjectService.getProjectDetail(projectId)
-        .then((result) => { this.setState({ project: result})})
+    getDetail(id) {
+        ProjectService.getDetail(id)
+        .then((result) => { this.setState({ detail: result})})
     }
 
     showAlert(isShow) {
@@ -98,7 +94,7 @@ class SearchProject extends React.Component {
     }
 
     handlePageChange(pageNumber) {
-        this.loadProject(pageNumber);
+        this.load(pageNumber);
     }
 
 
@@ -120,7 +116,7 @@ class SearchProject extends React.Component {
     render() {
         const {
             searchResult,
-            project,
+            detail,
             modalShowApplied,
             activePage,
             value,
@@ -146,7 +142,7 @@ class SearchProject extends React.Component {
                     <Col style={{ paddingLeft: 0, paddingRight: 0 }}>
                         <Card>
                             <CardBody style={{ padding: "1rem" }}>
-                                <form id="searchProject"  onSubmit={this.searchProject.bind(this)}>
+                                <form id="searchForm"  onSubmit={this.search.bind(this)}>
                                     <Row form>
                                         <Col md="12" style={{ display: "flex", flexDirection: "row", textAlign: "center", padding: "0 15%" }}>
                                             <input type="text" className="react-autosuggest__input" placeholder="Enter Keywords" name={keyword} onChange={(e) => {this.keywordChange(e) }} style={{ flexGrow: "2", height:"40px",flexBasis: "40%" }} />
@@ -176,21 +172,22 @@ class SearchProject extends React.Component {
                     </Col>
                 </Row>
                 <div className="centerPosition">
-                    <Row className="py-4">
-                        <Col md="5" style={{ padding: "0 2px" }}>
-                            <ProjectListSummary projects={searchResult.projects} getProjectDetail={this.getProjectDetail} showAlert={this.showAlert} />
-                            <div style={{marginTop:"1rem"}}> <Pagination>{items}</Pagination> </div>
-                        </Col>
-                        <Col md="7" style={{ padding: "0 2px" }}>
-                            <ProjectDetail project={project} accountId={this.props.accountId} showAlert={this.showAlert} />
+                {searchResult.projects!=null && searchResult.projects.length != 0 && 
+                    <Row className="py-4">                  
+                        <Col md="5" style={{ padding: "0 2px" }}>                          
+                            <ProjectListSummary projects={searchResult.projects} getProjectDetail={this.getDetail} showAlert={this.showAlert} />
+                            <div style={{marginTop:"1rem"}}> <Pagination>{items}</Pagination> </div>    
+                        </Col>                    
+                        <Col md="7" style={{ padding: "0 2px" }}>                           
+                                <ProjectDetail project={detail} accountId={this.props.accountId} showAlert={this.showAlert} />
                         </Col>
                     </Row>
+                }
                 </div>
             </Container>
         );
     }
 }
-// Map Redux state to component props
 function mapStateToProps(state) {
     return {
         accountId : state.LinkxReducer.accountId

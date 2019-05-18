@@ -1,8 +1,6 @@
 import {connect} from 'react-redux'
 import Counter from '../components/Counter'
 import * as actions from '../actions'
-import UserProfileOverview from '../components/profile/UserProfileOverview';
-
 
 // Map Redux state to component props
 function mapStateToProps(state) {
