@@ -1,7 +1,7 @@
 import React from "react";
-import offericon from "../../images/icon/hot-sale.png"
-import AccountProjects from "./AccountProjects";
-import UserStats from "./UserStats";
+import offericon from "../../assets/images/icon/hot-sale.png"
+import AccountProjects from "../offer/AccountProjects";
+import UserStats from "./Stats";
 import { connect } from 'react-redux'
 import {
   Row,
@@ -10,7 +10,7 @@ import {
   CardBody,
   Badge
 } from "shards-react";
-import ProfileModal from "./ProfileModal";
+import ProfileModal from "./Modal";
 import {UserService} from "../../services/User.service"; 
 
 

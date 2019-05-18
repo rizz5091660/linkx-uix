@@ -1,14 +1,14 @@
 
 import React from "react";
 import ShowLikes from "../../components/like/ShowLikes";
-import UserProfileOverview from "../../components/profile/UserProfileOverview";
+import UserProfileOverview from "../../components/profile/Overview";
 import Follow from "../../components/follow/Follow";
 import Explore from "../../components/explore/Explore";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { FeedService } from "../../services/Feed.service";
 import { connect } from 'react-redux'
-import projecticon from '../../images/icon/project.png'
-import offericon from '../../images/icon/hot-sale.png'
+import projecticon from '../../assets/images/icon/project.png'
+import offericon from '../../assets/images/icon/hot-sale.png'
 import {
   FloatingMenu,
   MainButton,

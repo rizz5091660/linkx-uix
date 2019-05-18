@@ -2,8 +2,8 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Container, Row, Nav, NavItem, NavLink } from "shards-react";
 import { Link } from "react-router-dom";
-import write from "../../images/icon/edit.png";
-import settings from "../../images/icon/settings.png";
+import write from "../../assets/images/icon/edit.png";
+import settings from "../../assets/images/icon/settings.png";
 
 const MainFooter = ({ contained, menuItems, copyright }) => (
   <footer className="d-flex  px-3 sticky-bottom">

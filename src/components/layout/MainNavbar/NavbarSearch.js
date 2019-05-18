@@ -1,8 +1,8 @@
 import React from "react";
-import logo from "./../../../images/icon/linkedin-icon.png";
-import friends from "./../../../images/icon/friends.png";
-import home from "./../../../images/icon/home.png";
-import jobs from "./../../../images/icon/jobs.png";
+import logo from "./../../../assets/images/icon/linkedin-icon.png";
+import friends from "./../../../assets/images/icon/friends.png";
+import home from "./../../../assets/images/icon/home.png";
+import jobs from "./../../../assets/images/icon/jobs.png";
 import {
   Form,
   InputGroup,

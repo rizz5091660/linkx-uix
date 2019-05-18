@@ -1,7 +1,7 @@
 import React from "react";
 import { Container, Row, Col } from "shards-react";
 
-import UserProfileDetail from "../offer/UserProfileDetail";
+import UserProfileDetail from "../profile/Detail";
 import Follow from "../follow/Index";
 import {connect} from 'react-redux'
 

@@ -1,7 +1,7 @@
 import React from "react";
 import { Nav } from "shards-react";
 import { HashRouter as Router, Route, Link, NavLink } from 'react-router-dom';
-import home from "./../../../../images/icon/home.png";
+import home from "./../../../../assets/images/icon/home.png";
 
 export default () => (
   <Nav navbar className="border-left flex-row">

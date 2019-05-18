@@ -1,16 +1,16 @@
 
 import React from "react";
 import ShowLikes from "./Likes";
-import UserProfileOverview from "../offer/UserProfileOverview";
+import UserProfileOverview from "../profile/Overview";
 import Follow from "../follow/Index";
 import Explore from "../explore/Index";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { FeedService } from "../../services/Feed.service";
 import { connect } from 'react-redux'
-import projecticon from '../../images/icon/project.png'
-import offericon from '../../images/icon/hot-sale.png'
+import projecticon from '../../assets/images/icon/project.png'
+import offericon from '../../assets/images/icon/hot-sale.png'
 import {
-  FloatingMenu,
+  FloatingMenu, 
   MainButton,
   ChildButton,
 } from 'react-floating-button-menu';

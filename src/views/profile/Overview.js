@@ -1,9 +1,9 @@
 import React from "react";
-import signal from "../../images/icon/signal.gif"
+import signal from "../../assets/images/icon/signal.gif"
 import {Card,CardHeader,CardBody,Row,Col} from "shards-react";
 import {connect} from 'react-redux'
 import { NavLink } from 'react-router-dom'
-import offericon from '../../images/icon/hot-sale.png';
+import offericon from '../../assets/images/icon/hot-sale.png';
 
 class UserProfileOverview extends React.Component {
   constructor(props) {
