@@ -3,16 +3,10 @@ import offericon from "../../assets/images/icon/hot-sale.png"
 import AccountProjects from "../offer/AccountProjects";
 import UserStats from "./Stats";
 import { connect } from 'react-redux'
-import {
-  Row,
-  Col,
-  Card,
-  CardBody,
-  Badge
-} from "shards-react";
-import ProfileModal from "./Modal";
+import { Row, Col, Card, CardBody, Badge } from "shards-react";
+import ProfileModal from "./OverviewModal";
 import {UserService} from "../../services/User.service"; 
-
+import UploadImageModal from "./UploadImageModal";
 
 
 class UserDetails extends React.Component {
@@ -31,6 +25,7 @@ class UserDetails extends React.Component {
       },
     }
     this.editProfileChild = React.createRef();
+    this.uploadProfileChild = React.createRef();
     this.showEditModal = this.showEditModal.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleCtryDDChange = this.handleCtryDDChange.bind(this);
@@ -42,7 +37,12 @@ class UserDetails extends React.Component {
   }
 
   showEditModal(){
-    this.editProfileChild.current.showEditModal();
+    this.editProfileChild.current.showModal();
+  }
+
+  showUploadModal(type){
+    console.log(type);
+    this.uploadProfileChild.current.showModal();
   }
 
   handleChange(event) {
@@ -133,12 +133,9 @@ handleTagsDrag(tag, currPos, newPos) {
               <CardBody>
                 <div
                   className="card-post__image"
-                  style={{ backgroundImage: `url(${profile.profileBannerFullpath})` }} >
-
-                  <div className="card-post__author d-flex">
-                    <a
-                      href="#"
-                      className="card-post__author-avatar"
+                  style={{ backgroundImage: `url(${profile.profileBannerFullpath})` }}>
+                  <div className="card-post__author d-flex" style={{cursor:"pointer"}} onClick={this.showUploadModal.bind(this,'profile-pict')}>
+                    <a className="card-post__author-avatar"
                       style={{ backgroundImage: `url('${profile.avatarFullpath}')`, width: "7rem", height: "7rem" }}>
                     </a>
                   </div>
@@ -194,6 +191,7 @@ handleTagsDrag(tag, currPos, newPos) {
             handleCtryDDChange={this.handleCtryDDChange} handleStatesDDChange={this.handleStatesDDChange}  
             handleTagsDelete ={this.handleTagsDelete} handleTagsAddition ={this.handleTagsAddition} handleTagsDrag={this.handleTagsDrag}
             />
+            <UploadImageModal ref={this.uploadProfileChild} accountId ={this.props.accountId}/>
       </div>
     );
   }

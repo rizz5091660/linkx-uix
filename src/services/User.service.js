@@ -41,14 +41,10 @@ function get(id){
 }
 
 
-function updateProfileOverview(profile){
+function updateProfileOverview(data){
     return fetch(process.env.REACT_APP_API+"account/updateOverview", {
-        headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json"
-        },
         method: "POST",
-        body: JSON.stringify(profile)
+        body: data
     })
     .then((Response) => Response.json());
 }

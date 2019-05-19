@@ -11,6 +11,7 @@ import EditProfile from './views/profile/Edit';
 import SearchProject from './views/project/Index';
 import SearchOffer from './views/offer/Index';
 import LoginLayout from "./layouts/Login";
+import Inbox from './views/inbox/Inbox';
 
 export default [
   {
@@ -58,5 +59,10 @@ export default [
     path: "/editProfile",
     layout: DefaultLayout,
     component: EditProfile
+  },
+  {
+    path: "/inbox",
+    layout: DefaultLayout,
+    component: Inbox
   }
 ];
