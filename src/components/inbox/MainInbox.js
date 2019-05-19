@@ -18,7 +18,7 @@ export default class MainInbox extends React.Component {
       inputValue: "",
       friendId: "",
       friendName: "",
-      accId: "0c26efd8-45e8-11e9-a64b-2afa6a2473d7"
+      accId: "398765f0-4220-11e9-8972-aca63e449b3c"
     };
 
     this.addMessage = this.addMessage.bind(this);
@@ -31,13 +31,9 @@ export default class MainInbox extends React.Component {
     try {
       if (this.state.friendId !== "") {
         const res = await fetch(
-          "http://localhost:8080/api/chat/msg/" +
-            this.state.accId +
-            "/" +
-            this.state.friendId
+          "http://localhost:8080/api/chat/msg/" + this.state.accId + "/" + this.state.friendId
         );
         const json = await res.json();
-
         this.setState({
           messageList: json
         });
@@ -48,8 +44,9 @@ export default class MainInbox extends React.Component {
   }
 
   componentDidMount() {
+    alert("here " + this.state.accId)
     fetch(
-      "http://localhost:8080/api/chat/list/0c26efd8-45e8-11e9-a64b-2afa6a2473d7"
+      "http://localhost:8080/api/chat/list/" + this.state.accId
     )
       .then(res => res.json())
       .then(json => this.setState({ data: json }));
@@ -58,7 +55,7 @@ export default class MainInbox extends React.Component {
 
   addMessage(e) {
     InboxService.addMSg(
-      "0c26efd8-45e8-11e9-a64b-2afa6a2473d7",
+      this.state.accId,
       this.state.friendId,
       this.state.inputValue
     ).then(response => {
@@ -89,8 +86,7 @@ export default class MainInbox extends React.Component {
       friendName: event.title
     });
     fetch(
-      "http://localhost:8080/api/chat/msg/0c26efd8-45e8-11e9-a64b-2afa6a2473d7/" +
-        event.id
+      "http://localhost:8080/api/chat/msg/" + this.state.accId + "/" + event.id
     )
       .then(res => res.json())
       .then(json => this.setState({ messageList: json }));
