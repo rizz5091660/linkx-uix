@@ -29,6 +29,14 @@ export default class MainInbox extends React.Component {
 
   async loadData() {
     try {
+      const resL = await fetch(
+        "http://localhost:8080/api/chat/list/" + this.state.accId
+      );
+      const jsonL = await resL.json();
+      this.setState({
+        data: jsonL
+      });
+
       if (this.state.friendId !== "") {
         const res = await fetch(
           "http://localhost:8080/api/chat/msg/" + this.state.accId + "/" + this.state.friendId
@@ -44,12 +52,7 @@ export default class MainInbox extends React.Component {
   }
 
   componentDidMount() {
-    alert("here " + this.state.accId)
-    fetch(
-      "http://localhost:8080/api/chat/list/" + this.state.accId
-    )
-      .then(res => res.json())
-      .then(json => this.setState({ data: json }));
+    
     setInterval(this.loadData, 1000);
   }
 
@@ -80,7 +83,6 @@ export default class MainInbox extends React.Component {
   }
 
   itemClick(event) {
-    alert(event.title)
     this.setState({
       friendId: event.id,
       friendName: event.title
