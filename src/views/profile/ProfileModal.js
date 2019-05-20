@@ -56,9 +56,10 @@ class ProfileModal extends React.Component {
         let data = new FormData();
         data.append('avatar', this.state.avatarFile);
         data.append('banner', this.state.bannerFile);
-        data.append('profile', this.props.profile);
+        data.append('profile', JSON.stringify(this.props.profile));
         this.setState({ data: data,modalOpen: false});
-        UserService.updateProfileOverview(data);
+        UserService.updateProfileOverview(data)
+        .then(result => this.props.loadUserAccount());
     }
 
     getCountries() {
@@ -80,11 +81,15 @@ class ProfileModal extends React.Component {
         this.props.handleStatesDDChange(event);
     }
 
+    loadUserAccount(){
+        this.props.loadUserAccount();
+    }
+
     handleUploadFile = (type,event) => {
         if(type=='profile-banner'){
-            this.setState({bannerDisplay: URL.createObjectURL(event.target.files[0]),avatarFile:event.target.files[0] });
+            this.setState({bannerDisplay: URL.createObjectURL(event.target.files[0]),bannerFile:event.target.files[0] });
         }else if(type=='profile-pict'){
-            this.setState({ avatarDisplay: URL.createObjectURL(event.target.files[0]),bannerFile:event.target.files[0] });
+            this.setState({ avatarDisplay: URL.createObjectURL(event.target.files[0]),avatarFile:event.target.files[0] });
         }
     }
 

@@ -84,7 +84,6 @@ class Projects extends React.Component {
     const DATE_OPTIONS = { year: 'numeric', month: 'short', day: 'numeric' };
     const projectArr = projects || [];
     let shoWMoreButton = <div></div>;
-    console.log("size arr "+projectArr.length );
    // if (projectArr.length > 3) {
       shoWMoreButton = <CardFooter className="border-top">
         <Row>

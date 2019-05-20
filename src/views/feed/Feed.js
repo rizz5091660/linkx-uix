@@ -124,14 +124,10 @@ class Feed extends React.Component {
                   <CardBody style={{ padding: "0rem" }} >
                       <Row>
                         <Col style={{ padding: "1rem 2rem" }}>
-                          <div style={{ float: "left" }}>
-                            <img
-                              className="user-avatar rounded-circle mr-2"
-                              src={profile.avatar}
-                              alt={profile.name}
-                              width="30"
-                            />
-                          </div>
+                          <div className="card-post__author d-flex" style={{ float: "left"}}>
+                              <a className="card-post__author-avatar"  style={{ backgroundImage: `url('${profile.avatar}')` }}>
+                              </a>
+                            </div>
                           <div style={{ float: "left", width: "70%", height: "100%", cursor: "pointer" }}>
                             <b style={{ color: "#0073b1", fontSize: "20px" }}>Start a post</b>
                           </div>

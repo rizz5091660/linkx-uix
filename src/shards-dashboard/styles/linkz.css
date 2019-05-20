@@ -35,7 +35,7 @@
 
 .profile-name-feed {
     top: .9375rem;
-    padding-left: 3rem;
+    margin-left: 50px;
     position: absolute;
     font-weight:500;
 }

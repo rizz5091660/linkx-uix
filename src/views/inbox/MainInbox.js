@@ -30,7 +30,7 @@ export default class MainInbox extends React.Component {
   async loadData() {
     try {
       const resL = await fetch(
-        "http://localhost:8081/api/chat/list/" + this.state.accId
+        process.env.REACT_APP_API+"chat/list/" + this.state.accId
       );
       const jsonL = await resL.json();
       this.setState({
@@ -39,7 +39,7 @@ export default class MainInbox extends React.Component {
 
       if (this.state.friendId !== "") {
         const res = await fetch(
-          "http://localhost:8081/api/chat/msg/" + this.state.accId + "/" + this.state.friendId
+          process.env.REACT_APP_API+"chat/msg/" + this.state.accId + "/" + this.state.friendId
         );
         const json = await res.json();
         this.setState({
@@ -88,7 +88,7 @@ export default class MainInbox extends React.Component {
       friendName: event.title
     });
     fetch(
-      "http://localhost:8081/api/chat/msg/" + this.state.accId + "/" + event.id
+      process.env.REACT_APP_API+"chat/msg/" + this.state.accId + "/" + event.id
     )
       .then(res => res.json())
       .then(json => this.setState({ messageList: json }));
