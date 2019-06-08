@@ -9,8 +9,9 @@ import {
   NavItem,
   NavLink
 } from "shards-react";
+import { connect } from 'react-redux'
 
-export default class UserActions extends React.Component {
+class UserActions extends React.Component {
   constructor(props) {
     super(props);
 
@@ -19,6 +20,9 @@ export default class UserActions extends React.Component {
     };
 
     this.toggleUserActions = this.toggleUserActions.bind(this);
+  }
+
+  componentDidMount() {
   }
 
   toggleUserActions() {
@@ -31,12 +35,10 @@ export default class UserActions extends React.Component {
     return (
       <NavItem tag={Dropdown} caret toggle={this.toggleUserActions}>
         <DropdownToggle caret tag={NavLink} className="text-nowrap px-3">
-          <img
-            className="user-avatar rounded-circle mr-2"
-            src="https://s3.amazonaws.com/linkz-us-east-1554525925157/profile-pict/nathanfigueroa.jpg"
-            alt="User Avatar"
-          />{" "}
-          <span className="d-none d-md-inline-block"><b style={{color:"white"}}>Me</b></span>
+          <div className="card-post__author-avatar card-post__author-avatar--small"
+            style={{ backgroundImage: `url('${this.props.avatar}')`, float: "left" }}>
+          </div>{" "}
+          <span className="d-none d-md-inline-block"></span>
         </DropdownToggle>
         <Collapse tag={DropdownMenu} right small open={this.state.visible}>
           <DropdownItem tag={Link} to="profile">
@@ -51,3 +53,12 @@ export default class UserActions extends React.Component {
     );
   }
 }
+
+function mapStateToProps(state) {
+  return {
+    accountId: state.LinkxReducer.accountId,
+    avatar: state.LinkxReducer.avatar
+  }
+}
+
+export default connect(mapStateToProps)(UserActions)

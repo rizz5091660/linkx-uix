@@ -48,7 +48,8 @@ class ProfileModal extends React.Component {
             bannerDisplay: this.props.profile.profileBannerFullpath,
         });
         this.getCountries();
-        this.getStatesByCountryId(this.props.profile.country.id);
+        if(this.props.profile.country!=null)
+           this.getStatesByCountryId(this.props.profile.country.id);
     }
 
     updateProfileSubmit(event) {
@@ -57,9 +58,9 @@ class ProfileModal extends React.Component {
         data.append('avatar', this.state.avatarFile);
         data.append('banner', this.state.bannerFile);
         data.append('profile', JSON.stringify(this.props.profile));
-        this.setState({ data: data,modalOpen: false});
         UserService.updateProfileOverview(data)
-        .then(result => this.props.loadUserAccount());
+        .then(result => this.props.loadUserAccount())
+        .then(result => this.setState({ data: data,modalOpen: false}));
     }
 
     getCountries() {

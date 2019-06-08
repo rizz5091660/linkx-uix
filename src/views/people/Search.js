@@ -1,30 +1,29 @@
 import React from 'react';
-import { Container, Row, Col, Card, CardBody,Form,FormInput, Button, Alert } from "shards-react";
+import { Container, Row, Col, Card, CardBody, Form, FormInput, Button, Alert } from "shards-react";
 import Pagination from 'react-bootstrap/Pagination';
-import ProjectListSummary from "./ListSummary";
-import ProjectDetail from "./Detail";
-import {ProjectService} from "../../services/Project.service"; 
-import {connect} from 'react-redux';
+import ListSummary from "./ListSummary";
+import Detail from "./Detail";
+import { connect } from 'react-redux';
 import Autosuggest from 'react-autosuggest';
-import {MasterDataService} from '../../services/MasterData.service';
+import { MasterDataService } from '../../services/MasterData.service';
+import { PeopleService } from '../../services/People.service';
 
-class SearchProject extends React.Component {
+class Search extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            searchResult: { projects: [], totalRecord: 0 },
+            searchResult: { accounts: [], totalRecord: 0 },
             detail: {},
             modalShowApplied: false,
             activePage: 1,
             totalPage: 5,
             value: '',
-            states:[],
-            keyword:'',
+            states: [],
+            keyword: '',
         }
         this.getDetail = this.getDetail.bind(this);
         this.showAlert = this.showAlert.bind(this);
         this.keywordChange = this.keywordChange.bind(this);
-
     }
 
     componentDidMount() {
@@ -41,7 +40,6 @@ class SearchProject extends React.Component {
                 return inputLength === 0 ? [] : this.state.states.filter(lang =>
                     lang.name.toLowerCase().slice(0, inputLength) === inputValue);
             }
-
             );
 
         return this.state.states;
@@ -62,21 +60,22 @@ class SearchProject extends React.Component {
     getSuggestionValue = suggestion => suggestion.name;
 
     renderSuggestion = suggestion => (
-        <div style={{textAlign:"left"}}>
+        <div style={{ textAlign: "left" }}>
             <b>{suggestion.name}</b>
         </div>
     );
 
     load(pageNumber) {
-        ProjectService.search(this.state.keyword,this.state.value,pageNumber)
-        .then((result) => {
-            this.setState({ searchResult: result, activePage: pageNumber, project:[] })
-            if(this.state.searchResult.projects && this.state.searchResult.projects.length ){
-                this.getDetail(this.state.searchResult.projects[0].id);
-            }else{
-                 this.setState({ detail:null})
-            }
-        })
+        PeopleService.search(this.props.accountId,this.state.keyword, this.state.value, pageNumber)
+            .then((result) => {
+                this.setState({ searchResult: result, activePage: pageNumber, accounts: [] })
+                if (this.state.searchResult.accounts && this.state.searchResult.accounts.length) {
+                    this.getDetail(this.state.searchResult.accounts[0].id);
+                } else {
+                    this.setState({ detail: null })
+                }
+            })
+        
     }
 
     search(e) {
@@ -85,8 +84,8 @@ class SearchProject extends React.Component {
     }
 
     getDetail(id) {
-        ProjectService.getDetail(id)
-        .then((result) => { this.setState({ detail: result})})
+        PeopleService.get(id)
+            .then((result) => { this.setState({ detail: result }) })
     }
 
     showAlert(isShow) {
@@ -107,9 +106,9 @@ class SearchProject extends React.Component {
 
     keywordChange(event) {
         const target = event.target;
-        const value =  target.value;
+        const value = target.value;
         this.setState({
-            keyword : value
+            keyword: value
         })
     }
 
@@ -142,22 +141,22 @@ class SearchProject extends React.Component {
                     <Col style={{ paddingLeft: 0, paddingRight: 0 }}>
                         <Card>
                             <CardBody style={{ padding: "1rem" }}>
-                                <form id="searchForm"  onSubmit={this.search.bind(this)}>
+                                <form id="searchForm" onSubmit={this.search.bind(this)}>
                                     <Row form>
                                         <Col md="12" style={{ display: "flex", flexDirection: "row", textAlign: "center", padding: "0 15%" }}>
-                                            <input type="text" className="react-autosuggest__input" placeholder="Enter Keywords" name={keyword} onChange={(e) => {this.keywordChange(e) }} style={{ flexGrow: "2", height:"40px",flexBasis: "40%" }} />
-                                            <div style={{ flexGrow: "2", marginRight: "2px", flexBasis: "40%", height:"100%" }} >
-                                            <Autosuggest
-                                                id="states"
-                                                suggestions={states}
-                                                onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
-                                                onSuggestionsClearRequested={this.onSuggestionsClearRequested}
-                                                getSuggestionValue={this.getSuggestionValue}
-                                                renderSuggestion={this.renderSuggestion}
-                                                inputProps={inputProps}
-                                            />
+                                            <input type="text" className="react-autosuggest__input" placeholder="Enter Keywords" name={keyword} onChange={(e) => { this.keywordChange(e) }} style={{ flexGrow: "2", height: "40px", flexBasis: "40%" }} />
+                                            <div style={{ flexGrow: "2", marginRight: "2px", flexBasis: "40%", height: "100%" }} >
+                                                <Autosuggest
+                                                    id="states"
+                                                    suggestions={states}
+                                                    onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
+                                                    onSuggestionsClearRequested={this.onSuggestionsClearRequested}
+                                                    getSuggestionValue={this.getSuggestionValue}
+                                                    renderSuggestion={this.renderSuggestion}
+                                                    inputProps={inputProps}
+                                                />
                                             </div>
-                                            <Button theme="primary" className="mb-2 mr-1" style={{height:"40px"}} type="submit">{"  Search  "}</Button>
+                                            <Button theme="primary" className="mb-2 mr-1" style={{ height: "40px" }} type="submit">{"  Search  "}</Button>
                                         </Col>
                                     </Row>
                                 </form>
@@ -172,17 +171,19 @@ class SearchProject extends React.Component {
                     </Col>
                 </Row>
                 <div className="centerPosition">
-                {searchResult.projects!=null && searchResult.projects.length != 0 && 
-                    <Row className="py-4">                  
-                        <Col md="5" style={{ padding: "0 2px" }}>                          
-                            <ProjectListSummary projects={searchResult.projects} getProjectDetail={this.getDetail} showAlert={this.showAlert} />
-                            <div style={{marginTop:"1rem"}}> <Pagination>{items}</Pagination> </div>    
-                        </Col>                    
-                        <Col md="7" style={{ padding: "0 2px" }}>                           
-                                <ProjectDetail project={detail} accountId={this.props.accountId} showAlert={this.showAlert} />
-                        </Col>
-                    </Row>
-                }
+                    {searchResult.accounts != null && searchResult.accounts.length != 0 &&
+                        <Row className="py-4">
+                            <Col md="9">
+                                <ListSummary accounts={searchResult.accounts} getProjectDetail={this.getDetail} showAlert={this.showAlert} />
+                                <div style={{ marginTop: "1rem" }}> <Pagination>{items}</Pagination> </div>
+                            </Col>
+                            {/* 
+                            <Col md="7">
+                                <Detail project={detail} accountId={this.props.accountId} showAlert={this.showAlert} />
+                            </Col>
+                            */}
+                        </Row>
+                    }
                 </div>
             </Container>
         );
@@ -190,8 +191,8 @@ class SearchProject extends React.Component {
 }
 function mapStateToProps(state) {
     return {
-        accountId : state.LinkxReducer.accountId
+        accountId: state.LinkxReducer.accountId
     }
-  }
-  
-export default connect(mapStateToProps)(SearchProject)
+}
+
+export default connect(mapStateToProps)(Search)

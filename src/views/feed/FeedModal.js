@@ -15,6 +15,7 @@ class FeedModal extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            data: new FormData(),
             modalOpen: false,
             labelTitle: 'Collaboration',
             type: '',
@@ -34,11 +35,13 @@ class FeedModal extends React.Component {
             startDate: null,
             endDate: null,
             offerCategories: [],
-            offerCategory: ''
+            offerCategory: '',
+            bannerFile:null,
+            bannerDisplay:''
         }
     }
 
-    showEditModal(type) {
+    showPostModal(type) {
         let title = '';
         if (type == 'offer') {
             title = 'Offer';
@@ -211,6 +214,7 @@ class FeedModal extends React.Component {
 
     addSubmit(e) {
         e.preventDefault();
+        console.log(this.state.type+" "+e)
         if (this.state.type === 'project') {
             this.addProjectSubmit(e);
         } else if (this.state.type === 'offer') {
@@ -220,14 +224,47 @@ class FeedModal extends React.Component {
 
     addProjectSubmit(e) {
         e.preventDefault();
-        this.setState({ modalOpen: false });
-        ProjectService.add(this.state.name, this.state.collabType, this.state.startDate, this.state.endDate, this.state.statesValue, this.state.description, this.state.skillValue, this.state.sponsorValue, this.props.accountId, null);
+        const project = {
+            name: this.state.name,
+            collabType: this.state.collabType.value,
+            startDateStr: this.state.startDate,
+            endDateStr: this.state.endDate,
+            location: this.state.statesValue,
+            description: this.state.description,
+            skillValue: this.state.skillValue,
+            sponsorValue:this.state.sponsorValue,
+            accountId:this.props.accountId,
+            organizationId:null,
+            offerCategory:null
+    
+        };
+        let data = new FormData();
+        data.append('banner', this.state.bannerFile);
+        data.append('post', JSON.stringify(project));
+        this.setState({ modalOpen: false,data:data });
+        ProjectService.add(data);
     }
 
     addOfferSubmit(e) {
         e.preventDefault();
+        const offer ={
+            name:this.state.name,
+            startDate:this.state.startDate, 
+            endDate:this.state.endDate, 
+            location:this.state.statesValue, 
+            description:this.state.description,
+            accountId: this.props.accountId,
+            organizationId:this.state.organizationId
+        }
+        let data = new FormData();
+        data.append('banner',this.state.bannerFile);
+        data.append('post', JSON.stringify(offer));
         this.setState({ modalOpen: false });
-        OfferService.add(this.state.name,this.state.startDate, this.state.endDate, this.state.statesValue, this.state.description, this.state.accountId, this.state.organizationId)
+        OfferService.add(data);
+    }
+
+    handleUploadFile = (type,event) => {
+        this.setState({bannerDisplay: URL.createObjectURL(event.target.files[0]),bannerFile:event.target.files[0] });
     }
 
     render() {
@@ -249,7 +286,8 @@ class FeedModal extends React.Component {
             statesValue,
             states,
             offerCategories,
-            offerCategory
+            offerCategory,
+            bannerDisplay
 
         } = this.state;
         let modalClose = () => this.setState({ modalOpen: false });
@@ -373,7 +411,7 @@ class FeedModal extends React.Component {
         return (
 
             <Modal size="md" aria-labelledby="contained-modal-title-vcenter" centered show={modalOpen} onHide={modalClose}>
-                <form id="updateProfileForm" onSubmit={this.addSubmit.bind(this)}>
+                <form id="updateProfileForm" encType="multipart/form-data" onSubmit={this.addSubmit.bind(this)}>
                     <Modal.Header closeButton className="p-3">Post {title}</Modal.Header>
                     <Modal.Body>
                         <Row form>
@@ -405,14 +443,18 @@ class FeedModal extends React.Component {
                         <Row form>
                             <Col className="form-group">
                                 <label htmlFor="description">Description</label>
-                                <ReactQuill value={description} style={{ height: "300px" }}
+                                <ReactQuill value={description} style={{ height: "250px" }}
                                     onChange={this.handleChangeRichText.bind(this)} />
                             </Col>
                         </Row>
                         <Row form style={{ paddingTop: "3rem" }}>
+                            <Col md="12">
+                                <img src={bannerDisplay} width="400px" />
+                            </Col>
+                        </Row>
+                        <Row form>
                             <Col className="form-group">
-                                <label>Upload Image</label>
-                                <Button theme="primary" style={{ marginLeft: "30px" }} className="mb-2 mr-1" >Upload</Button>
+                                <input type="file" name="file" onChange={this.handleUploadFile.bind(this,'profile-banner')} />
                             </Col>
                         </Row>
                         <Row form>

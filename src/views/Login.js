@@ -11,6 +11,9 @@ import {
 } from "shards-react";
 import { Container } from "react-bootstrap";
 import { UserService } from "../services/User.service";
+import {connect} from 'react-redux';
+import * as actions from '../redux/Actions';
+
 
 class Login extends Component {
   constructor() {
@@ -39,12 +42,15 @@ class Login extends Component {
       UserService.add(this.state.regFirstName, this.state.regLastName, this.state.regEmail, this.state.regPassword)
         .then(response => {
           if (response.status == 200) {
+            console.log(response);
+            this.props.onUpdateAccountClick(response.data);
             this.goToProfile(response.data,"/profile");
           } else {
             alert("Registration error :: " + response.message);
           }
         });
     }
+
   }
 
   render() {
@@ -128,4 +134,24 @@ class Login extends Component {
   }
 }
 
-export default Login;
+
+
+// Map Redux state to component props
+function mapStateToProps(state) {
+  return {
+     // accountId:state.AccountUpdate.accountId
+      accountId: state.LinkxReducer.accountId
+  }
+}
+
+// Map Redux actions to component props
+function mapDispatchToProps(dispatch) {
+  return {
+      onUpdateAccountClick: event => {
+           dispatch((actions.updateAccountIdTodo(event)))
+      }
+  }
+}
+
+
+export default connect(mapStateToProps,mapDispatchToProps)(Login)

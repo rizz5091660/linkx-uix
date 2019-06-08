@@ -1,10 +1,10 @@
 import React from "react";
 import offericon from "../../assets/images/icon/hot-sale.png"
-import AccountProjects from "../offer/AccountProjects";
+import AccountProjects from "./AccountProjects";
 import UserStats from "./Stats";
 import { connect } from 'react-redux'
 import { Row, Col, Card, CardBody, Badge } from "shards-react";
-import OverviewModal from "./ProfileModal";
+import ProfileModal from "./ProfileModal";
 import { UserService } from "../../services/User.service";
 import UploadImageModal from "./UploadImageModal";
 
@@ -98,7 +98,6 @@ class UserDetails extends React.Component {
     newTags.splice(currPos, 1);
     newTags.splice(newPos, 0, tag);
 
-    // re-render
     this.setState({ tags: newTags });
   }
 
@@ -106,12 +105,18 @@ class UserDetails extends React.Component {
     UserService.get(this.props.accountId).then((findresponse) => {
       this.setState({ profile: findresponse })
       let profile = Object.assign({}, this.state.profile);
-      profile.country.value = { "value": this.state.profile.country.id, "label": this.state.profile.country.name };
-      profile.states.value = { "value": this.state.profile.states.id, "label": this.state.profile.states.name };
+      if(this.state.profile.country!=null && this.state.profile.states!=null){
+       profile.country.value = { 'value': this.state.profile.country.id, 'label': this.state.profile.country.name };
+       profile.states.value = { 'value': this.state.profile.states.id, 'label': this.state.profile.states.name };
+      }else{
+        profile.country.value = { 'value': '', 'label': '' };
+        profile.states.value = { 'value': '', 'label': '' };
+      }
       this.setState({ profile })
     }
     )
   }
+
   componentDidMount() {
     this.loadUserAccount();
   }
@@ -139,7 +144,9 @@ class UserDetails extends React.Component {
                   <Col >
                     <h4 className="mb-0">{profile.fName} {profile.lName}</h4>
                     <h6>{profile.summary}</h6>
-                    <h6>{profile.address}, {profile.states.name} {profile.postalCode}, {profile.country.name}</h6>
+                    { profile.states!=null && profile.country!=null &&
+                       <h6>{profile.address}, {profile.states.name} {profile.postalCode}, {profile.country.name}</h6>
+                    }
                     {profile.brandSpecs.map((bs, idx) => (
                       <Badge key={idx} pill className={bs.badgeColor}>{bs.name}</Badge>
                     ))}
@@ -182,7 +189,7 @@ class UserDetails extends React.Component {
             <AccountProjects accountId={this.props.accountId} />
           </Col>
         </Row>
-        <OverviewModal ref={this.editProfileChild} profile={profile} handleChange={this.handleChange.bind(this)}
+        <ProfileModal ref={this.editProfileChild} profile={profile} handleChange={this.handleChange.bind(this)}
           handleCtryDDChange={this.handleCtryDDChange.bind(this)} handleStatesDDChange={this.handleStatesDDChange.bind(this)}
           handleTagsDelete={this.handleTagsDelete.bind(this)} handleTagsAddition={this.handleTagsAddition.bind(this)} handleTagsDrag={this.handleTagsDrag.bind(this)}
           loadUserAccount={this.loadUserAccount.bind(this)}

@@ -6,7 +6,7 @@ import {
     CardBody,
     Form,
 } from "shards-react";
-class ProjectListSummary extends React.Component {
+class ListSummary extends React.Component {
     getProjectDetail(id) {
         this.props.getProjectDetail(id);
         this.props.showAlert(false);
@@ -35,4 +35,4 @@ class ProjectListSummary extends React.Component {
         );
     }
 }
-export default ProjectListSummary;
+export default ListSummary;

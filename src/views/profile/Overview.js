@@ -29,7 +29,7 @@ class Overview extends React.Component {
           </NavLink>
         </CardHeader>
         <CardBody>
-          {profile.accSocMedStats.map((asm, idx) => (
+          {profile.accSocMedStats!=null && profile.accSocMedStats.map((asm, idx) => (
             <Row key={idx}>
               <Col className="ml-4" lg="12">
                 <div style={{ display: "inline" }}><a href="https://www.youtube.com/user/natefiggs"><img src={asm.socMed.avatarFullPath} width="30" /></a> </div>

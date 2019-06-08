@@ -6,13 +6,12 @@ export const ProjectService ={
 }
 
 function search(keyword,location,offset) {
-    console.log(location);
     const SearchCriteria ={
         keyword:keyword,
         location:location,
         offset:offset
     }
-    return fetch(process.env.REACT_APP_API+"project/criteria", {
+    return fetch(process.env.REACT_APP_API+"project/search", {
         method: 'POST',
         headers : {
             'Accept': 'application/json',
@@ -38,27 +37,9 @@ function apply(id,accountId){
     }).then((res) => res.json());
 }
 
-function add(name,collabType, startDate, endDate, statesValue, description, skillValue, sponsorValue, accountId, organizationId,offerCategory){
-    const Project = {
-        name: name,
-        collabType: collabType.value,
-        startDateStr: startDate,
-        endDateStr: endDate,
-        location: statesValue,
-        description: description,
-        skillValue: skillValue,
-        sponsorValue:sponsorValue,
-        accountId:accountId,
-        organizationId:organizationId,
-        offerCategory:offerCategory
-
-    };
+function add(data){
     return fetch(process.env.REACT_APP_API+'project', {
         method: 'POST',
-        headers : {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        },
-        body:JSON.stringify(Project)
+        body:data
     }).then((res) => res.json());
 }

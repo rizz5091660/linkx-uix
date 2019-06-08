@@ -9,16 +9,17 @@ import { FeedService } from "../../services/Feed.service";
 import { connect } from 'react-redux'
 import projecticon from '../../assets/images/icon/project.png'
 import offericon from '../../assets/images/icon/hot-sale.png'
+import communityicon from '../../assets/images/icon/campaign.png'
 import {
-  FloatingMenu, 
+  FloatingMenu,
   MainButton,
   ChildButton,
 } from 'react-floating-button-menu';
 
 import {
-  Container, Row, Col, Card, CardBody, CardFooter, Badge, Button
+  Container, Row, Col, Card, CardBody, Badge, Button
 } from "shards-react";
-import FeedModal from "./Modal";
+import FeedModal from "./FeedModal";
 
 class Feed extends React.Component {
   constructor(props) {
@@ -44,9 +45,9 @@ class Feed extends React.Component {
     this.showFeed();
   }
 
-  showEditModal(type) {
-    this.setState({isOpen:false});
-    this.feedModal.current.showEditModal(type);
+  showPostModal(type) {
+    this.setState({ isOpen: false });
+    this.feedModal.current.showPostModal(type);
   }
 
   getSummaryAccount() {
@@ -121,27 +122,14 @@ class Feed extends React.Component {
               <Row>
                 <Col lg="12" sm="12" >
                   <Card className="card-post mb-4">
-                  <CardBody style={{ padding: "0rem" }} >
+                    <CardBody style={{ padding: "0rem" }} >
                       <Row>
-                        <Col style={{ padding: "1rem 2rem" }}>
-                         <div className="card-post__author-avatar card-post__author-avatar--small" 
-                          style={{ backgroundImage: `url('${profile.avatar}')`,float:"left" }}>
-                         </div>
-                          <div style={{ float: "left", width: "60%", height: "100%", cursor: "pointer", marginLeft: "10px", verticalAlign:"top" }}>
-                            <b style={{ color: "#0073b1", fontSize: "15px" }}>Start a post</b>
+                        <Col style={{ padding: "1rem 2rem" }}>                         
+                          <div style={{ float: "left", width: "40%", height: "100%", cursor: "pointer", marginLeft: "10px", verticalAlign: "top" }}>
+                            <b style={{ color: "#0073b1", fontSize: "20px" }}>Start a post</b>
                           </div>
-                        </Col>
-                        <Col>
-                          <div style={{ float: "right", height: "100%", padding: "10% 10% 10% 10%", textAlign: "center", cursor: "pointer", borderStyle: "solid", borderWidth: "1px", }}
-                            onClick={this.showEditModal.bind(this, 'offer')}
-                          >
-                            <img src={offericon} alt="Offer" width="30" />
-                          </div>
-                          <div style={{ float: "right", height: "100%", padding: "10% 10% 10% 10%", textAlign: "center", cursor: "pointer", borderStyle: "solid", borderWidth: "1px", }}
-                            onClick={this.showEditModal.bind(this, 'collab')}
-                          >
-                            <img src={projecticon} alt="Project" width="30" />
-                          </div>
+                        <Button theme="primary" style={{margin:"0 5px", padding:"2px 2px", width:"100px"}} onClick={this.showPostModal.bind(this, 'project')}> <img src={projecticon} alt="Project" width="30" /> Project</Button>
+                        <Button theme="primary" style={{margin:"0 5px", padding:"2px 2px", width:"100px"}} onClick={this.showPostModal.bind(this, 'offer')}> <img src={offericon} alt="Project" width="30" /> Offer </Button>
                         </Col>
                       </Row>
                     </CardBody>

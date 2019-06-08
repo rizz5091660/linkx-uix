@@ -8,8 +8,9 @@ import ComponentsOverview from './views/ComponentsOverview';
 import Feed from './views/feed/Index';
 import Login from './views/Login';
 import EditProfile from './views/profile/Edit';
-import SearchProject from './views/project/Index';
-import SearchOffer from './views/offer/Index';
+import SearchProject from './views/project/Search';
+import SearchOffer from './views/offer/Search';
+import SearchPeople from './views/people/Search';
 import LoginLayout from "./layouts/Login";
 import Inbox from './views/inbox/Inbox';
 
@@ -39,6 +40,11 @@ export default [
     path: "/offer",
     layout: DefaultLayout,
     component: SearchOffer
+  },
+  {
+    path: "/people",
+    layout: DefaultLayout,
+    component: SearchPeople
   },
   {
     path: "/components-overview",

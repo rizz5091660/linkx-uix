@@ -18,7 +18,7 @@ function search(keyword,location,offset) {
         location:location,
         offset:offset
     }
-    return fetch(process.env.REACT_APP_API+"offer/criteria", {
+    return fetch(process.env.REACT_APP_API+"offer/search", {
         method: 'POST',
         headers : {
             'Accept': 'application/json',
@@ -39,22 +39,9 @@ function apply(id,accountId){
      }).then((res) => res.json());
  }
 
-function add(name,startDate, endDate, location, description, accountId, organizationId){
-    const Offer = {
-        name: name,
-        startDateStr: startDate,
-        endDateStr: endDate,
-        location: location,
-        description: description,
-        accountId:accountId,
-        organizationId:organizationId
-    };
+function add(data){
     return fetch(process.env.REACT_APP_API+'offer', {
         method: 'POST',
-        headers : {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        },
-        body:JSON.stringify(Offer)
+        body:data
     }).then((res) => res.json());
 }
